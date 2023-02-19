@@ -29,11 +29,9 @@ app.use(express.static(publicDirectory));
 
 app.set('view engine', 'hbs');
 
+// ROUTES USED
 
-app.get("/", (req, res) => {
-    // res.send("Home Page");
-    res.render('index.hbs');
-});
+app.use('/', require('./routes/pages.js'));
 
 app.listen(port, () => {
     console.log("server started at port: "  + port);
