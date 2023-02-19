@@ -27,6 +27,11 @@ db.connect(
 const publicDirectory = path.join(__dirname, './public');
 app.use(express.static(publicDirectory));
 
+// Parse URL encoded bodies (sent by html form)
+app.use(express.urlencoded({ extended: false }));
+// parse json bodies
+app.use(express.json()),
+
 app.set('view engine', 'hbs');
 
 // ROUTES USED
