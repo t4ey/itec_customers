@@ -1,0 +1,157 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #DFF6FF;
+}
+
+a {
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+}
+
+h1,
+h2 {
+    font-size: 3.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
+
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+p {
+    color: white;
+    font-weight: 300;
+    font-size: 1.5rem;
+}
+
+iframe {
+    width: 100%;
+    height: 25rem;
+}
+
+.black-version {
+    color: black;
+}
+
+/* heading section */
+
+.navbar-container {
+    background-color: #1363DF;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.catalog-btn {
+    border-color: white;
+    border-radius: 2rem;
+    color: white;
+    margin-left: 5%;
+}
+
+.container-heading {
+    background-color: #1363DF;
+    padding: 0;
+    padding: 5% 15% 5%;
+    color: white;
+}
+
+/* location section */
+
+.location-container {
+    background-color: #DFF6FF;
+    padding: 0;
+    padding: 5% 15% 5%;
+    color: white;
+}
+
+/* footer section */
+
+footer {
+    background-color: gray;
+}
+
+.footer-container {
+    padding: 7% 15% 7%;
+    background-color: #06283D;
+}
+
+.footer-title {
+    font-size: 2rem;
+    color: white;
+}
+
+.footer-list {
+    list-style-type: none;
+}
+
+.footer-options {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.5rem;
+}
+
+
+.footer-options:hover {
+    color: white;
+    font-size: 1.5rem;
+}
+
+footer i {
+    font-size: 3rem;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+
+}
+
+footer i:hover {
+    color: white;
+}
+
+.copyright {
+    color: rgba(203, 203, 203, 0.7);
+    font-size: 1.2rem;
+}
+
+.hr-footer {
+    color: white;
+}
+
+/***************** MEDIA QUERIES ********************/
+
+/* tablet size and below */
+
+@media (max-width: 991px) {
+    body {
+        text-align: center;
+    }
+
+    h1,
+    h2 {
+        font-size: 3rem;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+    }
+
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+    }
+
+    p {
+        color: white;
+        font-weight: 500;
+        font-size: 1.5rem;
+    }
+
+    .container-heading {
+        padding: 5% 15% 10%;
+    }
+}

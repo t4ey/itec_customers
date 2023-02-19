@@ -1,0 +1,159 @@
+body {
+    background-color: #DFF6FF;
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
+h2 {
+    font-size: 2.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+p {
+    color: black;
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* heading section */
+
+.navbar-container {
+    background-color: #1363DF;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.catalog-btn {
+    border-color: white;
+    border-radius: 2rem;
+    color: white;
+    margin-left: 5%;
+}
+
+.container-heading {
+    padding: 3% 15% 1%;
+}
+
+/* categories */
+
+.categories-container {
+    padding: 1% 15% 3%;
+}
+
+/* shopping cart items section */
+
+.items-container {
+    padding: 1% 15% 5%;
+}
+
+.item-img {
+    width: 100%;
+    height: 100%;
+}
+
+.item {
+    border: solid #47B5FF 2px;
+}
+
+.fa-trash {
+    font-size: 1.5rem;
+    color: rgb(231, 53, 53);
+}
+
+.calculus-container {
+    padding: 2rem;
+    border: solid #47B5FF 2px;
+}
+
+.buy-btn-container {
+    border: solid #47B5FF 2px;
+    padding: 2rem;
+}
+
+/* footer section */
+
+footer {
+    background-color: gray;
+}
+
+.footer-container {
+    padding: 7% 15% 7%;
+    background-color: #06283D;
+}
+
+.footer-title {
+    font-size: 2rem;
+    color: white;
+}
+
+.footer-list {
+    list-style-type: none;
+}
+
+.footer-options {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.5rem;
+}
+
+
+.footer-options:hover {
+    color: white;
+    font-size: 1.5rem;
+}
+
+footer i {
+    font-size: 3rem;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+
+}
+
+footer i:hover {
+    color: white;
+}
+
+.copyright {
+    color: rgba(203, 203, 203, 0.7);
+    font-size: 1.2rem;
+}
+
+/***************** MEDIA QUERIES ********************/
+
+/* mobile size and below */
+
+@media (max-width: 576px) {
+    h1 {
+        font-size: 2.5rem;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+    }
+
+    p {
+        color: black;
+        font-weight: 500;
+        font-size: 1rem;
+    }
+}

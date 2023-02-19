@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta</title>
+
+    <!-- boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;900&family=Ubuntu:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <!-- font awesome icons -->
+    <script src="https://kit.fontawesome.com/8faedc4425.js" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="../css/styles_log_in_customers.css">
+</head>
+<body>
+    <!-- navbar -->
+    
+    <div class="container-fluid navbar-container">
+    
+        <nav class="navbar navbar-expand-lg navbar-dark mb-3 py-3">
+            <div class="container-fluid px-0">
+                <a class="navbar-brand" href="../index.html">OVA Tienda Virtual</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="../index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="market.html">Popular</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contacto</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.html#Catalog">Catálogo</a>
+                        </li>
+                    </ul>
+                    <a href="#Catalog">
+                        <div class="dropdown-center">
+                            <a type="button" class="btn btn-outline-light catalog-btn ms-0 ms-lg-2 dropdown-toggle"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="ps-2"> Mi Cuenta</span>
+                            </a>
+                            <ul class="dropdown-menu text-small shadow">
+                                <li><a class="dropdown-item" href="cart_sopping.html">Carrito</a></li>
+                                <li><a class="dropdown-item" href="account_customers.html">Perfil</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+                            </ul>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    
+    <!-- heading section -->
+    
+    <section id="heading">
+        <div class="container-fluid container-heading">
+    
+            <h1>Horarios de atencion : </h1>
+            <h2>10:30 - 20:30 mañanas</h2>
+            <h2>10:30 - 20:30 tardes</h2>
+            <h3>abierto</h3>
+    
+            <div class="search-bar-container">
+                <div class="row py-2">
+                    <div class="col col-12 col-lg-4">
+                    </div>
+                    <div class="col col-8 col-lg-4">
+                        <form class="d-flex" role="search">
+                            <input class="form-control me-2 " type="search" placeholder="Buscar" aria-label="Search">
+                            <button class="btn btn-outline-primary" type="submit"><i
+                                    class="fa-solid fa-magnifying-glass"></i></button>
+    
+                        </form>
+                    </div>
+                    <div class="col col-4 text-end">
+                        <a class="btn btn-primary" href="#" role="button"><i class="fa-solid fa-cart-shopping"></i>
+                            <span class="sopping-cart-text">Carrito</span></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    
+    </section>
+
+    <!-- login form customers -->
+
+    <section id="login">    
+        <div class="container-fluid login-container text-center">
+            <h2>Mi Cuenta</h2>
+            <div class="container-fluid form-container text-start">
+                <form>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nombres</label>
+                        <input type="text" class="form-control" id="name" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="lastName">
+                    </div>
+                    <div class="mb-4">
+                        <label for="InputEmail" class="form-label">Dirección de correo electrónico</label>
+                        <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp">
+                    </div>
+                    <hr>
+                    <h3>Cambiar contraseña</h3>
+                    <div class="mb-3">
+                        <label for="InputPassword" class="form-label">Contraseña Actual</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="InputPassword" class="form-label">Contraseña Nueva</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1">
+                        <div id="passwordHelpBlock" class="form-text">
+                            Su contraseña debe ser de 8-20 caracteres, contener letras y números.
+                        </div>
+                    </div>
+                    <div class="mb-5">
+                        <label for="InputPassword1" class="form-label">Repetir Contraseña</label>
+                        <input type="password" class="form-control" id="InputPassword1">
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-success">Guardar Cambios</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer section -->
+    
+    <section id="footer">
+        <footer>
+            <div class="container-fluid footer-container mt-4">
+                <div class="container text-start">
+                    <div class="row">
+                        <div class="col col-12 col-lg-4">
+                            <ul class="footer-list">
+                                <li>
+                                    <h3 class="footer-title">Contenido</h3>
+                                </li>
+                                <li>
+                                    <p class="footer-options">Portada</p>
+                                </li>
+                                <li>
+                                    <p class="footer-options">Productos mas vendidos</p>
+                                </li>
+                                <li>
+                                    <p class="footer-options">Blog</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col col-12 col-lg-4">
+                            <ul class="footer-list">
+                                <li>
+                                    <h3 class="footer-title">Informacion</h3>
+                                </li>
+                                <li>
+                                    <p class="footer-options">Ubicacion</p>
+                                </li>
+                                <li>
+                                    <p class="footer-options">Negocio</p>
+                                </li>
+                                <li>
+                                    <p class="footer-options">Contacto</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col col-12 col-lg-4">
+                            <ul class="footer-list">
+                                <li>
+                                    <h3 class="footer-title">Redes Sociales</h3>
+                                </li>
+                                <li>
+                                    <a href=""><i class="fa-brands fa-square-twitter"></i></a>
+                                    <a href=""><i class="fa-brands fa-square-facebook"></i></a>
+                                    <a href=""><i class="fa-brands fa-square-whatsapp"></i></a>
+                                    <a href=""></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <h4 class="copyright">Copyright © 2022 Tienda Electrónica OVA S.R.L. Todos los derechos reservados.</h4>
+            </div>
+        </footer>
+    
+    </section>
+    <!-- bootstrap js cdn -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    
+    <!-- js custom -->
+    <script src="../js/market.js"></script>
+
+</body>
+</html>
