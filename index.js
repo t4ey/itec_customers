@@ -11,7 +11,7 @@ const db = mysql.createConnection({
     host: '192.168.76.200',
     user: 'itec',
     password: 'alva234',
-    database: 'ova_store'
+    database: 'e_store_ova'
 });
 
 db.connect(
