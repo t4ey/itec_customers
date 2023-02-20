@@ -1,6 +1,10 @@
 //MySQL connection
 const mysql = require("mysql");
 
+// idk
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+
 const db = mysql.createConnection({
     host: '192.168.76.200',
     user: 'itec',
@@ -13,7 +17,7 @@ exports.register = async (req, res) => {
     console.log(req.body);
     const {name, lastName, email, password, repPassword} = req.body;
 
-    await db.query("SELECT email FROM client WHERE email = ?", [email], (error, result) => {
+    await db.query("SELECT email FROM client WHERE email = ?", [email], async (error, result) => {
         if(error)
             console.log(error);
         
@@ -25,7 +29,11 @@ exports.register = async (req, res) => {
             return res.render('./session/register.hbs', {
                 message: "Las contraseñas no son las mismas",
             });
+
+        let hashedPassword = await bcrypt.hash(password, 8);
+        console.log(hashedPassword);
+        console.log(hashedPassword.length); 
     });
 
-    res.send("ok");
+    // res.send("ok");
 }

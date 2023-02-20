@@ -104,10 +104,16 @@
     
     </section>
 
-    <!-- login form customers -->
+    <!-- signup form customers -->
 
-    <section id="login">
+    <section id="signup">
         <div class="container-fluid login-container text-center">
+            {{#if message.length > 0}}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{message}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {{/if}}
             <h2>Crear Cuenta</h2>
             <div class="container-fluid form-container text-start">
                 <form action="/register" method="POST">
