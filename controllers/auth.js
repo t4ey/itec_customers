@@ -76,20 +76,20 @@ exports.login = async (req, res) => {
                 console.log(result);
                 const id = result[0].id;
                 const jwt_secret = "secretPassword";
-                const jwt_expire_in = "30d";
+                const jwt_expire_in = 3 * 24 * 60 * 60;
                 const jwt_cookie_expires = 30;
+
+                // create JWT token
 
                 const token = jwt.sign({ id: id }, jwt_secret, {
                     expiresIn: jwt_expire_in,
                 });
 
                 const cookieOptions = {
-                    expires: new Date (
-                        Date.now() + jwt_cookie_expires * 24 * 60 * 60 * 1000,
-                    ),
-                    httponly: true,
+                    maxAge: jwt_expire_in * 1000,
+                    httpOnly: true,
                 }
-
+                
                 res.cookie('jwt', token, cookieOptions);
 
                 return res.redirect("/");
