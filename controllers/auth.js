@@ -50,3 +50,32 @@ exports.register = async (req, res) => {
 
     // res.send("ok");
 }
+
+
+exports.login = async (req, res) => {
+    console.log(req.body);
+
+    try{
+        const {email, password} = req.body;
+
+        if(!email || !password) {
+            return res.status(400).render('./session/login.hbs', {
+                message: "Nesecita un correo electronico y una contraseña para iniciar sesión",
+                alertType: "alert-warning"
+            })
+        }
+
+        await db.query('SELECTOR * FROM client WHERE email = ?', [email], async (error, result) => {
+            if(!result || !(await bcrypt.compare(password, result.password))){
+                console.log(result);
+                return res.status(400).render('./session/login', {
+                    message: "El usuario o la contraseña es incorrecto",
+                    alertType: "alert-danger"
+                });
+            } else return res.send("login success");
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
+}
