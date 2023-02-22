@@ -4,6 +4,10 @@ const port = 3000;
 
 const path = require('path');
 
+// session COOKIES 
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 //MySQL connection
 const mysql = require("mysql");
 
