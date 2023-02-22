@@ -65,14 +65,17 @@ exports.login = async (req, res) => {
             })
         }
 
-        await db.query('SELECTOR * FROM client WHERE email = ?', [email], async (error, result) => {
-            if(!result || !(await bcrypt.compare(password, result.password))){
+        await db.query('SELECT * FROM client WHERE email = ?', [email], async (error, result) => {
+            if(!result || !(await bcrypt.compare(password, result[0].password))){
                 console.log(result);
                 return res.status(400).render('./session/login', {
                     message: "El usuario o la contraseña es incorrecto",
                     alertType: "alert-danger"
                 });
-            } else return res.send("login success");
+            } else {
+                console.log(result);
+                return res.send("login success");
+            }
         });
 
     } catch (error) {
