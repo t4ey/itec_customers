@@ -38,24 +38,18 @@ const checkUser = async (req, res, next) => {
             } else {
                 console.log(decodedToken);
                 userId = decodedToken.id;
-                console.log(userId);
+                // console.log(userId);
 
-                let user = await db.query("SELECT * FROM client WHERE id = ?", [userId], (error, result) => {
-                    if (error) {
-                        console.log(error.message);
-                    }
-                    else return result;
-                });
-                console.log(user);
-                res.locals.user = user;
+                let user = await db.query("SELECT * FROM client WHERE id = ?", [userId]);
+                res.locals.user = user[0];
+                console.log(res.locals.user.email);
 
                 next();
             }
         });
     } else {
         res.locals.user = null;
-        await console.log(db.query("SELECT * FROM client WHERE id = 3"));
-
+        // console.log(await db.query("SELECT * FROM client WHERE id = 4"));
         next();
         // res.redirect('/login');
     }

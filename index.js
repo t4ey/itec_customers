@@ -10,16 +10,16 @@ app.use(cookieParser());
 
 // database start connection
 
-const {db} = require('./database/database.js');
+// const {db} = require('./database/database.js');
 const { checkUser } = require('./middleware/customers_middleware.js');
 
-db.connect(
-    (error) => {
-        if(error)
-            console.log(error);
-        else console.log("MySQL conection success.....");
-    }
-)
+// db.connect(
+//     (error) => {
+//         if(error)
+//             console.log(error);
+//         else console.log("MySQL conection success.....");
+//     }
+// )
 
 // HBS home page with handle bars
 
