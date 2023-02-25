@@ -3,6 +3,9 @@ const authController = require('../controllers/auth.js');
 
 const router = express.Router();
 
+// authentication jwt
+const { requireAuth } = require('../middleware/customers_middleware.js')
+
 // GET ROUTES
 
 router.get('/', (req, res) => {
@@ -15,6 +18,13 @@ router.get('/login', (req, res) => {
 
 router.get('/register', (req, res) => {
     res.render('./session/register.hbs')
+});
+
+
+///marketplace section
+
+router.get('/marketplace', requireAuth, (req, res) => {
+    res.render('./marketplace/market.hbs')
 });
 
 // POST ROUTES
