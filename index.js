@@ -8,15 +8,9 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
-//MySQL connection
-const mysql = require("mysql");
+// database start connection
 
-const db = mysql.createConnection({
-    host: '192.168.76.200',
-    user: 'itec',
-    password: 'alva234',
-    database: 'e_store_ova'
-});
+const {db} = require('./database/database.js')
 
 db.connect(
     (error) => {

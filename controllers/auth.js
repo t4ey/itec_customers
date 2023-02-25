@@ -5,12 +5,7 @@ const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-const db = mysql.createConnection({
-    host: '192.168.76.200',
-    user: 'itec',
-    password: 'alva234',
-    database: 'e_store_ova'
-});
+const { db } = require('../database/database.js')
 
 exports.register = async (req, res) => {
 
@@ -66,7 +61,14 @@ exports.login = async (req, res) => {
         }
 
         await db.query('SELECT * FROM client WHERE email = ?', [email], async (error, result) => {
-            if(!result || !(await bcrypt.compare(password, result[0].password))){
+            console.log("test : " + result.length);
+            if (!(result.length > 0)){
+                console.log(result);
+                return res.status(400).render('./session/login', {
+                    message: "El usuario o la contraseña es incorrecto",
+                    alertType: "alert-danger"
+                });
+            } else if (!(await bcrypt.compare(password, result[0].password))) {
                 console.log(result);
                 return res.status(400).render('./session/login', {
                     message: "El usuario o la contraseña es incorrecto",
@@ -77,7 +79,6 @@ exports.login = async (req, res) => {
                 const id = result[0].id;
                 const jwt_secret = "secretPassword";
                 const jwt_expire_in = 3 * 24 * 60 * 60;
-                const jwt_cookie_expires = 30;
 
                 // create JWT token
 
