@@ -31,7 +31,7 @@ exports.register = async (req, res) => {
         // console.log(typeof(hashedPassword));
         // console.log(hashedPassword.length);
         
-        await db.query('INSERT INTO client SET ?', { first_name: name, last_name: lastName, email: email, password: hashedPassword}, (error, result) => {
+        db.query('INSERT INTO client SET ?', { first_name: name, last_name: lastName, email: email, password: hashedPassword}, (error, result) => {
             if(error)
                 console.log(error);
             else

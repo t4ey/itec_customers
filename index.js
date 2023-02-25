@@ -10,7 +10,8 @@ app.use(cookieParser());
 
 // database start connection
 
-const {db} = require('./database/database.js')
+const {db} = require('./database/database.js');
+const { checkUser } = require('./middleware/customers_middleware.js');
 
 db.connect(
     (error) => {
@@ -33,6 +34,10 @@ app.use(express.json()),
 app.set('view engine', 'hbs');
 
 // ROUTES USED
+
+// check all the get requests
+
+app.get('*', checkUser);
 
 app.use('/', require('./routes/pages.js'));
 

@@ -24,23 +24,41 @@ const  requireAuth = (req, res, next) => {
     }
 }
 
-const checkUser = (req, res, next) => {
+const checkUser = async (req, res, next) => {
+
+    const token = req.cookies.jwt;
 
     // check if json web token exist
     if (token) {
-        jwt.verify(token, jwt_secret, (error, decodedToken) => {
+        jwt.verify(token, jwt_secret, async (error, decodedToken) => {
             if (error) {
                 console.log(error.message);
+                res.locals.user = null;
                 // res.redirect('/login');                
             } else {
                 console.log(decodedToken);
-                // let user = db.query
+                userId = decodedToken.id;
+                console.log(userId);
+
+                let user = await db.query("SELECT * FROM client WHERE id = ?", [userId], (error, result) => {
+                    if (error) {
+                        console.log(error.message);
+                    }
+                    else return result;
+                });
+                console.log(user);
+                res.locals.user = user;
+
                 next();
             }
         });
     } else {
-        res.redirect('/login');
+        res.locals.user = null;
+        await console.log(db.query("SELECT * FROM client WHERE id = 3"));
+
+        next();
+        // res.redirect('/login');
     }
 };
 
-module.exports = {requireAuth};
+module.exports = {requireAuth, checkUser};
