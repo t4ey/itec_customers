@@ -101,3 +101,9 @@ exports.login = async (req, res) => {
         console.log(error);
     }
 }
+
+exports.logout = (req, res) => {
+    res.cookie('jwt', '', {maxAge: 1});
+
+    return res.redirect("/");
+}

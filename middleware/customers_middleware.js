@@ -55,4 +55,24 @@ const checkUser = async (req, res, next) => {
     }
 };
 
-module.exports = {requireAuth, checkUser};
+const alreadyLogged = async (req, res, next) => {
+
+    const token = req.cookies.jwt;
+
+    // check if json web token exist
+    if (token) {
+        jwt.verify(token, jwt_secret, async (error, decodedToken) => {
+            if (error) {
+                console.log(error.message);
+                // res.redirect('/login');                
+            } else {
+                res.redirect('back'); 
+            }
+        });
+    } else {
+        next();
+        // res.redirect('/login');
+    }
+};
+
+module.exports = { requireAuth, checkUser, alreadyLogged };

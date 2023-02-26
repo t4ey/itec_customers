@@ -41,10 +41,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../index.html">Home</a>
+                            <a class="nav-link" aria-current="page" href="/">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="market.html">Popular</a>
+                            <a class="nav-link active" href="#">Tienda</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="contact.html">Contacto</a>
@@ -55,18 +55,26 @@
                     </ul>
                     <a href="#Catalog">
                         <div class="dropdown-center">
-                            <a type="button" class="btn btn-outline-light catalog-btn ms-0 ms-lg-2 dropdown-toggle"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="ps-2"> Mi Cuenta</span>
-                            </a>
-                            <ul class="dropdown-menu text-small shadow">
-                                <li><a class="dropdown-item" href="cart_sopping.html">Carrito</a></li>
-                                <li><a class="dropdown-item" href="account_customers.html">Perfil</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
-                            </ul>
+                            {{#if loggedIn}}
+                                <div class="dropdown-center">
+                                    <a type="button" class="btn btn-outline-light catalog-btn ms-0 ms-lg-2 dropdown-toggle" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <span class="ps-2"> {{user.first_name}}</span>
+                                    </a>
+                                    <ul id="dropdownEnter" class="dropdown-menu text-small shadow">
+                                        <li><a class="dropdown-item" href="subs/cart_sopping.html">Carrito</a></li>
+                                        <li><a class="dropdown-item" href="subs/account_customers.html">Perfil</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" href="/logout">Cerrar Sesion</a></li>
+                                    </ul>
+                                </div>
+                            {{else}}
+                                <a type="button" class="btn btn-outline-light catalog-btn ms-0 ms-lg-2" href="/login">
+                                    <span class="ps-2 d-block"> Iniciar Sesion {{user.email}}</span>
+                                </a>
+                            {{/if}}
                         </div>
                     </a>
                 </div>
