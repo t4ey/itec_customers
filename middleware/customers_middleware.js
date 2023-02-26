@@ -42,7 +42,7 @@ const checkUser = async (req, res, next) => {
 
                 let user = await db.query("SELECT * FROM client WHERE id = ?", [userId]);
                 res.locals.user = user[0];
-                console.log(res.locals.user.email);
+                // console.log(res.locals.user.email);
 
                 next();
             }

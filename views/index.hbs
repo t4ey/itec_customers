@@ -55,9 +55,26 @@
                             </ul>
                             
                             <div class="ms-0 ms-lg-5">
+                                {{#if loggedIn}}
+                                    <div class="dropdown ms-0 ms-lg-5">
+                                        <a type="button" class="btn btn-outline-light catalog-btn ms-0 ms-lg-2 dropdown-toggle" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            <span class="ps-2"> {{user.first_name}}</span>
+                                        </a>
+                                        <ul id="dropdownEnter" class="dropdown-menu text-small shadow">
+                                            <li><a class="dropdown-item" href="subs/cart_sopping.html">Carrito</a></li>
+                                            <li><a class="dropdown-item" href="subs/account_customers.html">Perfil</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+                                        </ul>
+                                    </div>
+                                {{else}}
                                 <a type="button" class="btn btn-outline-light catalog-btn ms-0 ms-lg-2" href="/login">
                                         <span class="ps-2 d-block"> Iniciar Sesion</span>
                                 </a>
+                                {{/if}}
                             </div>
                         </div>
                     </div>

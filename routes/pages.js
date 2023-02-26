@@ -4,12 +4,19 @@ const authController = require('../controllers/auth.js');
 const router = express.Router();
 
 // authentication jwt
-const { requireAuth } = require('../middleware/customers_middleware.js')
+const { requireAuth, checkUser } = require('../middleware/customers_middleware.js')
 
 // GET ROUTES
 
 router.get('/', (req, res) => {
-    res.render('index.hbs')
+    if(res.locals.user){
+        loggedIn = true;
+    }else loggedIn = false;
+    // console.log(loggedIn);
+    // loggedin = (res.locals.email)?a:a;
+    res.render('index.hbs', {
+        loggedIn: loggedIn,
+    });
 });
 
 router.get('/login', (req, res) => {
