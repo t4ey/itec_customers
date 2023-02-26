@@ -9,13 +9,9 @@ const { requireAuth, checkUser, alreadyLogged } = require('../middleware/custome
 // GET ROUTES
 
 router.get('/', (req, res) => {
-    if(res.locals.user){
-        loggedIn = true;
-    }else loggedIn = false;
+
     // console.log(loggedIn);
-    res.render('index.hbs', {
-        loggedIn: loggedIn,
-    });
+    res.render('index.hbs');
 });
 
 router.get('/login', alreadyLogged, (req, res) => {
@@ -29,13 +25,8 @@ router.get('/register', alreadyLogged, (req, res) => {
 ///marketplace section
 
 router.get('/marketplace', requireAuth, (req, res) => {
-    if (res.locals.user) {
-        loggedIn = true;
-    } else loggedIn = false;
 
-    res.render('./marketplace/market.hbs', {
-        loggedIn: loggedIn,
-    });
+    res.render('./marketplace/market.hbs',);
 });
 
 
