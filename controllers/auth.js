@@ -5,7 +5,9 @@ const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-const { db } = require('../database/database.js')
+const { db } = require('../database/database.js');
+const { checkUser } = require("../middleware/customers_middleware.js");
+const { application } = require("express");
 
 exports.register = async (req, res) => {
 
@@ -100,6 +102,85 @@ exports.login = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+}
+
+exports.profile = async (req, res) => {
+    
+    console.log(req.body);
+
+    const { name, lastName, email, password, newPassword, repNewPassword } = req.body;
+
+    if (!email || !name || !lastName) {
+        return res.status(400).render('./session/profile.hbs', {
+            message: "No puede dejar espacios vacios",
+            alertType: "alert-warning"
+        })
+    }
+
+    if (newPassword || repNewPassword || password) {
+        if(!newPassword || !repNewPassword){
+            return res.status(400).render('./session/profile.hbs', {
+                message: "No puede dejar espacios vacios",
+                alertType: "alert-warning"
+            })
+        }
+        else if (!(newPassword == repNewPassword)){
+            return res.status(400).render('./session/profile.hbs', {
+                message: "Las contraseñas no coinciden",
+                alertType: "alert-warning"
+            })
+        }
+    } 
+    
+    await db.query("SELECT email FROM client WHERE email = ?", [email], async (error, result) => {
+        if (error)
+            console.log(error);
+
+        if (password){
+
+            if (!(await bcrypt.compare(password, result[0].password))) {
+                console.log(result);
+                return res.status(400).render('./session/profile', {
+                    message: "La contraseña no es valida",
+                    alertType: "alert-danger"
+                });
+            }
+            else {
+
+                let hashedPassword = await bcrypt.hash(password, 8);
+
+                db.query('UPDATE client SET ?', { first_name: name, last_name: lastName, email: email, password: hashedPassword }, (error, result) => {
+                    if (error)
+                        console.log(error);
+                    else
+                        return res.render('./session/profile.hbs', {
+                            message: "Los cambios se aplicaron correctamente exitosamente",
+                            alertType: "alert-success",
+                        });
+        
+                });            
+            }
+        }
+        else {
+            await db.query('UPDATE client SET ?', { first_name: name, last_name: lastName, email: email}, async (error, result) => {
+                if (error) {
+                    console.log(error);
+                }
+                else {
+                    await res.status(200).redirect('/profile');
+                    console.log(__dirname);
+                    return await res.render('../views/session/profile_customers.hbs',  
+                    {
+                        message: "Los cambios se aplicaron correctamente exitosamente",
+                        alertType: "alert-success",
+                    }
+                    );
+                }
+
+            });   
+        }
+
+    });
 }
 
 exports.logout = (req, res) => {

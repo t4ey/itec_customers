@@ -22,6 +22,10 @@ router.get('/register', alreadyLogged, (req, res) => {
     res.render('./session/register.hbs')
 });
 
+router.get('/profile', requireAuth, (req, res) => {
+    res.render('./session/profile_customers.hbs');
+});
+
 ///marketplace section
 
 router.get('/marketplace', requireAuth, (req, res) => {
@@ -30,11 +34,14 @@ router.get('/marketplace', requireAuth, (req, res) => {
 });
 
 
+
 // POST ROUTES
 
 router.post('/register', alreadyLogged, authController.register);
 
 router.post('/login', alreadyLogged, authController.login);
+
+router.post('/profile', checkUser, authController.profile);
 
 router.get('/logout', authController.logout);
 
