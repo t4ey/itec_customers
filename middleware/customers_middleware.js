@@ -15,7 +15,7 @@ const  requireAuth = (req, res, next) => {
                 res.redirect('/login');
                 // res.redirect('/login');                
             } else {
-                console.log(decodedToken);
+                // console.log(decodedToken);
                 next();
             }
         });
@@ -36,7 +36,7 @@ const checkUser = async (req, res, next) => {
                 res.locals.user = null;
                 // res.redirect('/login');                
             } else {
-                console.log(decodedToken);
+                console.log("check user md: ",decodedToken);
                 userId = decodedToken.id;
                 // console.log(userId);
 

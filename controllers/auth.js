@@ -50,7 +50,7 @@ exports.register = async (req, res) => {
 
 
 exports.login = async (req, res) => {
-    console.log(req.body);
+    console.log("login body:" , req.body);
 
     try{
         const {email, password} = req.body;
@@ -63,7 +63,7 @@ exports.login = async (req, res) => {
         }
 
         await db.query('SELECT * FROM client WHERE email = ?', [email], async (error, result) => {
-            console.log("test : " + result.length);
+            console.log("login result : " + result.length);
             if (!(result.length > 0)){
                 console.log(result);
                 return res.status(400).render('./session/login', {
