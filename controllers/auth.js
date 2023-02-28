@@ -111,69 +111,93 @@ exports.profile = async (req, res) => {
     const { name, lastName, email, password, newPassword, repNewPassword } = req.body;
 
     if (!email || !name || !lastName) {
-        return res.status(400).render('./session/profile.hbs', {
+        return res.status(400).render('./session/profile_customers.hbs', {
             message: "No puede dejar espacios vacios",
             alertType: "alert-warning"
         })
     }
 
     if (newPassword || repNewPassword || password) {
-        if(!newPassword || !repNewPassword){
-            return res.status(400).render('./session/profile.hbs', {
+        if(!newPassword || !repNewPassword || !password){
+            return res.status(400).render('./session/profile_customers.hbs', {
                 message: "No puede dejar espacios vacios",
-                alertType: "alert-warning"
+                alertType: "alert-danger"
             })
         }
         else if (!(newPassword == repNewPassword)){
-            return res.status(400).render('./session/profile.hbs', {
+            return res.status(400).render('./session/profile_customers.hbs', {
                 message: "Las contraseñas no coinciden",
-                alertType: "alert-warning"
+                alertType: "alert-danger"
             })
         }
     } 
     
-    await db.query("SELECT email FROM client WHERE email = ?", [email], async (error, result) => {
+    await db.query("SELECT * FROM client WHERE email = ?", [email], async (error, result) => {
+        userId = res.locals.user.id;
+        // console.log("result : ", result);
+
         if (error)
             console.log(error);
 
+        //change password
+        
         if (password){
 
             if (!(await bcrypt.compare(password, result[0].password))) {
                 console.log(result);
-                return res.status(400).render('./session/profile', {
+                return res.status(400).render('/session/profile', {
                     message: "La contraseña no es valida",
                     alertType: "alert-danger"
                 });
             }
             else {
 
-                let hashedPassword = await bcrypt.hash(password, 8);
+                let hashedPassword = await bcrypt.hash(newPassword, 8);
+                console.log(hashedPassword);
 
-                db.query('UPDATE client SET ?', { first_name: name, last_name: lastName, email: email, password: hashedPassword }, (error, result) => {
+                db.query('UPDATE client SET ? WHERE id = ' + userId, { password: hashedPassword }, (error, result) => {
                     if (error)
                         console.log(error);
-                    else
-                        return res.render('./session/profile.hbs', {
+                    else {
+
+                        user = {
+                            email: email,
+                            first_name: name,
+                            last_name: lastName,
+                        }
+                        
+                        res.render('./session/profile_customers.hbs',
+                        {
+                            user: user,
                             message: "Los cambios se aplicaron correctamente exitosamente",
                             alertType: "alert-success",
-                        });
+                        }
+                        );
+                    }
         
                 });            
             }
         }
+        //change data only
+
         else {
-            await db.query('UPDATE client SET ?', { first_name: name, last_name: lastName, email: email}, async (error, result) => {
+            await db.query('UPDATE client SET ? WHERE  id = ' + userId, { first_name: name, last_name: lastName, email: email}, async (error, result) => {
                 if (error) {
                     console.log(error);
                 }
                 else {
-                    await res.status(200).redirect('/profile');
-                    console.log(__dirname);
-                    return await res.render('../views/session/profile_customers.hbs',  
-                    {
-                        message: "Los cambios se aplicaron correctamente exitosamente",
-                        alertType: "alert-success",
+                    user = {
+                        email: email,
+                        first_name: name,
+                        last_name: lastName,
                     }
+                    
+                    res.render('./session/profile_customers.hbs',  
+                        {
+                            user: user,
+                            message: "Los cambios se aplicaron correctamente exitosamente",
+                            alertType: "alert-success",
+                        }
                     );
                 }
 
