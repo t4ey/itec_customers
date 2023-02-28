@@ -155,16 +155,13 @@ exports.profile = async (req, res) => {
                 let hashedPassword = await bcrypt.hash(newPassword, 8);
                 console.log(hashedPassword);
 
-                db.query('UPDATE client SET ? WHERE id = ' + userId, { password: hashedPassword }, (error, result) => {
+                await db.query('UPDATE client SET ? WHERE id = ' + userId, { password: hashedPassword }, async (error, result) => {
                     if (error)
                         console.log(error);
                     else {
 
-                        user = {
-                            email: email,
-                            first_name: name,
-                            last_name: lastName,
-                        }
+                        getUpdatedUser = await db.query('SELECT * FROM client WHERE id = ?', [userId]);
+                        user = getUpdatedUser[0];
                         
                         res.render('./session/profile_customers.hbs',
                         {
@@ -186,12 +183,9 @@ exports.profile = async (req, res) => {
                     console.log(error);
                 }
                 else {
-                    user = {
-                        email: email,
-                        first_name: name,
-                        last_name: lastName,
-                    }
-                    
+                    getUpdatedUser = await db.query('SELECT * FROM client WHERE id = ?', [userId]);
+                    user = getUpdatedUser[0];
+                    // console.log("result", user)
                     res.render('./session/profile_customers.hbs',  
                         {
                             user: user,
