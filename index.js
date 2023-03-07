@@ -37,9 +37,12 @@ app.set('view engine', 'hbs');
 
 // check all the get requests
 
+// app.get('^((?!admin).)*$', checkUser);
 app.get('*', checkUser);
 
 app.use('/', require('./routes/pages.js'));
+
+app.use('/admin', require('./routes/admin_pages.js'));
 
 app.listen(port, () => {
     console.log("server started at port: "  + port);

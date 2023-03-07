@@ -27,7 +27,11 @@ const  requireAuth = (req, res, next) => {
 const checkUser = async (req, res, next) => {
 
     const token = req.cookies.jwt;
-
+    // check if checkuser is checking an admin page 
+    if(req.originalUrl.toLowerCase().includes("admin")){
+        // console.log("admin redirect");
+        return next();
+    }
     // check if json web token exist
     if (token) {
         jwt.verify(token, jwt_secret, async (error, decodedToken) => {
@@ -49,6 +53,7 @@ const checkUser = async (req, res, next) => {
         });
     } else {
         res.locals.user = null;
+        console.log("user checked");
         // console.log(await db.query("SELECT * FROM client WHERE id = 4"));
         next();
         // res.redirect('/login');
