@@ -91,3 +91,43 @@ body {
     border-color: transparent;
     box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
+
+/* CONTENT */
+
+/* cards */
+
+.card-n-orders {
+    background-color: #e1ffdb;
+}
+
+.card-n-orders-title {
+    color: #53d535;
+}
+
+.card-n-orders-sub {
+    color: #8ce07c;
+}
+
+.card-orders {
+    background-color: #fef3d7;
+}
+
+.card-orders-title {
+    color: #d6883d;
+}
+
+.card-orders-sub {
+    color: #dcb47c;
+}
+
+.card-out-stock {
+    background-color: #fedfda;
+}
+
+.card-out-stock-title {
+    color: #d04440;
+}
+
+.card-out-stock-sub {
+    color: #dc8484;
+}

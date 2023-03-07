@@ -4,8 +4,11 @@ const authController = require('../controllers/auth.js');
 const router = express.Router();
 
 router.get('/login', (req, res) => {
-    res.send("hi admin");
-    // res.render('./admin/session/login.hbs');
+    res.render('./admin/session/a_login');
+});
+
+router.get('/home', (req, res) => {
+    res.render('./admin/a_home');
 });
 
 module.exports = router;
