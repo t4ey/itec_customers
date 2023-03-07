@@ -1,0 +1,265 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+}
+
+h1,
+h2 {
+    font-size: 3.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
+
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+p {
+    color: white;
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+.dark-text {
+    color: black;
+    font-weight: 300;
+}
+
+/* heading section */
+
+.nav-item {
+    padding-right: 5%;
+}
+
+.nav-link {
+    font-size: 1.25rem;
+    font-weight: 300;
+}
+
+.catalog-btn {
+    border-color: white;
+    border-radius: 2rem;
+    color: white;
+    margin-left: 5%;
+}
+
+.container-heading {
+    text-align: start;
+    padding: 3% 15% 7%;
+    background-color: #1363DF;
+    color: white;
+}
+
+.container-heading h1 {
+    margin-top: 5%;
+    margin-bottom: 30px;
+    text-align: start;
+    font-size: 3.5rem;
+}
+
+.img-heading-container {
+    text-align: center;
+}
+
+.heading-img {
+    width: 35%;
+    position:absolute;
+    right: 14%;
+    top: 12%;
+}
+
+.heading-content {
+    padding-top: 5%;
+}
+
+.wave1 {
+    position: absolute;
+    transform: translate(-50%, -3em);
+}
+
+/* items section */
+
+.container-items {
+    padding: 8% 15% 10%;
+    background-color: white;
+}
+
+.img-feature {
+    height: 10rem;
+    width: 10rem;
+    border: solid 3px #1363DF;
+    border-radius: 30%;
+}
+
+/* cards section */
+
+.cards-container {
+    background-color: #DFF6FF;
+    /* background-color: #47B5FF; */
+    padding: 7% 15% 7%; 
+}
+
+.card {
+    margin: auto;
+    width: 90%;
+}
+
+.card-title {
+    font-weight: 500;
+}
+
+.card-img-top {
+    height: 11rem;
+}
+
+/* catalog section */
+
+.catalog-container {
+    padding: 7% 15% 7%;
+}
+
+.img-catalog {
+    width: 60%;
+}
+
+/* footer section */
+
+footer {
+    background-color: gray;
+}
+
+.footer-container {
+    padding: 7% 15% 7%;
+    background-color: #06283D;
+}
+
+.footer-title {
+    font-size: 2rem;
+    color: white;
+}
+
+.footer-list {
+    list-style-type: none;
+}
+
+.footer-options {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.5rem;
+}
+
+
+.footer-options:hover {
+    color: white;
+    font-size: 1.5rem;
+}
+
+footer i {
+    font-size: 3rem;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+
+}
+
+footer i:hover {
+    color:white;
+}
+
+.copyright {
+    color: rgba(203, 203, 203, 0.7);
+    font-size: 1.2rem;
+}
+
+/***************** MEDIA QUERIES ********************/
+
+/* Extra large and avobe */
+
+@media (min-width: 1400px) {
+    .heading-img {
+            width: 30%;
+    }
+
+    .container-heading h1 {
+        font-size: 4rem;
+    }
+
+    /* cards section */
+
+    .card {
+        margin: auto;
+        width: 80%;
+    }
+
+    .card-img-top {
+        height: 16rem;
+    }
+}
+
+/* tablet size and below */
+
+@media (max-width: 992px) {
+
+    /* heading section */
+
+    .heading-img {
+        position: static;
+        width: 100%;
+    }
+
+    .container-heading {
+        text-align: center;
+    }
+
+    .container-heading h1 {
+        margin-top: 5%;
+        margin-bottom: 5%;
+        text-align: center;
+        font-size: 2.5rem;
+    }
+
+    .container-heading {
+        padding: 5% 15% 20%;
+        background-color: #1363DF;
+        color: white;
+    }
+
+    /* navbar - dropdown */
+    
+    #dropdownEnter {
+        left: calc(--variable-width);
+    }
+
+    /* Features section */
+    
+    .container-items {
+        padding: 15% 15% 20%;
+    }
+
+    .features-heading {
+        font-size: 2rem;
+    }
+
+    /* cards section */
+
+    .cards-heading {
+        font-size: 2rem;
+    }
+
+    .card {
+        width: 16rem;
+    }
+
+    /* catalog section */
+    .catalog-container {
+        text-align: center;
+        padding: 15% 15% 20%;
+    }
+
+    .catalog-heading {
+        font-size: 2rem;
+    }
+}

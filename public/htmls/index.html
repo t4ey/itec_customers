@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tienda Electrónica OVA</title>
+
+        <!-- boostrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <!-- fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;900&family=Ubuntu:wght@300;400;700&display=swap"
+            rel="stylesheet">
+        <!-- font awesome icons -->
+        <script src="https://kit.fontawesome.com/8faedc4425.js" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+
+    <body>
+
+        <section id="title">
+            <div class="container-fluid container-heading">
+                
+                <!-- navbar -->
+                <nav class="navbar navbar-expand-lg navbar-dark mb-3">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#title">OVA Tienda Virtual</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse text-start" id="navbarSupportedContent">
+                             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 pe-0 pe-lg-3">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#title">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#Features">Popular</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#cards">Contacto</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="../index.html#Catalog">Catálogo</a>
+                                </li>
+                                <li>
+                                    
+                                </li>
+                            </ul>
+                            
+                            <div class="dropdown ms-0 ms-lg-5">
+                                <a type="button" class="btn btn-outline-light catalog-btn ms-0 ms-lg-2 dropdown-toggle" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <span class="ps-2"> Mi Cuenta</span>
+                                </a>
+                                <ul id="dropdownEnter" class="dropdown-menu text-small shadow">
+                                    <li><a class="dropdown-item" href="subs/cart_sopping.html">Carrito</a></li>
+                                    <li><a class="dropdown-item" href="subs/account_customers.html">Perfil</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- title content -->
+                <div class="container heading-content">
+                    <div class="row">
+                        <div class="col col-12 col-lg-6">
+                            <h1>La Mejor Tienda de productos de electrónica</h1>
+                            <!-- <p>los mejores productos en electronica a precios buenos para tus proyectos profesionales Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
+                            </p> -->
+                            <!-- <button type="button" class="dwl-button btn btn-outline-light btn-lg"><i class="fa-solid fa-store"></i> Download</button> -->
+                        </div>
+                        <div class="col col-12 col-lg-6 img-heading-container">
+                            <img src="images/heading1.png" class="heading-img" alt="heading image">
+                        </div>
+                    </div>
+                    <a href="subs/market.html" type="button" class="dwl-button btn btn-light btn-lg mt-5 mt-lg-5"><i class="fa-solid fa-store"></i> Tienda</a>
+                </div>
+            </div>
+            
+            <!-- wave -->
+            <!-- <svg class="wave1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#1363DF" fill-opacity="1"
+                    d="M0,96L60,117.3C120,139,240,181,360,192C480,203,600,181,720,197.3C840,213,960,267,1080,250.7C1200,235,1320,149,1380,106.7L1440,64L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z">
+                </path> -->
+            </svg>
+        </section>
+
+        <section id="Features">
+            <div class="container-fluid container-items">
+                <h2 class="mb-0 mb-lg-5 features-heading    ">Productos Más Vendidos</h2>
+                <div class="row pt-0 pt-lg-5">
+                    <div class="col col-12 col-lg-4">
+                        <a href="/subs/market.html"><img src="images/arduino.jpg" class="img-feature mb-3 mb-lg-4 mt-lg-0 mt-5" alt="Feature1"></a>
+                        <h3>Arduino</h3>
+                    </div>
+                    <div class="col col-12 col-lg-4">
+                        <a href="/subs/market.html"><img src="images/impresora.jpg" class="img-feature mb-3 mb-lg-4 mt-lg-0 mt-5" alt="Feature2"></a>
+                        <h3>Impresoras 3D</h3>
+                    </div>
+                    <div class="col col-12 col-lg-4">
+                        <a href="/subs/market.html"><img src="images/raspberry.jpg" class="img-feature mb-3 mb-lg-4 mt-lg-0 mt-5" alt="Feature3"></a>
+                        <h3>Raspberry Pi</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cards">
+            <div class="container-fluid cards-container">
+                <h2 class="mb-5 cards-heading">Acerca de nosotros</h2>
+                <div class="row">
+                    <div class="col col-12 col-lg-4 mb-5">
+                        <div class="card text-start">
+                            <img src="images/location.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Nuestra Ubicación</h5>
+                                <p class="card-text dark-text">Nos encontramos en la Calle ...</p>
+                                <a href="subs/location.html" class="btn btn-primary"><i class="fa-solid fa-map-location-dot"></i> Ubicación</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-12 col-lg-4 mb-5">
+                        <div class="card text-start ">
+                            <img src="images/arduino.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Contacto</h5>
+                                <p class="card-text dark-text">Envianos un mensaje ...</p>
+                                <a href="subs/contact.html" class="btn btn-primary"><i class="fa-regular fa-paper-plane"></i> Contactar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-12 col-lg-4 mb-5">
+                        <div class="card text-start">
+                            <img src="images/arduino.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Ubicación</h5>
+                                <p class="card-text dark-text">Nos encontramos en la Calle ...</p>
+                                <a href="#" class="btn btn-primary"><i class="fa-solid fa-map-location-dot"></i> Maps</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="Catalog">
+            <div class="container-fluid catalog-container">
+                <div class="container-fluid text-center text-lg-start">
+                    <div class="row">
+                        <div class="col col-12 col-lg-6">
+                            <h1 class="catalog-heading">Nuestro Calogo de Productos</h1>
+                            <p class="dark-text">contamos con una gran variedad de productos, por esto le presentamos nuestro catalogo a su dispocicion</p>
+                        </div>
+                        <div class="col col-12 col-lg-6 text-center">
+                            <img src="images/catalogue.png" alt="Catalog image" class="img-catalog mt-4 mt-lg-0">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-dark btn-lg mt-5"><i class="fa-sharp fa-solid fa-download"></i> Descargar Catálogo<o/button>
+
+            </div>
+        </section>
+        
+        <footer>
+            <div class="container-fluid footer-container">
+                <div class="container text-start">
+                    <div class="row">
+                        <div class="col col-12 col-lg-4">
+                            <ul class="footer-list">
+                                <li>
+                                    <h3 class="footer-title">Contenido</h3>
+                                </li>
+                                <li>
+                                    <p class="footer-options">Portada</p>
+                                </li>
+                                <li>
+                                    <p class="footer-options">Productos mas vendidos</p>
+                                </li>
+                                <li>
+                                    <p class="footer-options">Blog</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col col-12 col-lg-4">
+                            <ul class="footer-list">
+                                <li>
+                                    <h3 class="footer-title">Informacion</h3>
+                                </li>
+                                <li>
+                                    <p class="footer-options">Ubicacion</p>
+                                </li>
+                                <li>
+                                    <p class="footer-options">Negocio</p>
+                                </li>
+                                <li>
+                                    <p class="footer-options">Contacto</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col col-12 col-lg-4">
+                            <ul class="footer-list">
+                                <li>
+                                    <h3 class="footer-title">Redes Sociales</h3>
+                                </li>
+                                <li>
+                                    <a href=""><i class="fa-brands fa-square-twitter"></i></a>
+                                    <a href=""><i class="fa-brands fa-square-facebook"></i></a>
+                                    <a href=""><i class="fa-brands fa-square-whatsapp"></i></a>
+                                    <a href=""></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <h4 class="copyright">Copyright © 2022 Tienda Electrónica YU S.R.L. Todos los derechos reservados.</h4>
+            </div>
+        </footer>
+
+        <!-- bootstrap js cdn -->
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    </body>
+</html>

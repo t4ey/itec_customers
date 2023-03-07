@@ -1,0 +1,132 @@
+body {
+    background-color: #DFF6FF;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+
+/* heading section */
+
+.navbar-container {
+    background-color: #1363DF;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.catalog-btn {
+    border-color: white;
+    border-radius: 2rem;
+    color: white;
+    margin-left: 5%;
+}
+
+.container-heading {
+    padding: 0;
+    padding: 3% 15% 3%;
+}
+
+
+/* categories section */
+
+.categories-container {
+    padding: 1% 15% 3%;
+}
+
+/* cards */
+
+.card-title {
+    color: black;
+}
+
+.card-text {
+    font-weight: 500;
+    color: red;
+}
+
+.card-img-top {
+    height: 100%;
+}
+
+.card-miniature {
+    height: 8rem;
+    /* width: 8rem; */
+}
+
+/* footer section */
+
+footer {
+    background-color: gray;
+}
+
+.footer-container {
+    padding: 7% 15% 7%;
+    background-color: #06283D;
+}
+
+.footer-title {
+    font-size: 2rem;
+    color: white;
+}
+
+.footer-list {
+    list-style-type: none;
+}
+
+.footer-options {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.5rem;
+}
+
+
+.footer-options:hover {
+    color: white;
+    font-size: 1.5rem;
+}
+
+footer i {
+    font-size: 3rem;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+
+}
+
+footer i:hover {
+    color: white;
+}
+
+.copyright {
+    color: rgba(203, 203, 203, 0.7);
+    font-size: 1.2rem;
+}
+
+
+/***************** MEDIA QUERIES ********************/
+
+/* Extra large and avobe */
+
+@media (min-width: 1400px) {
+
+    /* .card-img-top {
+        height: 15rem;
+    } */
+}
+
+/* tablet size and below */
+
+@media (max-width: 992px) {
+    .search-bar-container {
+        width: 100%;
+        margin: auto;
+    }
+
+    /* categories section */
+
+    .sopping-cart-text {
+        display: none;
+    }
+
+}
