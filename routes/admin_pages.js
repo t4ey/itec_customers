@@ -1,5 +1,5 @@
 const express = require('express');
-const authController = require('../controllers/auth.js');
+const adminAuthController = require('../controllers/admin_auth.js');
 
 const router = express.Router();
 
@@ -24,6 +24,10 @@ router.get('/salesperson', (req, res) => {
 router.get('/add_employee', (req, res) => {
     res.render('./admin/clientsNcustomers/add_employee.hbs');
 });
+
+// POST REQUESTS
+
+router.post('/add_employee', adminAuthController.add_employee);
 
 
 module.exports = router;
