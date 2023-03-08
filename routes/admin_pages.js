@@ -7,8 +7,14 @@ router.get('/login', (req, res) => {
     res.render('./admin/session/a_login');
 });
 
+// SIDE BAR GET REQUESTS
+
 router.get('/home', (req, res) => {
     res.render('./admin/a_home');
+});
+
+router.get('/clients', (req, res) => {
+    res.render('./admin/clientsNcustomers/clients');
 });
 
 router.get('/salesperson', (req, res) => {

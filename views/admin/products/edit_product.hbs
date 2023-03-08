@@ -116,12 +116,13 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
                 <div class="row pt-3 pb-2 mb-3 border-bottom">
                     <div class="col mb-2">
-                        <a class="btn btn-primary" href="/admin/salesperson"><i class="fa-solid fa-chevron-left"></i> Atras</a>
+                        <a class="btn btn-primary" href="/links/add"><i class="fa-solid fa-chevron-left"></i> Atras</a>
                     </div>
                     <div class="col text-center">
-                        <h2>Añadir Vendedor Nuevo</h2>
+                        <h2>Detalles Producto</h2>
                     </div>
                     <div class="col text-end">
+                        <a class="btn btn-danger" href="/links/add"><i class="fa-regular fa-trash-can"></i> Eliminar Producto</a>
                     </div>
                 </div>
                 
@@ -131,67 +132,68 @@
                             <div class="card">
                                 <div class="card-body">
                                     <form action="/links/add" method="POST">
-                                        {{!-- <div class="form-group pb-3"> --}}
+                                        <div class="pb-3">
+                                            <label class="form-label" for="customFile">Cambiar Imagen</label>
+                                            <input type="file" class="form-control" id="image" name="image" />
+                                        </div>
+                                        <div class="form-group pb-3">
                                             <!-- {{!-- <input type="number" name="id" class="form-control" placeholder="ID" autofocus
                                                                                                 readonly> --}} -->
-                                            {{!-- <input type="number" name="id" class="form-control" placeholder="ID" value="{{next_id} }" readonly> --}}
-                                        {{!-- </div> --}}
-                                        <div class="form-group pb-3">
-                                            <label class="" for="">email</label>
-                                            <input type="email" name="email" class="form-control" placeholder="Email" maxlength="30" autofocus>
+                                            <input type="number" name="id" class="form-control" placeholder="ID" value="{{next_id}}" autofocus readonly>
                                         </div>
                                         <div class="form-group pb-3">
-                                            <label class="" for="">Nombre(s)</label>
+                                            <label class="" for="">Nombre</label>
                                             <input type="text" name="name" class="form-control" placeholder="Nombre" maxlength="30">
                                         </div>
-                                        <div class="form-group pb-3">
-                                            <label class="" for="">Apellido(s)</label>
-                                            <input type="text" name="lastName" class="form-control" placeholder="Apellidos" maxlength="30">
+                                        <div class="form-group pb-3 ">
+                                            <label class="" for="">Precio</label>
+                                            <input type="text" name="price" class="form-control" placeholder="Precio" value="1" min="1">
+                                            <!-- {{!-- <textarea name="description" rows="2" class="form-control"
+                                                                                                placeholder="Description"></textarea> --}} -->
                                         </div>
                                         <div class="form-group pb-3">
-                                            <label class="" for="">Número de Contacto</label>
-                                            <input type="tel" name="phone_number" class="form-control" placeholder="Número de celular" maxlength="8">
+                                            <label for="">Stock</label>
+                                            <input type="number" name="stock" class="form-control" placeholder="Stock" value="1" min="1">
                                         </div>
                                         <div class="form-group pb-3">
-                                            <label class="" for="">Dirección</label>
-                                            <input type="text" name="local_address" class="form-control" placeholder="Calle ... N° ###" maxlength="30">
-                                        </div>
-                                        <div class="container">
-                                            <div class="row px-2">
-                                                <div class="col form-check">
-                                                    
-                                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                                    <label class="form-check-label" for="flexRadioDefault1" checked>
-                                                        Vendedor
-                                                    </label>
-                                                </div>
-                                                    <div class="col form-check">
-                                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                                                    <label class="form-check-label" for="flexRadioDefault2">
-                                                        Administrador
-                                                    </label>
+                                            <label class="form-check-label" for="">Categoria</label>
+                                            <div class="accordion" id="accordionExample">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingOne">
+                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                                            data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"> Seleccionar
+                                                            Categorias </button>
+                                                    </h2>
+                                                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                                        data-bs-parent="#accordionExample">
+                                                        <div class="accordion-body p-0">
+                                                            <ul class="list-group p-0 m-0">
+                                                                <li class="list-group-item"><span class="me-auto">
+                                                                        <div class="row">
+                                                                            <div class="col">Electronica</div>
+                                                                            <div class="col text-end"><input class="form-check-input" type="checkbox"
+                                                                                    name="electronica" value="ELC"></div>
+                                                                        </div>
+                                                                </li>
+                                                                <li class="list-group-item"><span class="me-auto">
+                                                                        <div class="row">
+                                                                            <div class="col">Electronica</div>
+                                                                            <div class="col text-end"><input class="form-check-input" type="checkbox"
+                                                                                    name="electronica" value="ELCz"></div>
+                                                                        </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group pb-3">
-                                            <h3>Contraseña</h3>
-                                            <label class="" for="">Nueva Contraseña</label>
-                                            <input type="password" name="password" class="form-control" placeholder="Escriba la nueva Contraseña" maxlength="30">
-                                        </div>
-                                        <div class="form-group pb-3">
-                                            <label class="" for="">Repetir Contraseña</label>
-                                            <input type="password" name="repeat_password" class="form-control" placeholder="Repetir Contraseña"
-                                                maxlength="30">
-                                        </div>
-                                        
                                         <div class="form-group text-center">
                                             <a href="/list_items" class="btn btn-secondary me-3"><span>Cancelar</span></a>
-                                            <button href="/links/delete/{{id}}" type="submit" class="btn btn-success"><span>Guardar</span> <i
+                                            <button href="/links/delete/{{id}}" type="submit" class="btn btn-success"><span>Guardar Cambios </span> <i
                                                     class="fa-regular fa-floppy-disk"></i></button>
                                         </div>
                                     </form>
-
-
                                 </div>
                             </div>
                         </div>
