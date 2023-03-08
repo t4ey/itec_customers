@@ -36,8 +36,8 @@ exports.add_employee = async (req, res) => {
             if (error)
                 console.log(error);
             else
-                return res.render('./admin/session/a_login', {
-                    message: "Has sido registrado exitosamente, por favor, Inicie Sesión",
+                return res.render('./admin/clientsNcustomers/salesperson', {
+                    message: "El usuario ha sido registrado correctamente, puede Iniciar Sesión",
                     alertType: "alert-success",
                 });
 
