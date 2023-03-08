@@ -130,7 +130,7 @@
                         <div class="col-md-4 mx-auto">
                             <div class="card">
                                 <div class="card-body">
-                                    <form action="/links/add" method="POST">
+                                    <form action="/admin/add_employee" method="POST">
                                         {{!-- <div class="form-group pb-3"> --}}
                                             <!-- {{!-- <input type="number" name="id" class="form-control" placeholder="ID" autofocus
                                                                                                 readonly> --}} -->
@@ -150,24 +150,24 @@
                                         </div>
                                         <div class="form-group pb-3">
                                             <label class="" for="">Número de Contacto</label>
-                                            <input type="tel" name="phone_number" class="form-control" placeholder="Número de celular" maxlength="8">
+                                            <input type="tel" name="phoneNumber" class="form-control" placeholder="Número de celular" maxlength="8">
                                         </div>
                                         <div class="form-group pb-3">
                                             <label class="" for="">Dirección</label>
-                                            <input type="text" name="local_address" class="form-control" placeholder="Calle ... N° ###" maxlength="30">
+                                            <input type="text" name="localAddress" class="form-control" placeholder="Calle ... N° ###" maxlength="30">
                                         </div>
                                         <div class="container">
                                             <div class="row px-2">
                                                 <div class="col form-check">
                                                     
-                                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                                    <label class="form-check-label" for="flexRadioDefault1" checked>
+                                                    <input class="form-check-input" type="radio" name="role" id="salesperson" value="salesperson" checked>
+                                                    <label class="form-check-label" for="salesperson">
                                                         Vendedor
                                                     </label>
                                                 </div>
-                                                    <div class="col form-check">
-                                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                                                    <label class="form-check-label" for="flexRadioDefault2">
+                                                <div class="col form-check">
+                                                    <input class="form-check-input" type="radio" name="role" id="admin" value="admin">
+                                                    <label class="form-check-label" for="admin">
                                                         Administrador
                                                     </label>
                                                 </div>
@@ -180,7 +180,7 @@
                                         </div>
                                         <div class="form-group pb-3">
                                             <label class="" for="">Repetir Contraseña</label>
-                                            <input type="password" name="repeat_password" class="form-control" placeholder="Repetir Contraseña"
+                                            <input type="password" name="repPassword" class="form-control" placeholder="Repetir Contraseña"
                                                 maxlength="30">
                                         </div>
                                         
