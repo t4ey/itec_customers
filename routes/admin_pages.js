@@ -11,4 +11,13 @@ router.get('/home', (req, res) => {
     res.render('./admin/a_home');
 });
 
+router.get('/salesperson', (req, res) => {
+    res.render('./admin/clientsNcustomers/salesperson');
+});
+
+router.get('/add_employee', (req, res) => {
+    res.render('./admin/clientsNcustomers/add_employee.hbs');
+});
+
+
 module.exports = router;
