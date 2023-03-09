@@ -128,51 +128,42 @@
             
                 <h2>Lista de Empleados</h2>
                 <div class="table-sm-responsive mt-4">
-                    <table class="table table-hover table-bordered">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Email</th>
-                                <th>Nombre(s) del Cliente</th>
-                                <th>Apellido(s)</th>
-                                <th>N° de Contacto</th>
-                                <th>Dirección</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                            <tr class="">
-                                <td class="order align-middle white-space-nowrap">666</td>
-                                <td class="date align-middle white-space-nowrap text-700 "><a href="#"
-                                        class=h2">brochagorda777@gmail.com</a></td>
-                                <td class="align-middle white-space-nowrap">
-                                    <h6 class="mb-0 text-900">Hugo G.</h6>
-                                </td>
-                                <td class="total align-middle fw-semi-bold text-1000">Guillermo Diaz</td>
-                                <td class="total align-middle fw-semi-bold text-1000">67322030</td>
-                                <td class="total align-middle fw-semi-bold text-1000">Calle de tal conasd dkj 3N° 30</td>
-                            </tr>
-                            <tr class="">
-                                <td class="order align-middle white-space-nowrap">666</td>
-                                <td class="date align-middle white-space-nowrap text-700 "><a href="#" class=h2">brochagorda777@gmail.com</a></td>
-                                <td class="align-middle white-space-nowrap">
-                                    <h6 class="mb-0 text-900">Hugo G.</h6>
-                                </td>
-                                <td class="total align-middle fw-semi-bold text-1000">Guillermo Diaz</td>
-                                <td class="total align-middle fw-semi-bold text-1000">67322030</td>
-                                <td class="total align-middle fw-semi-bold text-1000">Calle de tal conasd dkj 3N° 30</td>
-                            </tr>
-                            <tr class="">
-                                <td class="order align-middle white-space-nowrap">666</td>
-                                <td class="date align-middle white-space-nowrap text-700 "><a href="#" class=h2">brochagorda777@gmail.com</a></td>
-                                <td class="align-middle white-space-nowrap">
-                                    <h6 class="mb-0 text-900">Hugo G.</h6>
-                                </td>
-                                <td class="total align-middle fw-semi-bold text-1000">Guillermo Diaz</td>
-                                <td class="total align-middle fw-semi-bold text-1000">67322030</td>
-                                <td class="total align-middle fw-semi-bold text-1000">Calle de tal conasd dkj 3N° 30</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    {{#if employees}}
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Email</th>
+                                    <th>Nombre(s) del Cliente</th>
+                                    <th>Apellido(s)</th>
+                                    <th>N° de Contacto</th>
+                                    <th>Dirección</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                            {{#each employees}}
+                                <tr class="">
+                                    <td class="order align-middle white-space-nowrap">{{id}}</td>
+                                    <td class="date align-middle white-space-nowrap text-700 "><a href="/edit_employee/{{id}}"
+                                            class="h2">{{email}}</a></td>
+                                    <td class="align-middle white-space-nowrap">
+                                        <h6 class="mb-0 text-900">{{first_name}}</h6>
+                                    </td>
+                                    <td class="total align-middle fw-semi-bold text-1000">{{last_name}}</td>
+                                    <td class="total align-middle fw-semi-bold text-1000">{{phone_number}}</td>
+                                    <td class="total align-middle fw-semi-bold text-1000">{{address}}</td>
+                                </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    {{else}}
+                        <div class="col-md-8 mx-auto text-center pt-5">
+                            <div class="card card-body">
+                                <h2>No hay ningún producto registrado</h2>
+                                <a href="/links/add"><h3>Añadir Un nuevo Producto</h3></a>
+                            </div>
+                        </div>
+                    {{/if}}
                 </div>
             </main>
         </div>

@@ -1,5 +1,6 @@
 const express = require('express');
 const adminAuthController = require('../controllers/admin_auth.js');
+const user_tables = require('../routes/admin_tables/user_tables');
 
 const router = express.Router();
 
@@ -17,9 +18,7 @@ router.get('/clients', (req, res) => {
     res.render('./admin/clientsNcustomers/clients');
 });
 
-router.get('/salesperson', (req, res) => {
-    res.render('./admin/clientsNcustomers/salesperson');
-});
+router.get('/salesperson', user_tables.admins);
 
 router.get('/add_employee', (req, res) => {
     res.render('./admin/clientsNcustomers/add_employee.hbs');
