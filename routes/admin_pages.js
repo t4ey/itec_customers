@@ -35,9 +35,11 @@ router.get('/edit_employee/:id', async (req, res) => {
     });
 });
 
+
 // POST REQUESTS
 
 router.post('/add_employee', adminAuthController.add_employee);
 
+router.get('/delete_employee/:id', adminAuthController.delete_employee);
 
 module.exports = router;

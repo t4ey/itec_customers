@@ -1,5 +1,9 @@
 const mysql = require("mysql");
 
+const express = require('express');
+const user_tables = require('../routes/admin_tables/user_tables');
+const router = express.Router();
+
 // idk
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -141,4 +145,12 @@ exports.edit_employee = async (req, res) => {
         }
 
     });
+}
+
+exports.delete_employee = async (req, res) => {
+    const { id } = req.params;
+
+    let employee = await db.query('DELETE FROM administradores WHERE id = ?', [id]);
+
+    res.redirect('/admin/salesperson');
 }

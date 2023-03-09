@@ -18,7 +18,7 @@ exports.admins = async (req, res) => {
         employees = result;
         if (result) {
             // console.log(result);
-            res.render('./admin/clientsNcustomers/salesperson', {
+            return res.render('./admin/clientsNcustomers/salesperson', {
                 employees: employees
             });
         }
