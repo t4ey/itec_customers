@@ -39,11 +39,11 @@ exports.add_employee = async (req, res) => {
         db.query('INSERT INTO administradores SET ?', { first_name: name, last_name: lastName, email: email, phone_number: phoneNumber, address: localAddress, is_admin: isAdmin, password: hashedPassword }, (error, result) => {
             if (error)
                 console.log(error);
-            else
-                return res.render('./admin/clientsNcustomers/salesperson', {
-                    message: "El usuario ha sido registrado correctamente, puede Iniciar Sesión",
-                    alertType: "alert-success",
-                });
+            else{
+                req.flash('message', "El usuario ha sido registrado correctamente, puede Iniciar Sesión.");
+                req.flash('alertType', "alert-success");
+                return res.redirect('/admin/salesperson');
+            }
 
         });
     });
