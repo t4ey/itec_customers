@@ -1,15 +1,11 @@
-const mysql = require("mysql");
-
-// idk
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-
 const { db } = require('../../database/database.js');
 
 exports.admins = async (req, res) => {
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+    // const {alertType} = req.flash('alertType');
 
-    const { name, lastName, phoneNumber, email, localAddress, role, password, repPassword } = req.body;
-    let isAdmin = (role == "admin") ? true : false;
+    // console.log(message);
 
     await db.query("SELECT * FROM administradores", async (error, result) => {
         if (error)
@@ -19,7 +15,9 @@ exports.admins = async (req, res) => {
         if (result) {
             // console.log(result);
             return res.render('./admin/clientsNcustomers/salesperson', {
-                employees: employees
+                employees: employees,
+                message: message,
+                alertType: alertType,
             });
         }
         else 

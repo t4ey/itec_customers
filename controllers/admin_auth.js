@@ -150,7 +150,9 @@ exports.edit_employee = async (req, res) => {
 exports.delete_employee = async (req, res) => {
     const { id } = req.params;
 
-    let employee = await db.query('DELETE FROM administradores WHERE id = ?', [id]);
+    // await db.query('DELETE FROM administradores WHERE id = ?', [id]);
 
+    req.flash('message', 'El usuario a sido eliminado exitosamente');
+    req.flash('alertType', 'alert-success');
     res.redirect('/admin/salesperson');
 }
