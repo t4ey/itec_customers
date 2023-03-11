@@ -122,3 +122,77 @@ exports.delete_employee = async (req, res) => {
     req.flash('alertType', 'alert-success');
     res.redirect('/admin/salesperson');
 }
+
+// client section
+
+exports.edit_client = async (req, res) => {
+    const { id } = req.params;
+    console.log(req.body);
+    const { email, name, last_name, reset_password } = req.body;
+
+
+    if (!email || !name || !last_name) {
+        req.flash('message', "No puede dejar espacios vacios");
+        req.flash('alertType', "alert-warning");
+        return res.redirect(req.originalUrl);
+    }
+
+    await db.query("SELECT * FROM client WHERE id = ?", [id], async (error, result) => {
+        // console.log("result : ", result);
+
+        if (error)
+            console.log(error);
+
+        if (!result)
+            res.redirect(req.originalUrl);
+
+        //change password only
+
+        if (reset_password) {
+
+            let hashedPassword = await bcrypt.hash(reset_password, 8);
+            console.log(hashedPassword);
+
+            await db.query('UPDATE client SET ? WHERE id = ' + id, { password: hashedPassword }, async (error, result) => {
+                if (error)
+                    console.log(error);
+
+                else {
+
+                    req.flash("message", "La contraseña se actualizó correctamente");
+                    req.flash('alertType', "alert-success");
+                    // console.log(req.originalUrl);
+                    return res.redirect(req.originalUrl);
+                }
+
+            });
+        }
+        //change data only
+
+        else {
+            await db.query('UPDATE client SET ? WHERE id = ' + id, { first_name: name, last_name: last_name, email: email }, async (error, result) => {
+                if (error) {
+                    console.log(error);
+                }
+                else {
+                    req.flash("message", "Los cambios se aplicaron exitosamente");
+                    req.flash('alertType', "alert-success");
+                    // console.log(req.originalUrl);
+                    return res.redirect(req.originalUrl);
+                }
+
+            });
+        }
+
+    });
+}
+
+exports.delete_client = async (req, res) => {
+    const { id } = req.params;
+
+    await db.query('DELETE FROM client WHERE id = ?', [id]);
+
+    req.flash('message', 'El cliente a sido eliminado exitosamente');
+    req.flash('alertType', 'alert-success');
+    res.redirect('/admin/clients');
+}
