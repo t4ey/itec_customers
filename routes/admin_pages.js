@@ -28,10 +28,14 @@ router.get('/add_employee', (req, res) => {
 
 router.get('/edit_employee/:id', async (req, res) => {
     const { id } = req.params;
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
 
     let employee = await db.query('SELECT * FROM administradores WHERE id = ?', [id]);
     res.render('./admin/clientsNcustomers/edit_employee.hbs' ,{
         employee: employee[0],
+        message: message,
+        alertType: alertType
     });
 });
 
@@ -41,5 +45,7 @@ router.get('/edit_employee/:id', async (req, res) => {
 router.post('/add_employee', adminAuthController.add_employee);
 
 router.get('/delete_employee/:id', adminAuthController.delete_employee);
+
+router.post('/edit_employee/:id', adminAuthController.edit_employee);
 
 module.exports = router;

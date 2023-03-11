@@ -53,92 +53,58 @@ exports.add_employee = async (req, res) => {
 
 exports.edit_employee = async (req, res) => {
     const {id} = req.params;
+    console.log(req.body);
+    const { email, name, lastName, phone_number, local_address, reset_password} = req.body;
 
-    const { name, lastName, email, password, newPassword, repNewPassword } = await pool.query('SELECT * FROM producto WHERE id = ?', [id]);
 
-    if (!email || !name || !lastName) {
-        return res.status(400).render('./session/profile_customers.hbs', {
-            message: "No puede dejar espacios vacios",
-            alertType: "alert-warning"
-        })
+    if (!email || !name || !lastName || !phone_number || !local_address) {
+        req.flash('message', "No puede dejar espacios vacios");
+        req.flash('alertType', "alert-warning");
+        return res.redirect(req.originalUrl);
     }
 
-    if (newPassword || repNewPassword || password) {
-        if (!newPassword || !repNewPassword || !password) {
-            return res.status(400).render('./session/profile_customers.hbs', {
-                message: "No puede dejar espacios vacios",
-                alertType: "alert-danger"
-            })
-        }
-        else if (!(newPassword == repNewPassword)) {
-            return res.status(400).render('./session/profile_customers.hbs', {
-                message: "Las contraseñas no coinciden",
-                alertType: "alert-danger"
-            })
-        }
-    }
-
-    await db.query("SELECT * FROM client WHERE email = ?", [email], async (error, result) => {
-        userId = res.locals.user.id;
+    await db.query("SELECT * FROM administradores WHERE id = ?", [id], async (error, result) => {
         // console.log("result : ", result);
 
         if (error)
             console.log(error);
 
-        //change password
+        if (!result)
+            res.redirect(req.originalUrl);    
 
-        if (password) {
+        //change password only
 
-            if (!(await bcrypt.compare(password, result[0].password))) {
-                console.log(result);
-                return res.status(400).render('/session/profile', {
-                    message: "La contraseña no es valida",
-                    alertType: "alert-danger"
-                });
-            }
-            else {
+        if (reset_password) {
 
-                let hashedPassword = await bcrypt.hash(newPassword, 8);
-                console.log(hashedPassword);
+            let hashedPassword = await bcrypt.hash(reset_password, 8);
+            console.log(hashedPassword);
 
-                await db.query('UPDATE client SET ? WHERE id = ' + userId, { password: hashedPassword }, async (error, result) => {
-                    if (error)
-                        console.log(error);
-                    else {
+            await db.query('UPDATE administradores SET ? WHERE id = ' + id, { password: hashedPassword }, async (error, result) => {
+                if (error)
+                    console.log(error);
 
-                        getUpdatedUser = await db.query('SELECT * FROM client WHERE id = ?', [userId]);
-                        user = getUpdatedUser[0];
+                else {
+                    
+                    req.flash("message", "La contraseña se actualizó correctamente");
+                    req.flash('alertType', "alert-success");
+                    // console.log(req.originalUrl);
+                    return res.redirect(req.originalUrl);
+                }
 
-                        res.render('./session/profile_customers.hbs',
-                            {
-                                user: user,
-                                message: "Los cambios se aplicaron correctamente exitosamente",
-                                alertType: "alert-success",
-                            }
-                        );
-                    }
-
-                });
-            }
+            });
         }
         //change data only
 
         else {
-            await db.query('UPDATE client SET ? WHERE  id = ' + userId, { first_name: name, last_name: lastName, email: email }, async (error, result) => {
+            await db.query('UPDATE administradores SET ? WHERE id = ' + id, { first_name: name, last_name: lastName, email: email, phone_number: phone_number, address: local_address }, async (error, result) => {
                 if (error) {
                     console.log(error);
                 }
                 else {
-                    getUpdatedUser = await db.query('SELECT * FROM client WHERE id = ?', [userId]);
-                    user = getUpdatedUser[0];
-                    // console.log("result", user)
-                    res.render('./session/profile_customers.hbs',
-                        {
-                            user: user,
-                            message: "Los cambios se aplicaron correctamente exitosamente",
-                            alertType: "alert-success",
-                        }
-                    );
+                    req.flash("message", "Los cambios se aplicaron exitosamente");
+                    req.flash('alertType', "alert-success");
+                    // console.log(req.originalUrl);
+                    return res.redirect(req.originalUrl);
                 }
 
             });
@@ -150,7 +116,7 @@ exports.edit_employee = async (req, res) => {
 exports.delete_employee = async (req, res) => {
     const { id } = req.params;
 
-    // await db.query('DELETE FROM administradores WHERE id = ?', [id]);
+    await db.query('DELETE FROM administradores WHERE id = ?', [id]);
 
     req.flash('message', 'El usuario a sido eliminado exitosamente');
     req.flash('alertType', 'alert-success');
