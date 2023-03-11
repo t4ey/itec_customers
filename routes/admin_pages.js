@@ -14,11 +14,24 @@ router.get('/home', (req, res) => {
     res.render('./admin/a_home');
 });
 
-router.get('/clients', (req, res) => {
-    res.render('./admin/clientsNcustomers/clients');
+    // client pages
+
+router.get('/clients', user_tables.clients);
+
+router.get('/edit_client/:id', async (req, res) => {
+    const { id } = req.params;
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+
+    let client = await db.query('SELECT * FROM administradores WHERE id = ?', [id]);
+    res.render('./admin/clientsNcustomers/edit_client.hbs', {
+        client: client[0],
+        message: message,
+        alertType: alertType
+    });
 });
 
-// sales person pages
+    // sales person pages
 
 router.get('/salesperson', user_tables.admins);
 

@@ -26,3 +26,29 @@ exports.admins = async (req, res) => {
     });
         
 }
+
+exports.clients = async (req, res) => {
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+
+    // console.log(message);
+
+    await db.query("SELECT * FROM client", async (error, result) => {
+        if (error)
+            console.log(error);
+
+        clients = result;
+        if (result) {
+            // console.log(result);
+            return res.render('./admin/clientsNcustomers/clients', {
+                clients: clients,
+                message: message,
+                alertType: alertType,
+            });
+        }
+        else
+            console.log("nop");
+
+    });
+
+}

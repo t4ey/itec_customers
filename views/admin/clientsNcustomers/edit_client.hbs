@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OVA admins</title>
+    <title>Solo vendedores</title>
 
     <!-- boostrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    
+
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,15 +19,17 @@
         rel="stylesheet">
     <!-- font awesome icons -->
     <script src="https://kit.fontawesome.com/8faedc4425.js" crossorigin="anonymous"></script>
-    
+
     <link rel="stylesheet" href="../css/styles_dashboard.css">
 </head>
+
 <body>
-    
+
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">Tienda Virtual OVA</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
-            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
     </header>
@@ -37,7 +40,7 @@
                 <div class="position-sticky pt-3 sidebar-sticky">
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
-                            <a href="./dashboard.html" class="nav-link link-dark" aria-current="page">
+                            <a href="#" class="nav-link link-dark" aria-current="page">
                                 <i class="fa-solid fa-house"></i>
                                 Home
                             </a>
@@ -55,8 +58,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link active">
-                                <i class="fa-solid fa-user-group"></i>
+                            <a href="./clients.html" class="nav-link link-dark">
+                                <i class="fa-solid fa-users"></i>
                                 Clientes
                             </a>
                         </li>
@@ -71,9 +74,10 @@
                         <li>
                             <a href="./reports.html" class="nav-link link-dark">
                                 <span class="me-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="feather feather-bar-chart-2 align-text-bottom" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-bar-chart-2 align-text-bottom"
+                                        aria-hidden="true">
                                         <line x1="18" y1="20" x2="18" y2="10"></line>
                                         <line x1="12" y1="20" x2="12" y2="4"></line>
                                         <line x1="6" y1="20" x2="6" y2="14"></line>
@@ -84,11 +88,13 @@
                         </li>
                     </ul>
 
+                    <div class="py-3" height="20px"></div>
                     <hr class="">
                     <div class="dropdown px-3" bis_skin_checked="1">
                         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                            <img src="https://github.com/mdo.png" alt="" width="32" height="32"
+                                class="rounded-circle me-2">
                             <strong>User1</strong>
                         </a>
                         <ul class="dropdown-menu text-small shadow">
@@ -107,67 +113,72 @@
 
             <!-- dashboard -->
             
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div class="container-fluid px-0">
-                    <div
-                        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Clientes</h1>
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            
-                        </div>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
+                <div class="row pt-3 pb-2 mb-3 border-bottom">
+                    <div class="col mb-2">
+                        <a class="btn btn-primary" href="/admin/clients"><i class="fa-solid fa-chevron-left"></i> Atras</a>
                     </div>
-                    {{#if message}}
-                        <div class="alert {{alertType}} alert-dismissible fade show" role="alert">
-                            {{message}}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    {{/if}}
+                    <div class="col text-center">
+                        <h2>Detalles del Cliente</h2>
+                    </div>
+                    <div class="col text-end">
+                        <a class="btn btn-danger" href="/links/add"><i class="fa-regular fa-trash-can"></i> Eliminar Cliente</a>
+                    </div>
                 </div>
-            
-                <h2>Clientes Registrados</h2>
-                <div class="table-sm-responsive mt-4">
-                    {{#if clients}}
-                    <table class="table table-hover table-bordered">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Email</th>
-                                <th>Nombre(s) del Cliente</th>
-                                <th>Apellido(s)</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                            {{#each clients}}
-                            <tr class="">
-                                <td class="order align-middle white-space-nowrap">{{id}}</td>
-                                <td class="date align-middle white-space-nowrap text-700 "><a href="/admin/edit_client/{{id}}" class="h5">{{email}}</a></td>
-                                <td class="align-middle white-space-nowrap"><h6 class="mb-0 text-900">{{first_name}}</h6></td>
-                                <td class="total align-middle fw-semi-bold text-1000">{{last_name}}</td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                    {{else}}
-                        <div class="col-md-8 mx-auto text-center pt-5">
-                            <div class="card card-body">
-                                <h2>No hay ningún producto registrado</h2>
-                                <a href="/links/add"><h3>Añadir Un nuevo Producto</h3></a>
+                
+                <div class="container p-4">
+                    <div class="row">
+                        <div class="col-md-4 mx-auto">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form action="/admin/edit_client/{{id}}" method="POST">
+                                        <div class="form-group pb-3">
+                                            <!-- {{!-- <input type="number" name="id" class="form-control" placeholder="ID" autofocus
+                                                                                                readonly> --}} -->
+                                            <input type="number" name="id" class="form-control" placeholder="ID" value="{{client.id}}" readonly>
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            <label class="" for="">email</label>
+                                            <input type="email" name="name" class="form-control" placeholder="Email" maxlength="30" value="{{client.email}}">
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            <label class="" for="">Nombre(s)</label>
+                                            <input type="text" name="name" class="form-control" placeholder="Nombre" maxlength="30" value="{{client.first_name}}">
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            <label class="" for="">Apellido(s)</label>
+                                            <input type="text" name="name" class="form-control" placeholder="Apellidos" maxlength="30" value="{{client.last_name}}">
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            <h3>Resetear Contraseña</h3>
+                                            <label class="" for="">Nueva Contraseña</label>
+                                            <input type="text" name="name" class="form-control" placeholder="Escriba la nueva Contraseña" maxlength="30">
+                                        </div>
+                                        
+                                        <div class="form-group text-center">
+                                            <a href="/admin/clients" class="btn btn-secondary me-3"><span>Cancelar</span></a>
+                                            <button type="submit" class="btn btn-success"><span>Guardar</span> <i
+                                                    class="fa-regular fa-floppy-disk"></i></button>
+                                        </div>
+                                    </form>
+
+
+                                </div>
                             </div>
                         </div>
-                    {{/if}}
+                
+                    </div>
                 </div>
             </main>
         </div>
     </div>
 
     <!-- bootstrap js cdn -->
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
-       
+
 </body>
-</html>                    
-               
-                                               
-                                                                                                                                                                                                             
+
+</html>
