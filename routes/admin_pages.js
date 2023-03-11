@@ -1,6 +1,7 @@
 const express = require('express');
 const adminAuthController = require('../controllers/admin_auth.js');
 const user_tables = require('../routes/admin_tables/user_tables');
+const product_tables = require('../routes/admin_tables/product_tables.js');
 
 const router = express.Router();
 
@@ -52,6 +53,9 @@ router.get('/edit_employee/:id', async (req, res) => {
     });
 });
 
+    // products page
+
+router.get('/products', product_tables.products);
 
 // POST REQUESTS
 
