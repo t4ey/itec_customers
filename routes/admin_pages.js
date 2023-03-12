@@ -57,6 +57,19 @@ router.get('/edit_employee/:id', async (req, res) => {
 
 router.get('/products', product_tables.products);
 
+router.get('/add_product', async (req, res) => {
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+    const p_categories = await db.query('SELECT * FROM categoria');
+    // console.log(p_categories);
+
+    res.render('./admin/products/add_product.hbs', {
+        product_categories: p_categories,
+        message: message,
+        alertType: alertType
+    });
+});
+
 // POST REQUESTS
 
 router.post('/add_employee', adminAuthController.add_employee);
