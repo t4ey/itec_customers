@@ -1,3 +1,5 @@
+const { db } = require("../../database/database");
+
 exports.products = async (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
@@ -5,18 +7,41 @@ exports.products = async (req, res) => {
     // console.log(message);
 
 
-    await db.query("SELECT * FROM producto", (error, result) => {
+    await db.query("SELECT * FROM producto", async(error, result) => {
         if (error)
-        console.log(error);
+            console.log(error);
         
-        products = result;
-        console.log(products);
+        let products = result;
+
+        for(var i = 0; i < products.length; i++){
+
+            product_category_ids = await db.query("SELECT cat_id FROM clasificacion WHERE prod_id = ?", [products[i].id]);
+            
+            let name_categories = [];
+            // console.log(product_category_ids);
+            // console.log(cat_ids);
+
+            for(var j = 0; j < product_category_ids.length; j++) {
+                if(product_category_ids[j]) {
+                    let get_cat_name = await db.query("SELECT name FROM categoria WHERE id = ?", [product_category_ids[j].cat_id]);
+                    // console.log(get_cat_name[0].name);
+                    name_categories.push(get_cat_name[0].name);
+                    // console.log("categories push: ", categories);
+                }
+
+            }
+            products[i].categories = name_categories;
+            console.log(products[i]);
+            // console.log("next id", categories);
+        }
+
+        // console.log(products);
         if (products) {
             // console.log(result);
             return res.render('./admin/products/products.hbs', {
                 message: message,
                 alertType: alertType, 
-                products: products
+                products: products,
             });
         }
         else
