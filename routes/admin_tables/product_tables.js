@@ -26,37 +26,68 @@ exports.products = async (req, res) => {
 
 exports.add_product = async (req, res) => {
 
-    const { name, lastName, phoneNumber, email, localAddress, role, password, repPassword } = req.body;
-    let isAdmin = (role == "admin") ? true : false;
+    const { image, product_name, price, stock, categories } = req.body;
+    
     console.log(req.body);
+    
+    if (!product_name || !price || !stock) {
+        req.flash('message', "No puede dejar espacios vacios");
+        req.flash('alertType', "alert-danger");
+        return res.redirect(req.originalUrl);
+    };
+    // console.log(categories);
+    if (categories == null){
+        req.flash('message', "Debe seleccionar al menos una categoria");
+        req.flash('alertType', "alert-warning");
+        return res.redirect(req.originalUrl);
+    }
 
-
-    await db.query("SELECT email FROM administradores WHERE email = ?", [email], async (error, result) => {
+    await db.query("SELECT name FROM producto WHERE name = ?", [product_name], async (error, result) => {
         if (error)
-            console.log(error);
-
+        console.log(error);
+        
         if (result.length > 0)
-            return res.render('./admin/clientsNcustomers/add_employee', {
-                message: "Ese correo ya esta en uso",
-                alertType: "alert-danger",
-            });
-        else if (password != repPassword)
-            return res.render('./admin/clientsNcustomers/add_employee', {
-                message: "Las contraseñas no son las mismas",
+            return res.render('./admin/products/add_product', {
+                message: "El producto ya existe",
                 alertType: "alert-danger",
             });
 
-        let hashedPassword = await bcrypt.hash(password, 8);
         // console.log(typeof(hashedPassword));
         // console.log(hashedPassword.length);
 
-        db.query('INSERT INTO administradores SET ?', { first_name: name, last_name: lastName, email: email, phone_number: phoneNumber, address: localAddress, is_admin: isAdmin, password: hashedPassword }, (error, result) => {
+        await db.query('INSERT INTO producto SET ?', { name: product_name, price: price, stock: stock }, async (error, result) => {
             if (error)
                 console.log(error);
+
             else {
-                req.flash('message', "El usuario ha sido registrado correctamente, puede Iniciar Sesión.");
-                req.flash('alertType', "alert-success");
-                return res.redirect('/admin/salesperson');
+                await db.query("SELECT id FROM producto WHERE name = ?" , [product_name], async (error, result) => {
+                    if (error)
+                        console.log(error);
+
+                    let p_id = result;
+                    // console.log("last id: ", p_ids);
+                    product_id = p_id[0].id;
+                    console.log("prod id: ", product_id);
+                    
+                    let cat_type = typeof (categories);
+                    
+                    if(cat_type.includes('obj')) {
+                        categories.forEach(async category_id => {
+                        // console.log(category_id);
+                        await db.query('INSERT INTO clasificacion SET ?', { cat_id: category_id, prod_id: product_id });
+                        });
+                    }
+                    else {
+                        await db.query('INSERT INTO clasificacion SET ?', { cat_id: categories, prod_id: product_id });
+                        
+                    }
+                    req.flash('message', "El usuario ha sido registrado correctamente, puede Iniciar Sesión.");
+                    req.flash('alertType', "alert-success");
+                    return res.redirect('/admin/products');
+                });
+
+                // XCONSOEL TYPEOF CATEGORIES
+
             }
 
         });

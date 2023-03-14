@@ -84,4 +84,8 @@ router.get('/delete_client/:id', adminAuthController.delete_client);
 
 router.post('/edit_client/:id', adminAuthController.edit_client);
 
+    // products pages
+
+router.post('/add_product', product_tables.add_product);
+
 module.exports = router;
