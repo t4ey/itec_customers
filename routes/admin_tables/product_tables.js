@@ -3,24 +3,26 @@ exports.products = async (req, res) => {
     const alertType = req.flash('alertType');
 
     // console.log(message);
-    res.render('./admin/products/products.hbs')
-    // await db.query("SELECT * FROM client", async (error, result) => {
-    //     if (error)
-    //         console.log(error);
 
-    //     clients = result;
-    //     if (result) {
-    //         // console.log(result);
-    //         return res.render('./admin/clientsNcustomers/clients', {
-    //             clients: clients,
-    //             message: message,
-    //             alertType: alertType,
-    //         });
-    //     }
-    //     else
-    //         console.log("nop");
 
-    // });
+    await db.query("SELECT * FROM producto", (error, result) => {
+        if (error)
+        console.log(error);
+        
+        products = result;
+        console.log(products);
+        if (products) {
+            // console.log(result);
+            return res.render('./admin/products/products.hbs', {
+                message: message,
+                alertType: alertType, 
+                products: products
+            });
+        }
+        else
+            console.log("nop");
+
+    });
 
 }
 
@@ -81,7 +83,7 @@ exports.add_product = async (req, res) => {
                         await db.query('INSERT INTO clasificacion SET ?', { cat_id: categories, prod_id: product_id });
                         
                     }
-                    req.flash('message', "El usuario ha sido registrado correctamente, puede Iniciar Sesión.");
+                    req.flash('message', "Producto registrado exitosamente.");
                     req.flash('alertType', "alert-success");
                     return res.redirect('/admin/products');
                 });

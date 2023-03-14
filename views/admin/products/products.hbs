@@ -108,16 +108,24 @@
             <!-- dashboard -->
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Productos</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <a class="btn btn-success" href="/admin/add_product">Añadir Producto <i class="fa-solid fa-plus"></i></a>
+                <div class="container-fluid px-0">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Productos</h1>
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <a class="btn btn-success" href="/admin/add_product">Añadir Producto <i class="fa-solid fa-plus"></i></a>
+                        </div>
                     </div>
+                    {{#if message}}
+                        <div class="alert {{alertType}} alert-dismissible fade show" role="alert">
+                            {{message}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {{/if}}
                 </div>
-
 
                 <h2>Productos Registrados</h2>
                 <div class="table-sm-responsive mt-4">
+                {{#if products}}
                     <table class="table table-hover table-bordered">
                         <thead>
                             <tr>
@@ -129,41 +137,32 @@
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
+                        {{#each products}}
                             <tr class="">
-                                <td class="order align-middle white-space-nowrap">23</td>
+                                <td class="order align-middle white-space-nowrap">{{id}}</td>
                                 <td class="align-middle white-space-nowrap ps-8">
                                     <a class=" align-items-center" href="#">
-                                        <h6 class="mb-0 text-900">Arduino Uno</h6>
+                                        <h6 class="mb-0 text-900">{{name}}</h6>
                                     </a>
                                 </td>
-                                <td class="total align-middle fw-semi-bold text-1000">95 Bs.</td>
-                                <td><span class="badge text-bg-light">Electronica</span> <span class="badge text-bg-light">Electronica</span></td>
-                                <td class="date align-middle white-space-nowrap text-700 "><span class="h2">45</span> unidades</td>
-                            </tr>
-                            <tr class="">
-                                <td class="order align-middle white-space-nowrap">23</td>
-                                <td class="align-middle white-space-nowrap ps-8">
-                                    <a class=" align-items-center" href="#">
-                                        <h6 class="mb-0 text-900">Arduino Uno</h6>
-                                    </a>
+                                <td class="total align-middle fw-semi-bold text-1000">{{price}}</td>
+                                <td>
+                                    <span class="badge text-bg-light">Electronica</span> 
+                                    <span class="badge text-bg-light">Electronica</span>
                                 </td>
-                                <td class="total align-middle fw-semi-bold text-1000">95 Bs.</td>
-                                <td><span class="badge text-bg-light">Electronica</span> <span class="badge text-bg-light">Electronica</span></td>
-                                <td class="date align-middle white-space-nowrap text-700 "><span class=h2">45</span> unidades</td>
+                                <td class="date align-middle white-space-nowrap text-700 "><span class="h5">{{stock}}</span> unidades</td>
                             </tr>
-                            <tr class="">
-                                <td class="order align-middle white-space-nowrap">23</td>
-                                <td class="align-middle white-space-nowrap ps-8">
-                                    <a class=" align-items-center" href="#">
-                                        <h6 class="mb-0 text-900">Arduino Uno</h6>
-                                    </a>
-                                </td>
-                                <td class="total align-middle fw-semi-bold text-1000">95 Bs.</td>
-                                <td><span class="badge text-bg-light">Electronica</span> <span class="badge text-bg-light">Electronica</span></td>
-                                <td class="date align-middle white-space-nowrap text-700 "><span class=h2">45</span> unidades</td>
-                            </tr>
+                            {{/each}}
                         </tbody>
                     </table>
+                        {{else}}
+                        <div class="col-md-8 mx-auto text-center pt-5">
+                            <div class="card card-body">
+                                <h2>No hay ningún producto registrado</h2>
+                                <a href="/links/add"><h3>Añadir Un nuevo Producto</h3></a>
+                            </div>
+                        </div>
+                    {{/if}}
                 </div>
             </main>
         </div>
