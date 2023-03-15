@@ -70,6 +70,36 @@ router.get('/add_product', async (req, res) => {
     });
 });
 
+router.get('/edit_product/:id', async (req, res) => {
+    const { id } = req.params;
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+    const p_categories = await db.query('SELECT * FROM categoria');
+    const product = await db.query('SELECT * FROM producto WHERE id = ?', [id]);
+    const prod_cat_ids = await db.query('SELECT cat_id FROM clasificacion WHERE prod_id = ?', [id]);
+
+    // console.log(p_categories[3].id);
+    for(var i = 0; i < prod_cat_ids.length; i++) {
+        // console.log("next : ", i)
+        for(var j = 0; j < p_categories.length; j++){
+            if(p_categories[j].id == prod_cat_ids[i].cat_id) {
+                p_categories[j].checked = true;
+                // console.log(p_categories[i].id, "ch");
+            }
+        }
+    }
+    // console.log(p_categories);
+    // console.log(p_categories);
+
+    res.render('./admin/products/edit_product.hbs', {
+        product: product[0],
+        product_categories: p_categories,
+
+        message: message,
+        alertType: alertType
+    });
+});
+
 // POST REQUESTS
 
 router.post('/add_employee', adminAuthController.add_employee);
