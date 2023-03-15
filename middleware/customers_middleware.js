@@ -53,7 +53,7 @@ const checkUser = async (req, res, next) => {
         });
     } else {
         res.locals.user = null;
-        console.log("user checked");
+        console.log("user checked", req.originalUrl);
         // console.log(await db.query("SELECT * FROM client WHERE id = 4"));
         next();
         // res.redirect('/login');

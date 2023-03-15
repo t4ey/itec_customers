@@ -118,4 +118,6 @@ router.post('/edit_client/:id', adminAuthController.edit_client);
 
 router.post('/add_product', product_tables.add_product);
 
+router.post('/edit_product/:id', product_tables.edit_product);
+
 module.exports = router;

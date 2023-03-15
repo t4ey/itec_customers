@@ -124,7 +124,7 @@ exports.add_product = async (req, res) => {
 }
 
 exports.edit_product = async (req, res) => {
-
+    const { id } = req.params;
     const { image, product_name, price, stock, categories } = req.body;
 
     console.log(req.body);
@@ -145,45 +145,33 @@ exports.edit_product = async (req, res) => {
         if (error)
             console.log(error);
 
-        if (result.length > 0) {
-            req.flash('message', "El producto ya existe");
-            req.flash('alertType', "alert-warning");
-            return res.redirect(req.originalUrl);
-        }
-
         // console.log(typeof(hashedPassword));
         // console.log(hashedPassword.length);
 
-        await db.query('INSERT INTO producto SET ?', { name: product_name, price: price, stock: stock }, async (error, result) => {
+        await db.query('UPDATE producto SET ? WHERE id = ' + id, { name: product_name, price: price, stock: stock }, async (error, result) => {
             if (error)
                 console.log(error);
 
-            else {
-                await db.query("SELECT id FROM producto WHERE name = ?", [product_name], async (error, result) => {
-                    if (error)
-                        console.log(error);
+            else {;
+                product_id = id;
+                console.log("prod id: ", product_id);
 
-                    let p_id = result;
-                    // console.log("last id: ", p_ids);
-                    product_id = p_id[0].id;
-                    console.log("prod id: ", product_id);
+                let cat_type = typeof (categories);
 
-                    let cat_type = typeof (categories);
-
-                    if (cat_type.includes('obj')) {
-                        categories.forEach(async category_id => {
-                            // console.log(category_id);
-                            await db.query('INSERT INTO clasificacion SET ?', { cat_id: category_id, prod_id: product_id });
-                        });
-                    }
-                    else {
-                        await db.query('INSERT INTO clasificacion SET ?', { cat_id: categories, prod_id: product_id });
-
-                    }
-                    req.flash('message', "Producto registrado exitosamente.");
-                    req.flash('alertType', "alert-success");
-                    return res.redirect('/admin/products');
-                });
+                if (cat_type.includes('obj')) {
+                    await db.query('DELETE FROM clasificacion WHERE prod_id = ?', [id]);
+                    categories.forEach(async category_id => {
+                        // console.log(category_id);
+                        await db.query('INSERT INTO clasificacion SET ?', { cat_id: category_id, prod_id: product_id });
+                    });
+                }
+                else {
+                    await db.query('DELETE FROM clasificacion WHERE prod_id = ?', [id]);
+                    await db.query('INSERT INTO clasificacion SET ?', { cat_id: categories, prod_id: product_id });
+                }
+                req.flash('message', "Se actulizó el producto exitosamente.");
+                req.flash('alertType', "alert-success");
+                return res.redirect(req.originalUrl);
 
                 // XCONSOEL TYPEOF CATEGORIES
 
