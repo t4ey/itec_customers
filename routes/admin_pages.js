@@ -100,6 +100,11 @@ router.get('/edit_product/:id', async (req, res) => {
     });
 });
 
+    // categories pages
+
+router.get('/categories', product_tables.categories);
+
+
 // POST REQUESTS
 
 router.post('/add_employee', adminAuthController.add_employee);

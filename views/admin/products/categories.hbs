@@ -110,9 +110,9 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="container-fluid px-0">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Productos</h1>
+                        <h1 class="h2">Categorias</h1>
                         <div class="btn-toolbar mb-2 mb-md-0">
-                            <a class="btn btn-success" href="/admin/add_product">Añadir Producto <i class="fa-solid fa-plus"></i></a>
+                            <a class="btn btn-success" href="/admin/add_product">Añadir Categoria <i class="fa-solid fa-plus"></i></a>
                         </div>
                     </div>
                     {{#if message}}
@@ -123,21 +123,19 @@
                     {{/if}}
                 </div>
 
-                <h2>Productos Registrados</h2>
+                <h2>Categorias Registradas</h2>
                 <div class="table-sm-responsive mt-4">
-                {{#if products}}
+                {{#if categories}}
                     <table class="table table-hover table-bordered">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
-                                <th>Precio</th>
-                                <th>Categoria</th>
-                                <th>Stock</th>
+                                <th>Desciption</th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
-                        {{#each products}}
+                        {{#each categories}}
                             <tr class="">
                                 <td class="order align-middle white-space-nowrap">{{id}}</td>
                                 <td class="align-middle white-space-nowrap ps-8">
@@ -145,14 +143,7 @@
                                         <h6 class="mb-0 text-900">{{name}}</h6>
                                     </a>
                                 </td>
-                                <td class="total align-middle fw-semi-bold text-1000">{{price}}</td>
-                                <td>
-                                    {{#each categories}}
-                                        <span class="badge text-bg-light">{{this}}</span>                                         
-                                    {{/each}}
-                                    {{!-- <span class="badge text-bg-light">Electronica</span> --}}
-                                </td>
-                                <td class="date align-middle white-space-nowrap text-700 "><span class="h5">{{stock}}</span> unidades</td>
+                                <td class="total align-middle fw-semi-bold text-1000">{{description}}</td>
                             </tr>
                             {{/each}}
                         </tbody>

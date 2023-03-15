@@ -182,3 +182,32 @@ exports.edit_product = async (req, res) => {
 
     // res.send("ok");
 }
+
+
+// categories section
+
+exports.categories = async (req, res) => {
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+
+    // console.log(message);
+
+    await db.query("SELECT * FROM categoria", async (error, result) => {
+        if (error)
+            console.log(error);
+
+        categorias = result;
+        if (result) {
+            // console.log(result);
+            return res.render('./admin/products/categories.hbs', {
+                categories: categorias,
+                message: message,
+                alertType: alertType,
+            });
+        }
+        else
+            console.log("nop");
+
+    });
+
+}
