@@ -211,3 +211,13 @@ exports.categories = async (req, res) => {
     });
 
 }
+
+exports.delete_product = async (req, res) => {
+    const { id } = req.params;
+
+    await db.query('DELETE FROM producto WHERE id = ?', [id]);
+
+    req.flash('message', 'El cliente a sido eliminado exitosamente');
+    req.flash('alertType', 'alert-success');
+    res.redirect('/admin/products');
+}

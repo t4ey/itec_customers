@@ -125,4 +125,6 @@ router.post('/add_product', product_tables.add_product);
 
 router.post('/edit_product/:id', product_tables.edit_product);
 
+router.get('/delete_product/:id', product_tables.delete_product);
+
 module.exports = router;
