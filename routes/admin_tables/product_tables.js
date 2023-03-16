@@ -13,6 +13,8 @@ exports.products = async (req, res) => {
         
         let products = result;
 
+        // display categories part
+
         for(var i = 0; i < products.length; i++){
 
             product_category_ids = await db.query("SELECT cat_id FROM clasificacion WHERE prod_id = ?", [products[i].id]);
