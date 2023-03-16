@@ -188,7 +188,7 @@ exports.delete_product = async (req, res) => {
 
     await db.query('DELETE FROM producto WHERE id = ?', [id]);
 
-    req.flash('message', 'El cliente a sido eliminado exitosamente');
+    req.flash('message', 'El producto a sido eliminado exitosamente');
     req.flash('alertType', 'alert-success');
     res.redirect('/admin/products');
 }
@@ -230,7 +230,7 @@ exports.add_category = async (req, res) => {
     if (!cat_name || !description) {
         req.flash('message', "No puede dejar espacios vacios");
         req.flash('alertType', "alert-warning");
-        res.redirect('/admin/categories');
+        return res.redirect('/admin/add_category');
     }
 
     await db.query("SELECT name FROM categoria WHERE name = ?", [cat_name], async (error, result) => {
@@ -257,4 +257,41 @@ exports.add_category = async (req, res) => {
     });
 
     // res.send("ok");
+}
+
+exports.edit_category = async (req, res) => {
+    const {id} = req.params;
+    const { cat_name, description } = req.body;
+
+    console.log(req.body);
+
+    if (!cat_name || !description) {
+        req.flash('message', "No puede dejar espacios vacios");
+        req.flash('alertType', "alert-warning");
+        return res.redirect(req.originalUrl);
+    }
+
+
+    db.query('UPDATE categoria SET ? WHERE id = ' + id, [{ name: cat_name, description: description }], (error, result) => {
+        if (error)
+            console.log(error);
+
+        else {
+            req.flash('message', "Los cambios se aplicaron exitosamente.");
+            req.flash('alertType', "alert-success");
+            return res.redirect(req.originalUrl);
+        }
+
+    });
+    // res.send("ok");
+}
+
+exports.delete_category = async (req, res) => {
+    const { id } = req.params;
+
+    await db.query('DELETE FROM categoria WHERE id = ?', [id]);
+
+    req.flash('message', 'La categoria se eliminó exitosamente');
+    req.flash('alertType', 'alert-success');
+    res.redirect('/admin/categories');
 }

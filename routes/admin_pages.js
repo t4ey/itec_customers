@@ -115,6 +115,20 @@ router.get('/add_category', (req, res) => {
     });
 });
 
+router.get('/edit_category/:id', async (req, res) => {
+    const { id } = req.params;
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+    const category = await db.query('SELECT * FROM categoria WHERE id = ?', [id]);
+    // console.log(category[0]);
+
+    res.render('./admin/products/edit_category', {
+        category: category[0],
+        message: message,
+        alertType: alertType
+    });
+});
+
 
 // POST REQUESTS
 
@@ -139,5 +153,9 @@ router.post('/edit_product/:id', product_tables.edit_product);
 router.get('/delete_product/:id', product_tables.delete_product);
 
 router.post('/add_category', product_tables.add_category);
+
+router.post('/edit_category/:id', product_tables.edit_category);
+
+router.get('/delete_category/:id', product_tables.delete_category);
 
 module.exports = router;
