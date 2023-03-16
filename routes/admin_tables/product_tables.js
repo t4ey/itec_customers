@@ -183,6 +183,15 @@ exports.edit_product = async (req, res) => {
     // res.send("ok");
 }
 
+exports.delete_product = async (req, res) => {
+    const { id } = req.params;
+
+    await db.query('DELETE FROM producto WHERE id = ?', [id]);
+
+    req.flash('message', 'El cliente a sido eliminado exitosamente');
+    req.flash('alertType', 'alert-success');
+    res.redirect('/admin/products');
+}
 
 // categories section
 
@@ -212,12 +221,40 @@ exports.categories = async (req, res) => {
 
 }
 
-exports.delete_product = async (req, res) => {
-    const { id } = req.params;
+exports.add_category = async (req, res) => {
 
-    await db.query('DELETE FROM producto WHERE id = ?', [id]);
+    const { cat_name, description } = req.body;
 
-    req.flash('message', 'El cliente a sido eliminado exitosamente');
-    req.flash('alertType', 'alert-success');
-    res.redirect('/admin/products');
+    console.log(req.body);
+
+    if (!cat_name || !description) {
+        req.flash('message', "No puede dejar espacios vacios");
+        req.flash('alertType', "alert-warning");
+        res.redirect('/admin/categories');
+    }
+
+    await db.query("SELECT name FROM categoria WHERE name = ?", [cat_name], async (error, result) => {
+        if (error)
+            console.log(error);
+
+        if (result.length > 0) {
+            req.flash('message', "Ya hay una categoria existente con ese nombre.");
+            req.flash('alertType', "alert-danger");
+            return res.redirect('/admin/categories');
+        }
+
+        db.query('INSERT INTO categoria SET ?', { name: cat_name, description: description}, (error, result) => {
+            if (error)
+                console.log(error);
+                
+            else {
+                req.flash('message', "La categoria ha sido registrada exitosamente.");
+                req.flash('alertType', "alert-success");
+                return res.redirect('/admin/categories');
+            }
+
+        });
+    });
+
+    // res.send("ok");
 }

@@ -104,6 +104,17 @@ router.get('/edit_product/:id', async (req, res) => {
 
 router.get('/categories', product_tables.categories);
 
+router.get('/add_category', (req, res) => {
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+    // console.log(p_categories);
+
+    res.render('./admin/products/add_category', {
+        message: message,
+        alertType: alertType
+    });
+});
+
 
 // POST REQUESTS
 
@@ -126,5 +137,7 @@ router.post('/add_product', product_tables.add_product);
 router.post('/edit_product/:id', product_tables.edit_product);
 
 router.get('/delete_product/:id', product_tables.delete_product);
+
+router.post('/add_category', product_tables.add_category);
 
 module.exports = router;
