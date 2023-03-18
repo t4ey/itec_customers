@@ -5,6 +5,27 @@ const product_tables = require('../routes/admin_tables/product_tables.js');
 
 const router = express.Router();
 
+// upload images
+
+const multer = require('multer');
+const { memoryStorage } = require('multer');
+
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, './');
+//     },
+//     filename: (req, file, cb) => {
+//         const f_extension = file.originalname.split('.').pop();
+//         cb(null, 'uploaded-' + Date.now + f_extension);
+//     }
+// });
+
+const storage = memoryStorage();
+
+const upload_image = multer({ storage: storage });
+
+// AUTHENTICATION REQUESTS
+
 router.get('/login', (req, res) => {
     res.render('./admin/session/a_login');
 });
@@ -146,7 +167,7 @@ router.post('/edit_client/:id', adminAuthController.edit_client);
 
     // products pages
 
-router.post('/add_product', product_tables.add_product);
+router.post('/add_product', upload_image.single('image'), product_tables.add_product);
 
 router.post('/edit_product/:id', product_tables.edit_product);
 

@@ -1,5 +1,15 @@
 const { db } = require("../../database/database");
 
+// resize the given image
+const sharp = require('sharp');
+
+const resize_image = (file, filename,width = 350, height = 250) => {
+    return sharp(file.buffer).resize(width, height, {
+        fit: sharp.fit.fill,
+        withoutEnlargement: true
+    }).toFile('./public/images/products/' + filename +  '.jpg');
+}
+
 exports.products = async (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
@@ -54,10 +64,12 @@ exports.products = async (req, res) => {
 }
 
 exports.add_product = async (req, res) => {
+    console.log("img", req.file);
 
-    const { image, product_name, price, stock, categories } = req.body;
+    const { product_name, price, stock, categories } = req.body;
     
     console.log(req.body);
+    
     
     if (!product_name || !price || !stock) {
         req.flash('message', "No puede dejar espacios vacios");
@@ -70,7 +82,7 @@ exports.add_product = async (req, res) => {
         req.flash('alertType', "alert-warning");
         return res.redirect(req.originalUrl);
     }
-
+    
     await db.query("SELECT name FROM producto WHERE name = ?", [product_name], async (error, result) => {
         if (error)
         console.log(error);
@@ -80,10 +92,12 @@ exports.add_product = async (req, res) => {
             req.flash('alertType', "alert-warning");
             return res.redirect(req.originalUrl);
         }
-
+        
         // console.log(typeof(hashedPassword));
         // console.log(hashedPassword.length);
-
+        
+        await resize_image(req.file, "img1");
+        
         await db.query('INSERT INTO producto SET ?', { name: product_name, price: price, stock: stock }, async (error, result) => {
             if (error)
                 console.log(error);
