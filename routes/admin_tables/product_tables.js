@@ -86,7 +86,7 @@ exports.add_product = async (req, res) => {
     console.log(req.body);
     
     
-    if (!product_name || !price || !stock) {
+    if (!product_name || !price || !stock || !req.file) {
         req.flash('message', "No puede dejar espacios vacios");
         req.flash('alertType', "alert-danger");
         return res.redirect(req.originalUrl);
