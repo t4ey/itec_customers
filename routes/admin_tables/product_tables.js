@@ -3,11 +3,25 @@ const { db } = require("../../database/database");
 // resize the given image
 const sharp = require('sharp');
 
+// image resolutions
+
+const img_width = 350;  // image output resolution in pixels
+const img_height = 250;
+const img_micro_width = 80;
+const img_micro_height = Math.round(img_micro_width * (((img_height * 100) / img_width) / 100));
+
+// searching the micro image
+
+const micro_img_dir = (img_dir) => {
+    let last_ch = img_dir.lastIndexOf("/") + 1;
+    return img_dir.slice(0, last_ch) + "micro-" + img_dir.slice(last_ch);
+}
+
 const resize_image = (file, filename,width = 350, height = 250) => {
     return sharp(file.buffer).resize(width, height, {
         fit: sharp.fit.fill,
         withoutEnlargement: true
-    }).toFile('./public/images/products/' + filename +  '.jpg');
+    }).toFormat('jpg').toFile('./public/images/products/' + filename +  '.jpg');
 }
 
 exports.products = async (req, res) => {
@@ -26,7 +40,8 @@ exports.products = async (req, res) => {
         // display categories part
 
         for(var i = 0; i < products.length; i++){
-
+            products[i].img_dir = micro_img_dir(products[i].img_dir); // change to micro img dir
+            
             product_category_ids = await db.query("SELECT cat_id FROM clasificacion WHERE prod_id = ?", [products[i].id]);
             
             let name_categories = [];
@@ -96,9 +111,13 @@ exports.add_product = async (req, res) => {
         // console.log(typeof(hashedPassword));
         // console.log(hashedPassword.length);
         
-        await resize_image(req.file, "img1");
-        
-        await db.query('INSERT INTO producto SET ?', { name: product_name, price: price, stock: stock }, async (error, result) => {
+        // resize and save the image
+
+
+        await resize_image(req.file, product_name, img_width, img_height);
+        await resize_image(req.file, "micro-" + product_name, img_micro_width, img_micro_height);
+
+        await db.query('INSERT INTO producto SET ?', { name: product_name, price: price, stock: stock, img_dir: ('/images/products/' + product_name + '.jpg') }, async (error, result) => {
             if (error)
                 console.log(error);
 
