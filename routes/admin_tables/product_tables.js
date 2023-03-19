@@ -17,6 +17,13 @@ const micro_img_dir = (img_dir) => {
     return img_dir.slice(0, last_ch) + "micro-" + img_dir.slice(last_ch);
 }
 
+const get_name_from_img_dir = (img_dir) => {
+    var slash = img_dir.lastIndexOf("/") + 1;
+    var last_dot = img_dir.lastIndexOf(".");
+    var text = img_dir.slice(slash, last_dot);
+    return text;
+}
+
 const resize_image = (file, filename,width = 350, height = 250) => {
     return sharp(file.buffer).resize(width, height, {
         fit: sharp.fit.fill,
@@ -113,9 +120,10 @@ exports.add_product = async (req, res) => {
         
         // resize and save the image
 
-
-        await resize_image(req.file, product_name, img_width, img_height);
-        await resize_image(req.file, "micro-" + product_name, img_micro_width, img_micro_height);
+        if(req.file){
+            await resize_image(req.file, product_name, img_width, img_height);
+            await resize_image(req.file, "micro-" + product_name, img_micro_width, img_micro_height);
+        }
 
         await db.query('INSERT INTO producto SET ?', { name: product_name, price: price, stock: stock, img_dir: ('/images/products/' + product_name + '.jpg') }, async (error, result) => {
             if (error)
@@ -160,8 +168,9 @@ exports.add_product = async (req, res) => {
 
 exports.edit_product = async (req, res) => {
     const { id } = req.params;
-    const { image, product_name, price, stock, categories } = req.body;
+    const { product_name, price, stock, categories } = req.body;
 
+    console.log(req.file);
     console.log(req.body);
 
     if (!product_name || !price || !stock) {
@@ -176,12 +185,20 @@ exports.edit_product = async (req, res) => {
         return res.redirect(req.originalUrl);
     }
 
-    await db.query("SELECT name FROM producto WHERE name = ?", [product_name], async (error, result) => {
+    await db.query("SELECT * FROM producto WHERE id = ?", [id], async (error, result) => {
         if (error)
             console.log(error);
 
         // console.log(typeof(hashedPassword));
         // console.log(hashedPassword.length);
+        let img_dir = result[0].img_dir; 
+        console.log(result);
+        let img_dir_name = get_name_from_img_dir(img_dir);
+
+        if(req.file) {
+            await resize_image(req.file, img_dir_name, img_width, img_height);
+            await resize_image(req.file, "micro-" + img_dir_name, img_micro_width, img_micro_height)
+        }
 
         await db.query('UPDATE producto SET ? WHERE id = ' + id, { name: product_name, price: price, stock: stock }, async (error, result) => {
             if (error)

@@ -140,7 +140,7 @@
                             <div class="card">
                                 <img src="{{product.img_dir}}" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <form action="/admin/edit_product/{{product.id}}" method="POST">
+                                    <form action="/admin/edit_product/{{product.id}}" method="POST" enctype="multipart/form-data">
                                         <div class="pb-3">
                                             <label class="form-label" for="customFile">Cambiar Imagen</label>
                                             <input type="file" class="form-control" id="image" name="image"/>
