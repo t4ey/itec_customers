@@ -93,7 +93,7 @@ exports.add_product = async (req, res) => {
     console.log(req.body);
     
     
-    if (!product_name || !price || !stock || !req.file) {
+    if ((!product_name || product_name == 'no image') || !price || !stock || !req.file) {
         req.flash('message', "No puede dejar espacios vacios");
         req.flash('alertType', "alert-danger");
         return res.redirect(req.originalUrl);
@@ -173,7 +173,7 @@ exports.edit_product = async (req, res) => {
     console.log(req.file);
     console.log(req.body);
 
-    if (!product_name || !price || !stock) {
+    if ((!product_name || product_name == 'no image') || !price || !stock) {
         req.flash('message', "No puede dejar espacios vacios");
         req.flash('alertType', "alert-danger");
         return res.redirect(req.originalUrl);
@@ -192,7 +192,7 @@ exports.edit_product = async (req, res) => {
         // console.log(typeof(hashedPassword));
         // console.log(hashedPassword.length);
         let img_dir = result[0].img_dir; 
-        console.log(result);
+        // console.log(result);
         let img_dir_name = get_name_from_img_dir(img_dir);
 
         if(req.file) {
