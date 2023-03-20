@@ -5,6 +5,10 @@ const product_tables = require('../routes/admin_tables/product_tables.js');
 
 const router = express.Router();
 
+// admin middlewares
+
+const { requireAuth, checkUser, alreadyLogged } = require('../middleware/customers_middleware.js');
+
 // upload images
 
 const multer = require('multer');
@@ -26,7 +30,7 @@ const upload_image = multer({ storage: storage });
 
 // AUTHENTICATION REQUESTS
 
-router.get('/login', (req, res) => {
+router.get('/login', alreadyLogged, (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
     res.render('./admin/session/a_login', {
@@ -37,15 +41,15 @@ router.get('/login', (req, res) => {
 
 // SIDE BAR GET REQUESTS
 
-router.get('/home', (req, res) => {
+router.get('/home', requireAuth, (req, res) => {
     res.render('./admin/a_home');
 });
 
     // client pages
 
-router.get('/clients', user_tables.clients);
+router.get('/clients', requireAuth, user_tables.clients);
 
-router.get('/edit_client/:id', async (req, res) => {
+router.get('/edit_client/:id', requireAuth, async (req, res) => {
     const { id } = req.params;
     const message = req.flash('message');
     const alertType = req.flash('alertType');
@@ -60,13 +64,13 @@ router.get('/edit_client/:id', async (req, res) => {
 
     // sales person pages
 
-router.get('/salesperson', user_tables.admins);
+router.get('/salesperson', requireAuth, user_tables.admins);
 
-router.get('/add_employee', (req, res) => {
+router.get('/add_employee', requireAuth, (req, res) => {
     res.render('./admin/clientsNcustomers/add_employee.hbs');
 });
 
-router.get('/edit_employee/:id', async (req, res) => {
+router.get('/edit_employee/:id', requireAuth, async (req, res) => {
     const { id } = req.params;
     const message = req.flash('message');
     const alertType = req.flash('alertType');
@@ -81,9 +85,9 @@ router.get('/edit_employee/:id', async (req, res) => {
 
     // products page
 
-router.get('/products', product_tables.products);
+router.get('/products', requireAuth, product_tables.products);
 
-router.get('/add_product', async (req, res) => {
+router.get('/add_product', requireAuth, async (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
     const p_categories = await db.query('SELECT * FROM categoria');
@@ -96,7 +100,7 @@ router.get('/add_product', async (req, res) => {
     });
 });
 
-router.get('/edit_product/:id', async (req, res) => {
+router.get('/edit_product/:id', requireAuth, async (req, res) => {
     const { id } = req.params;
     const message = req.flash('message');
     const alertType = req.flash('alertType');
@@ -128,9 +132,9 @@ router.get('/edit_product/:id', async (req, res) => {
 
     // categories pages
 
-router.get('/categories', product_tables.categories);
+router.get('/categories', requireAuth, product_tables.categories);
 
-router.get('/add_category', (req, res) => {
+router.get('/add_category', requireAuth, (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
     // console.log(p_categories);
@@ -141,7 +145,7 @@ router.get('/add_category', (req, res) => {
     });
 });
 
-router.get('/edit_category/:id', async (req, res) => {
+router.get('/edit_category/:id', requireAuth, async (req, res) => {
     const { id } = req.params;
     const message = req.flash('message');
     const alertType = req.flash('alertType');
@@ -158,32 +162,32 @@ router.get('/edit_category/:id', async (req, res) => {
 
 // POST REQUESTS
 
-router.post('/login', adminAuthController.login)
+router.post('/login', alreadyLogged, adminAuthController.login)
 
-router.post('/add_employee', adminAuthController.add_employee);
+router.post('/add_employee', requireAuth, adminAuthController.add_employee);
 
-router.get('/delete_employee/:id', adminAuthController.delete_employee);
+router.get('/delete_employee/:id', requireAuth, adminAuthController.delete_employee);
 
-router.post('/edit_employee/:id', adminAuthController.edit_employee);
+router.post('/edit_employee/:id', requireAuth, adminAuthController.edit_employee);
 
 // router.post('/add_employee', adminAuthController.add_employee);
 
-router.get('/delete_client/:id', adminAuthController.delete_client);
+router.get('/delete_client/:id', requireAuth, adminAuthController.delete_client);
 
-router.post('/edit_client/:id', adminAuthController.edit_client);
+router.post('/edit_client/:id', requireAuth, adminAuthController.edit_client);
 
     // products pages
 
-router.post('/add_product', upload_image.single('image'), product_tables.add_product);
+router.post('/add_product', requireAuth, upload_image.single('image'), product_tables.add_product);
 
-router.post('/edit_product/:id', upload_image.single('image'), product_tables.edit_product);
+router.post('/edit_product/:id', requireAuth, upload_image.single('image'), product_tables.edit_product);
 
-router.get('/delete_product/:id', product_tables.delete_product);
+router.get('/delete_product/:id', requireAuth, product_tables.delete_product);
 
-router.post('/add_category', product_tables.add_category);
+router.post('/add_category', requireAuth, product_tables.add_category);
 
-router.post('/edit_category/:id', product_tables.edit_category);
+router.post('/edit_category/:id', requireAuth, product_tables.edit_category);
 
-router.get('/delete_category/:id', product_tables.delete_category);
+router.get('/delete_category/:id', requireAuth, product_tables.delete_category);
 
 module.exports = router;
