@@ -20,7 +20,7 @@ const  requireAuth = (req, res, next) => {
             }
         });
     } else {
-        res.redirect('/login');
+        res.redirect('/admin/login');
     }
 }
 

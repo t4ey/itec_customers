@@ -7,7 +7,7 @@ const router = express.Router();
 
 // admin middlewares
 
-const { requireAuth, checkUser, alreadyLogged } = require('../middleware/customers_middleware.js');
+const { requireAuth, alreadyLogged } = require('../middleware/admins_middleware.js');
 
 // upload images
 
