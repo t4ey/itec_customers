@@ -159,57 +159,20 @@
 
                     <div class="col col-12 col-lg-9">
                         <div class="container text-start">
+                                
                             <div class="row">
+                            {{#each products}}
                                 <div class="col col-12 col-md-6 col-xl-4 mb-0 mb-lg-4 mt-5 mt-lg-0">
                                     <div class="card">
-                                        <a href=""><img src="../images/arduino.jpg" class="card-img-top" alt="..."></a>
+                                        <a href=""><img src="{{img_dir}}" class="card-img-top" alt="..."></a>
                                         <div class="card-body">
-                                            <a href=""><h5 class="card-title">Arduino Uno</h5></a>
-                                            <p class="card-text">50 Bs.</p>
+                                            <a href=""><h5 class="card-title">{{name}}</h5></a>
+                                            <p class="card-text">{{price}}</p>
                                             <a href="#" class="btn btn-primary w-100"><i class="fa-solid fa-cart-plus"></i> <span>Añadir al carrito</span></a>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col col-12 col-md-6 col-xl-4 mb-0 mb-lg-4 mt-5 mt-lg-0">
-                                    <div class="card">
-                                        <a href=""><img src="../images/arduino.jpg" class="card-img-top" alt="..."></a>
-                                        <div class="card-body">
-                                            <a href="">
-                                                <h5 class="card-title">Arduino Uno</h5>
-                                            </a>
-                                            <p class="card-text">50 Bs.</p>
-                                            <a href="#" class="btn btn-primary w-100"><i class="fa-solid fa-cart-plus"></i> <span>Añadir al
-                                                    carrito</span></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col col-12 col-md-6 col-xl-4 mb-0 mb-lg-4 mt-5 mt-lg-0">
-                                    <div class="card">
-                                        <a href=""><img src="../images/arduino.jpg" class="card-img-top" alt="..."></a>
-                                        <div class="card-body">
-                                            <a href="">
-                                                <h5 class="card-title">Arduino Uno</h5>
-                                            </a>
-                                            <p class="card-text">50 Bs.</p>
-                                            <a href="#" class="btn btn-primary w-100"><i class="fa-solid fa-cart-plus"></i> <span>Añadir al
-                                                    carrito</span></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col col-12 col-md-6 col-xl-4 mb-0 mb-lg-4 mt-5 mt-lg-0">
-                                    <div class="card">
-                                        <a href=""><img src="../images/arduino.jpg" class="card-img-top" alt="..."></a>
-                                        <div class="card-body">
-                                            <a href="">
-                                                <h5 class="card-title">Arduino Uno</h5>
-                                            </a>
-                                            <p class="card-text">50 Bs.</p>
-                                            <a href="#" class="btn btn-primary w-100"><i class="fa-solid fa-cart-plus"></i> <span>Añadir al
-                                                    carrito</span></a>
-                                        </div>
-                                    </div>
-                                </div>
+                            {{/each}}
                             </div>
                         </div>
                     </div>

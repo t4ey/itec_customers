@@ -4,7 +4,8 @@ const authController = require('../controllers/auth.js');
 const router = express.Router();
 
 // authentication jwt
-const { requireAuth, checkUser, alreadyLogged } = require('../middleware/customers_middleware.js')
+const { requireAuth, checkUser, alreadyLogged } = require('../middleware/customers_middleware.js');
+const { products } = require('./admin_tables/product_tables.js');
 
 // GET ROUTES
 
@@ -33,9 +34,12 @@ router.get('/marketplace', requireAuth, async (req, res) => {
     const alertType = req.flash('alertType');
 
     let categories = await db.query("SELECT * FROM categoria");
+    let products = await db.query("SELECT * FROM producto");
+    // console.log(products);
     // console.log(categories);
     res.render('./marketplace/market.hbs',{
         categories: categories,
+        products: products,
         message: message,
         alertType: alertType,
     });
