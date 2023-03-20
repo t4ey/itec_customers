@@ -17,18 +17,24 @@
     <div class="container-fluid sign-in-container">
         <div class="card">
             <div class="card-body">
-
-                <form>
+                <form action="/admin/login" method="POST">
                     <h1 class="mb-4">Tienda OVA</h1>
                     <!-- <img class="mb-4" src="/docs/5.2/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
                     <h1 class="h3 mb-3 fw-normal">Por Favor, Inicie Sesión</h1>
                     
+                    {{#if message}}
+                        <div class="alert {{alertType}} alert-dismissible fade show" role="alert">
+                            {{message}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {{/if}}
+
                     <div class="form-floating pb-3" bis_skin_checked="1">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
                         <label for="floatingInput">Correo Electrónico</label>
                     </div>
                     <div class="form-floating pb-5" bis_skin_checked="1">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
                         <label for="floatingPassword">Contraseña</label>
                     </div>
                     

@@ -10,6 +10,61 @@ const bcrypt = require("bcryptjs");
 
 const { db } = require('../database/database.js');
 
+exports.login = async (req, res) => {
+    console.log("login body:", req.body);
+
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).render('./session/login.hbs', {
+                message: "Nesecita un correo electronico y una contraseña para iniciar sesión",
+                alertType: "alert-warning"
+            })
+        }
+
+        await db.query('SELECT * FROM administradores WHERE email = ?', [email], async (error, result) => {
+            console.log("login result : " + result.length);
+            if (!(result.length > 0)) {
+                console.log(result);
+                return res.status(400).render('./session/login', {
+                    message: "El usuario o la contraseña es incorrecto",
+                    alertType: "alert-danger"
+                });
+            } else if (!(await bcrypt.compare(password, result[0].password))) {
+                console.log(result);
+                return res.status(400).render('./session/login', {
+                    message: "El usuario o la contraseña es incorrecto",
+                    alertType: "alert-danger"
+                });
+            } else {
+                console.log(result);
+                const id = result[0].id;
+                const jwt_secret = "secretPassword";
+                const jwt_expire_in = 3 * 24 * 60 * 60;
+
+                // create JWT token
+
+                const token = jwt.sign({ id: id }, jwt_secret, {
+                    expiresIn: jwt_expire_in,
+                });
+
+                const cookieOptions = {
+                    maxAge: jwt_expire_in * 1000,
+                    httpOnly: true,
+                }
+
+                res.cookie('jwt', token, cookieOptions);
+                
+                return res.redirect("/admin/home");
+            }
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 exports.add_employee = async (req, res) => {
 
     const { name, lastName, phoneNumber, email, localAddress, role, password, repPassword } = req.body;

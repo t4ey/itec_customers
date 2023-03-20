@@ -8,7 +8,10 @@ const path = require('path');
 const flash = require('connect-flash');
 const session = require('express-session');
 
+// user and admins middlewares
+
 const { checkUser } = require('./middleware/customers_middleware.js');
+const { checkAdmin } = require('./middleware/admins_middleware.js');
 
 const cookieParser = require('cookie-parser');
 
@@ -49,16 +52,11 @@ app.get('*', checkUser);
 
 app.use('/', require('./routes/pages.js'));
 
+// check the admin pages if loged there are a locals.admin with the current admin data
+
+app.get('/admin/*', checkAdmin);
+
 app.use('/admin', require('./routes/admin_pages.js'));
-
-app.get('/ff', (req, res) => {
-    req.flash('message', 'Suc');
-    res.redirect('/gg');
-});
-
-app.get('/gg', (req, res) => {
-    res.send(req.flash('message'));
-});
 
 app.listen(port, () => {
     console.log("server started at port: "  + port);

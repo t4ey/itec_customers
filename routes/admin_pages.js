@@ -27,7 +27,12 @@ const upload_image = multer({ storage: storage });
 // AUTHENTICATION REQUESTS
 
 router.get('/login', (req, res) => {
-    res.render('./admin/session/a_login');
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+    res.render('./admin/session/a_login', {
+        message: message,
+        alertType: alertType
+    });
 });
 
 // SIDE BAR GET REQUESTS
@@ -152,6 +157,8 @@ router.get('/edit_category/:id', async (req, res) => {
 
 
 // POST REQUESTS
+
+router.post('/login', adminAuthController.login)
 
 router.post('/add_employee', adminAuthController.add_employee);
 
