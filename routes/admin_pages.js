@@ -162,7 +162,9 @@ router.get('/edit_category/:id', requireAuth, async (req, res) => {
 
 // POST REQUESTS
 
-router.post('/login', alreadyLogged, adminAuthController.login)
+router.post('/login', alreadyLogged, adminAuthController.login);
+
+router.get('/logout', requireAuth, adminAuthController.logout)
 
 router.post('/add_employee', requireAuth, adminAuthController.add_employee);
 

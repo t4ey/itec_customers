@@ -17,26 +17,24 @@ exports.login = async (req, res) => {
         const { email, password } = req.body;
 
         if (!email || !password) {
-            return res.status(400).render('./session/login.hbs', {
-                message: "Nesecita un correo electronico y una contraseña para iniciar sesión",
-                alertType: "alert-warning"
-            })
+            req.flash('message', "Nesecita un correo electronico y una contraseña para iniciar sesión");
+            req.flash('alertType', "alert-warning");
+            return res.redirect('/admin/login');
         }
 
         await db.query('SELECT * FROM administradores WHERE email = ?', [email], async (error, result) => {
             console.log("login result : " + result.length);
             if (!(result.length > 0)) {
                 console.log(result);
-                return res.status(400).render('./session/login', {
-                    message: "El usuario o la contraseña es incorrecto",
-                    alertType: "alert-danger"
-                });
+                req.flash('message', "El usuario o la contraseña es incorrecto");
+                req.flash('alertType', "alert-danger");
+                return res.redirect('/admin/login');
+
             } else if (!(await bcrypt.compare(password, result[0].password))) {
                 console.log(result);
-                return res.status(400).render('./session/login', {
-                    message: "El usuario o la contraseña es incorrecto",
-                    alertType: "alert-danger"
-                });
+                req.flash('message', "El usuario o la contraseña es incorrecto");
+                req.flash('alertType', "alert-danger");
+                return res.redirect('/admin/login');
             } else {
                 console.log(result);
                 const id = result[0].id;
@@ -63,6 +61,12 @@ exports.login = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+}
+
+exports.logout = (req, res) => {
+    res.cookie('jwt', '', { maxAge: 1 });
+
+    return res.redirect("/admin/login");
 }
 
 exports.add_employee = async (req, res) => {
