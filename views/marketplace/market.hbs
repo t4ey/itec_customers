@@ -139,10 +139,13 @@
                                             <a href="#" class="list-group-item list-group-item-action active disabled d-none d-lg-block" aria-current="true">
                                                 Categorias
                                             </a>
-                                            <a href="#" class="list-group-item list-group-item-action">Arduino</a>
-                                            <a href="#" class="list-group-item list-group-item-action">Domótica</a>
-                                            <a href="#" class="list-group-item list-group-item-action">Impresoras 3D</a>
-                                            <a class="list-group-item list-group-item-action">Motores</a>
+                                            {{#each categories}}
+                                                <a href="#" class="list-group-item list-group-item-action">{{name}}</a>
+                                            {{else}}
+                                                <a href="#" class="list-group-item list-group-item-action">Shomething went wrong :(</a>
+                                            {{/each}}
+                                            {{!-- <a href="#" class="list-group-item list-group-item-action">Impresoras 3D</a>
+                                            <a class="list-group-item list-group-item-action">Motores</a> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -281,6 +284,6 @@
             crossorigin="anonymous"></script>
         
         <!-- js custom -->
-        <script src="../js/market.js"></script>
+        <script src="/js/market.js"></script>
     </body>
 </html>

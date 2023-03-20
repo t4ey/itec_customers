@@ -28,9 +28,17 @@ router.get('/profile', requireAuth, (req, res) => {
 
 ///marketplace section
 
-router.get('/marketplace', requireAuth, (req, res) => {
+router.get('/marketplace', requireAuth, async (req, res) => {
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
 
-    res.render('./marketplace/market.hbs',);
+    let categories = await db.query("SELECT * FROM categoria");
+    // console.log(categories);
+    res.render('./marketplace/market.hbs',{
+        categories: categories,
+        message: message,
+        alertType: alertType,
+    });
 });
 
 
