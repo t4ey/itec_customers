@@ -152,9 +152,14 @@
                 </div>
 
                 <!-- item section -->
-
                 <div class="col col-12 col-lg-9 p-3 p-lg-0">
                     <div class="container text-start">
+                        {{#if message}}
+                            <div class="alert {{alertType}} alert-dismissible fade show" role="alert">
+                                {{message}}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {{/if}}
                         <div class="row">
                             {{#with product}}
                             <div class="col col-12 col-lg-6">
@@ -181,7 +186,7 @@
                                 <hr>
                                 <p>Código de Producto : <strong>EL-42</strong></p>
                                 <p>Existencias: <span class="avalability">Disponible</span></p>
-                                <form action="/marketplace/cart_shopping/add_product" method="POST" class="row g-3">
+                                <form action="/marketplace/cart_shopping/add_product/{{id}}" method="POST" class="row g-3">
                                     <div class="col-4 col-lg-2">
                                         <label for="inputNumberQuantity" class="form-label">Cantidad:</label>
 
