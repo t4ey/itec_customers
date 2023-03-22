@@ -45,6 +45,44 @@ router.get('/marketplace', requireAuth, async (req, res) => {
     });
 });
 
+router.get('/marketplace/product/:id', requireAuth, async (req, res) => {
+    const { id } = req.params;
+    console.log('id : ', id)
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+
+    let product = await db.query("SELECT * FROM producto WHERE id = ?", [id]);
+    let categories = await db.query("SELECT * FROM categoria");
+
+    console.log(product);
+    // console.log(categories);
+    res.render('./marketplace/product.hbs', {
+        categories: categories,
+        product: product[0],
+        message: message,
+        alertType: alertType,
+    });
+});
+
+
+router.get('/marketplace/cart_shopping', requireAuth, async (req, res) => {
+    const { id } = req.params;
+    console.log('id : ', id)
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+
+    let product = await db.query("SELECT * FROM producto WHERE id = ?", [id]);
+    let categories = await db.query("SELECT * FROM categoria");
+
+    console.log(product);
+    // console.log(categories);
+    res.render('./marketplace/cart_shopping.hbs', {
+        categories: categories,
+        product: product[0],
+        message: message,
+        alertType: alertType,
+    });
+});
 
 
 // POST ROUTES
