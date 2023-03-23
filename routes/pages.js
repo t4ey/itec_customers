@@ -67,19 +67,33 @@ router.get('/marketplace/product/:id', requireAuth, async (req, res) => {
 
 
 router.get('/marketplace/cart_shopping', requireAuth, async (req, res) => {
-    // const  user_id = res.locals.user.id;
+    const client_id = res.locals.user.id;
     // console.log('id : ', user_id)
     const message = req.flash('message');
     const alertType = req.flash('alertType');
 
-    // let product = await db.query("SELECT * FROM  WHERE id = ?", [id]);
-    // let categories = await db.query("SELECT * FROM categoria");
+    let cart_products = await db.query("SELECT * FROM cart_shopping WHERE client_id = ?", [client_id]);
+    // console.log(cart_products);
+    let product;
+    let products = [];
+    let total_cash = 0;
+    let n_products = 0;
 
-    // console.log(product);
+    for( var i = 0; i < cart_products.length; i++){
+        product = await db.query("SELECT * FROM producto WHERE id = ?", [cart_products[i].producto_id]);
+        products.push(product[0]);
+        products[i].quantity = cart_products[i].cantidad;
+        total_cash += product[0].price * cart_products[i].cantidad;
+        n_products++;
+    }
+
+    console.log(products);
+    console.log(cart_products);
     // console.log(categories);
     res.render('./marketplace/cart_shopping.hbs', {
-        // categories: categories,
-        // product: product[0],
+        total_cash: total_cash,
+        n_products: n_products,
+        products: products,
         message: message,
         alertType: alertType,
     });
@@ -99,5 +113,7 @@ router.get('/logout', authController.logout);
     // marketplace posts
 
 router.post('/marketplace/cart_shopping/add_product/:id', checkUser, marketplace.add_to_shopping_cart);
+
+router.get('/marketplace/product/cart_shopping/remove_product/:id', requireAuth, marketplace.delete_cart_product);
 
 module.exports = router;

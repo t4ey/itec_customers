@@ -108,30 +108,41 @@
 
     <section id="shopping">
         <div class="container-fluid items-container text-center ">
+        {{#if message}}
+            <div class="alert {{alertType}} alert-dismissible fade show text-start" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {{/if}}
             <div class="row">
                 <div class="col-12">
                     <h2 class="text-start pb-3">Productos en el <strong>Carrito</strong></h2>
                 </div>
                 <div class="col col-12 col-lg-8">
                     <div class="container-fluid">
-                        <div class="row item">
-                            <div class="col col-5 col-sm-2 px-0">
-                                <img class="item-img" src="../images/arduino.jpg" alt="">
+                        {{#if products}}
+                            {{#each products}}
+                            <div class="row item">
+                                <div class="col col-5 col-sm-2 px-0">
+                                    <img class="item-img" src="{{img_dir}}" alt="">
+                                </div>
+                                <div class="col col-7 col-sm-5 my-auto">
+                                    <h2 class="">{{name}}</h2>
+                                </div>
+                                <div class="col col-5 col-sm-2 my-auto py-3 py-sm-0">
+                                    <input type="number" min="1" max="50" value="{{quantity}}">
+                                </div>
+                                <div class="col col-5 col-sm-2 my-auto">
+                                    <p class="my-auto">{{price}} Bs</p>
+                                </div>
+                                <div class="col col-2 col-sm-1 my-auto">
+                                    <a href="/marketplace/product/cart_shopping/remove_product/{{id}}" ><i class="fa-solid fa-trash"></i></a>
+                                </div>
                             </div>
-                            <div class="col col-7 col-sm-5 my-auto">
-                                <h2 class="">Arduino Uno</h2>
-                            </div>
-                            <div class="col col-5 col-sm-2 my-auto py-3 py-sm-0">
-                                <input type="number" min="1" max="50" value="1">
-                            </div>
-                            <div class="col col-5 col-sm-2 my-auto">
-                                <p class="my-auto">50 Bs</p>
-                            </div>
-                            <div class="col col-2 col-sm-1 my-auto">
-                                <a href="#" ><i class="fa-solid fa-trash"></i></a>
-                            </div>
-                        </div>
-                        <div class="row item">
+                            {{/each}}
+                        {{else}}
+                        {{/if}}
+                        {{!-- <div class="row item">
                             <div class="col col-5 col-sm-2 px-0">
                                 <img class="item-img" src="../images/arduino.jpg" alt="">
                             </div>
@@ -164,13 +175,13 @@
                             <div class="col col-2 col-sm-1 my-auto px-0">
                                 <a href="#"><i class="fa-solid fa-trash"></i></a>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="col col-12 col-lg-4 text-start px-lg-3">
                     <div class="container-fluid calculus-container">
                         <p class="d-inline-block me-auto">N° Artículos: </p>
-                        <p class="d-inline-block">50</p>
+                        <p class="d-inline-block">{{n_products}}</p>
                         <br>
                         <p class="d-inline-block">SubTotal: </p>
                         <p class="d-inline-block">50</p>
@@ -179,7 +190,7 @@
                         <p class="d-inline-block">50</p>
                         <hr>
                         <p class="d-inline-block">Total: </p>
-                        <p class="d-inline-block">50</p>
+                        <p class="d-inline-block">{{total_cash}} Bs.</p>
                     </div>
                     <div class="container-fluid buy-btn-container text-center">
                         <button type="button" class="btn btn-success">Hacer Pedido</button>

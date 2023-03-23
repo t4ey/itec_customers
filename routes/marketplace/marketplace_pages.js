@@ -42,3 +42,15 @@ exports.add_to_shopping_cart = async (req, res) => {
 
     // res.send("ok");
 }
+
+exports.delete_cart_product = async (req, res) => {
+    const { id } = req.params;
+    const product_id = id;
+    const client_id = res.locals.user.id;
+
+    await db.query('DELETE FROM cart_shopping WHERE client_id = ? AND producto_id = ?', [client_id, product_id]);
+
+    req.flash('message', 'Producto Eliminado');
+    req.flash('alertType', 'alert-success');
+    res.redirect('/marketplace/cart_shopping');
+}
