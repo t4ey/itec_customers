@@ -38,7 +38,7 @@ exports.login = async (req, res) => {
             } else {
                 console.log(result);
                 const id = result[0].id;
-                const jwt_secret = "secretPassword";
+                const jwt_secret = "secretAdminPassword";
                 const jwt_expire_in = 3 * 24 * 60 * 60;
 
                 // create JWT token

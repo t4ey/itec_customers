@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const jwt_secret = "secretPassword";
+const jwt_secret = "secretAdminPassword";
 
 const { db } = require('../database/database.js');
 
@@ -32,8 +32,9 @@ const checkAdmin = async (req, res, next) => {
     if (token) {
         jwt.verify(token, jwt_secret, async (error, decodedToken) => {
             if (error) {
-                console.log(error.message);
+                console.log("error : ", error.message);
                 res.locals.admin = null;
+                res.redirect('/');
                 // res.redirect('/login');                
             } else {
                 console.log("check admin md: ",decodedToken);
