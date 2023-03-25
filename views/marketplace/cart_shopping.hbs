@@ -114,6 +114,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {{/if}}
+            {{#if order}}
+                <form action="/marketplace/cart_shopping/cancel_order" method="POST">
+            {{else}}
+                <form action="/marketplace/cart_shopping/make_order" method="POST">
+            {{/if}}
             <div class="row">
                 <div class="col-12">
                     <h2 class="text-start pb-3">Productos en el <strong>Carrito</strong></h2>
@@ -130,7 +135,8 @@
                                     <h2 class="">{{name}}</h2>
                                 </div>
                                 <div class="col col-5 col-sm-2 my-auto py-3 py-sm-0">
-                                    <input type="number" min="1" max="50" value="{{quantity}}">
+                                    <input name="product_id" type="number" value="{{id}}" class="d-none">
+                                    <input name="quantity" type="number" min="1" max="50" value="{{quantity}}">
                                 </div>
                                 <div class="col col-5 col-sm-2 my-auto">
                                     <p class="my-auto">{{price}} Bs</p>
@@ -141,6 +147,7 @@
                             </div>
                             {{/each}}
                         {{else}}
+                            {{!-- content --}}
                         {{/if}}
                         {{!-- <div class="row item">
                             <div class="col col-5 col-sm-2 px-0">
@@ -193,11 +200,16 @@
                         <p class="d-inline-block">{{total_cash}} Bs.</p>
                     </div>
                     <div class="container-fluid buy-btn-container text-center">
-                        <button type="button" class="btn btn-success">Hacer Pedido</button>
+                    {{#if order}}
+                        <button type="submit" class="btn btn-outline-secondary">Cancelar pedido</button>
+                    {{else}}
+                        <button type="submit" class="btn btn-success">Hacer Pedido</button>
+                    {{/if}}
                     </div>
                 </div>
             </div>
         </div>
+        </form>
     </section>
 
     <!-- footer section -->

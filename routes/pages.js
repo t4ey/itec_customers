@@ -1,5 +1,6 @@
 const express = require('express');
 const authController = require('../controllers/auth.js');
+const { db } = require('../database/database.js');
 
 const router = express.Router();
 
@@ -87,10 +88,15 @@ router.get('/marketplace/cart_shopping', requireAuth, async (req, res) => {
         n_products++;
     }
 
-    console.log(products);
-    console.log(cart_products);
+    let pedido = false;
+    if((await db.query("SELECT * FROM pedido WHERE client_id = ?", [client_id])).length > 0)
+        pedido = true;
+    else { pedido = false }
+    // console.log(products);
+    // console.log(cart_products);
     // console.log(categories);
     res.render('./marketplace/cart_shopping.hbs', {
+        order: pedido,
         total_cash: total_cash,
         n_products: n_products,
         products: products,
@@ -115,5 +121,9 @@ router.get('/logout', authController.logout);
 router.post('/marketplace/cart_shopping/add_product/:id', checkUser, marketplace.add_to_shopping_cart);
 
 router.get('/marketplace/product/cart_shopping/remove_product/:id', requireAuth, marketplace.delete_cart_product);
+
+router.post('/marketplace/cart_shopping/make_order', checkUser, marketplace.make_order);
+
+router.post('/marketplace/cart_shopping/cancel_order', checkUser, marketplace.cancel_order);
 
 module.exports = router;
