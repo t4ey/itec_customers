@@ -140,7 +140,10 @@
                                                 Categorias
                                             </a>
                                             {{#each categories}}
-                                                <a href="#" class="list-group-item list-group-item-action">{{name}}</a>
+                                                <form action="/marketplace/search" method="get">
+                                                    <input type="number" class="d-none" name="category" id="{{id}}" value="{{id}}">
+                                                    <button type="submit" class="list-group-item list-group-item-action">{{name}}</button>
+                                                </form>
                                             {{else}}
                                                 <a href="#" class="list-group-item list-group-item-action">Shomething went wrong :(</a>
                                             {{/each}}

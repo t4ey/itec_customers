@@ -32,20 +32,13 @@ router.get('/profile', requireAuth, (req, res) => {
 ///marketplace section
 
 router.get('/marketplace', requireAuth, async (req, res) => {
-    const searched_products = res.locals.products;
     const message = req.flash('message');
     const alertType = req.flash('alertType');
 
     let categories = await db.query("SELECT * FROM categoria");
-    console.log("p: ", res.locals.products);
-    if(searched_products){
-        console.log(req.products)
-        // products = req.products;
-    }
-    else {
 
-        products = await db.query("SELECT * FROM producto");
-    }
+    const products = await db.query("SELECT * FROM producto");
+    
     // console.log(products);
     // console.log(categories);
     res.render('./marketplace/market.hbs',{
@@ -116,13 +109,36 @@ router.get('/marketplace/cart_shopping', requireAuth, async (req, res) => {
 
 router.get('/marketplace/search/', async (req, res) => {
     const search_string = req.query.search;
+    const category = req.query.category;
+
     const message = req.flash('message');
     const alertType = req.flash('alertType');
     // console.log("name : ", search_string);
     let categories = await db.query("SELECT * FROM categoria");
-    const products = await db.query("SELECT * FROM producto WHERE name LIKE '%"+search_string+"%'");
     
-    if (products) {
+    if(category) {
+        const p_cat = await db.query("SELECT prod_id FROM clasificacion WHERE cat_id = ?", [category]);
+        let p_cat_list = [];
+        let products;
+        for(var i = 0; i<p_cat.length;i++){
+            p_cat_list.push(p_cat[i].prod_id);
+        }
+        if(p_cat.length > 0){
+            products = await db.query("SELECT * FROM producto WHERE id IN (?);", [p_cat_list]);
+        }
+        console.log("pcat : " ,p_cat);
+        console.log(products);
+
+        return res.render('./marketplace/market.hbs', {
+            categories: categories,
+            products: products,
+            message: message,
+            alertType: alertType,
+        });
+    }
+    
+    else if (search_string && products.length > 0) {
+        const products = await db.query("SELECT * FROM producto WHERE name LIKE '%"+search_string+"%'");
         // console.log(products);
         return res.render('./marketplace/market.hbs', {
             categories: categories,
@@ -133,7 +149,7 @@ router.get('/marketplace/search/', async (req, res) => {
     } else {
         req.flash('message', 'no se encontro ningún producto');
         req.flash('alertType', 'alert-danger');
-        res.redirect('marketplace');
+        res.redirect('/marketplace');
         // res.locals.products = null;
         // console.log("user checked", req.originalUrl);
         // console.log(await db.query("SELECT * FROM client WHERE id = 4"));
