@@ -34,7 +34,7 @@ exports.add_to_shopping_cart = async (req, res) => {
             else {
                 req.flash('message', "Producto añadido.");
                 req.flash('alertType', "alert-success");
-                return res.redirect('/marketplace/product/' + product_id);
+                return res.redirect('back');
             }
 
         });
