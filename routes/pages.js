@@ -32,11 +32,20 @@ router.get('/profile', requireAuth, (req, res) => {
 ///marketplace section
 
 router.get('/marketplace', requireAuth, async (req, res) => {
+    const searched_products = res.locals.products;
     const message = req.flash('message');
     const alertType = req.flash('alertType');
 
     let categories = await db.query("SELECT * FROM categoria");
-    let products = await db.query("SELECT * FROM producto");
+    console.log("p: ", res.locals.products);
+    if(searched_products){
+        console.log(req.products)
+        // products = req.products;
+    }
+    else {
+
+        products = await db.query("SELECT * FROM producto");
+    }
     // console.log(products);
     // console.log(categories);
     res.render('./marketplace/market.hbs',{
@@ -105,6 +114,32 @@ router.get('/marketplace/cart_shopping', requireAuth, async (req, res) => {
     });
 });
 
+router.get('/marketplace/search/', async (req, res) => {
+    const search_string = req.query.search;
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+    // console.log("name : ", search_string);
+    let categories = await db.query("SELECT * FROM categoria");
+    const products = await db.query("SELECT * FROM producto WHERE name LIKE '%"+search_string+"%'");
+    
+    if (products) {
+        // console.log(products);
+        return res.render('./marketplace/market.hbs', {
+            categories: categories,
+            products: products,
+            message: message,
+            alertType: alertType,
+        });
+    } else {
+        req.flash('message', 'no se encontro ningún producto');
+        req.flash('alertType', 'alert-danger');
+        res.redirect('marketplace');
+        // res.locals.products = null;
+        // console.log("user checked", req.originalUrl);
+        // console.log(await db.query("SELECT * FROM client WHERE id = 4"));
+    }
+    
+});
 
 // POST ROUTES
 

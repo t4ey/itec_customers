@@ -17,6 +17,7 @@ exports.add_to_shopping_cart = async (req, res) => {
     }
 
     const orderActive = await db.query("SELECT * FROM pedido WHERE client_id = ?" , [client_id]);
+    // console.log(orderActive);
 
     if (orderActive.length > 0) {
         req.flash('message', "Tiene un pedido en curso, no puede añadir o eliminar productos hasta que el pedido sea completado");
