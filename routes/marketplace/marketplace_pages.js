@@ -16,6 +16,15 @@ exports.add_to_shopping_cart = async (req, res) => {
         return res.redirect('/marketplace/product/' + product_id);
     }
 
+    const orderActive = await db.query("SELECT * FROM pedido WHERE client_id = ?" , [client_id]);
+
+    if (orderActive.length > 0) {
+        req.flash('message', "Tiene un pedido en curso, no puede añadir o eliminar productos hasta que el pedido sea completado");
+        req.flash('alertType', "alert-warning");
+        return res.redirect('/marketplace/cart_shopping');
+    }
+
+
     await db.query("SELECT * FROM cart_shopping WHERE client_id = ? AND producto_id = ?", [client_id, product_id], async (error, result) => {
         if (error)
             console.log(error);
