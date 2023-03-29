@@ -107,19 +107,26 @@
             <!-- dashboard -->
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Ordenes</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group me-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                <div class="container-fluid px-0">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Ordenes</h1>
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <div class="btn-group me-2">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                                <span data-feather="calendar" class="align-text-bottom"></span>
+                                This week
+                            </button>
                         </div>
-                        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                            <span data-feather="calendar" class="align-text-bottom"></span>
-                            This week
-                        </button>
                     </div>
+                    {{#if message}}
+                        <div class="alert {{alertType}} alert-dismissible fade show" role="alert">
+                            {{message}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {{/if}}
                 </div>
 
 
@@ -195,6 +202,7 @@
                     </div>
                 </div> -->
                 <div class="table-sm-responsive">
+                    {{#if orders}}
                     <table class="table table-hover table-bordered">
                         <thead>
                             <tr>
@@ -206,18 +214,20 @@
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
+                            {{#each orders}}
                             <tr class="">
-                                <td class="order align-middle white-space-nowrap"><a class="fw-semi-bold" href="#!">#2448</a>
-                                <td class="total align-middle fw-semi-bold text-1000">$9562</td>
+                                <td class="order align-middle white-space-nowrap"><a class="fw-semi-bold" href="#!">#{{id}}</a>
+                                <td class="total align-middle fw-semi-bold text-1000">Bs. {{total_amount}}</td>
                                 <td class="align-middle white-space-nowrap ps-8">
                                     <a class=" align-items-center" href="#">
-                                        <h6 class="mb-0 text-900">Igor Borvibson</h6>
+                                        <h6 class="mb-0 text-900">{{client_name}}</h6>
                                     </a>
                                 </td>
                                 <td><span class="badge bg-success">Confirmado <i class="fa-solid fa-check"></i></span></td>
-                                <td class="date align-middle white-space-nowrap text-700 fs--1 ">Nov 24, 10:16 AM</td>
+                                <td class="date align-middle white-space-nowrap text-700 fs--1 ">{{fecha_de_pedido}}</td>
                             </tr>
-                            <tr class="">
+                            {{/each}}
+                            {{!-- <tr class="">
                                 <td class="order align-middle white-space-nowrap"><a class="fw-semi-bold" href="#!">#2448</a>
                                 <td class="total align-middle fw-semi-bold text-1000">$9562</td>
                                 <td class="align-middle white-space-nowrap ps-8">
@@ -252,9 +262,17 @@
                                 <td class="d-none d-xl-table-cell">31/06/2022</td>
                                 <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
                                 <td class="d-none d-md-table-cell">Carl Jenkins</td>
-                            </tr>
+                            </tr> --}}
                         </tbody>
                     </table>
+                    {{else}}
+                        <div class="col-md-8 mx-auto text-center pt-5">
+                            <div class="card card-body">
+                                <h2>No hay ningún pedido</h2>
+                                <a href="/admin/add_product"><h3>Añadir Un nuevo Producto</h3></a>
+                            </div>
+                        </div>
+                    {{/if}}
                 </div>
             </main>
         </div>

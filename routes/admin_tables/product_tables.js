@@ -343,55 +343,36 @@ exports.orders = async (req, res) => {
     const alertType = req.flash('alertType');
 
     // console.log(message);
-    return res.render('./admin/products/orders.hbs', {
-        message: message,
-        alertType: alertType,
-        // products: products,
+    
+
+    await db.query("SELECT * FROM pedido", async (error, result) => {
+        if (error)
+            console.log(error);
+
+        const orders = result;
+        let list_client_ids = [];
+        for(var i = 0; i < orders.length ; i++){
+            list_client_ids.push(orders[i].client_id);
+        }
+        const clients_data = await db.query('SELECT * FROM client WHERE id IN(?)', [list_client_ids]);
+
+        for(var i = 0; i < orders.length ; i++) {
+            
+            for (var j = 0; j < clients_data.length; j++) {
+                if (orders[i].client_id == clients_data[j].id){
+                    orders[i].client_name = clients_data[j].first_name;
+                    // console.log("match")
+                }
+            }            
+        }
+
+        console.log(orders);
+        return res.render('./admin/products/orders.hbs', {
+            message: message,
+            alertType: alertType,
+            orders: orders,
+        });
+
     });
-
-    // await db.query("SELECT * FROM ordenes", async (error, result) => {
-    //     if (error)
-    //         console.log(error);
-
-    //     let products = result;
-
-    //     // display categories part
-
-    //     for (var i = 0; i < products.length; i++) {
-    //         products[i].img_dir = micro_img_dir(products[i].img_dir); // change to micro img dir
-
-    //         product_category_ids = await db.query("SELECT cat_id FROM clasificacion WHERE prod_id = ?", [products[i].id]);
-
-    //         let name_categories = [];
-    //         // console.log(product_category_ids);
-    //         // console.log(cat_ids);
-
-    //         for (var j = 0; j < product_category_ids.length; j++) {
-    //             if (product_category_ids[j]) {
-    //                 let get_cat_name = await db.query("SELECT name FROM categoria WHERE id = ?", [product_category_ids[j].cat_id]);
-    //                 // console.log(get_cat_name[0].name);
-    //                 name_categories.push(get_cat_name[0].name);
-    //                 // console.log("categories push: ", categories);
-    //             }
-
-    //         }
-    //         products[i].categories = name_categories;
-    //         // console.log(products[i]);
-    //         // console.log("next id", categories);
-    //     }
-
-    //     // console.log(products);
-    //     if (products) {
-    //         // console.log(result);
-    //         return res.render('./admin/products/products.hbs', {
-    //             message: message,
-    //             alertType: alertType,
-    //             products: products,
-    //         });
-    //     }
-    //     else
-    //         console.log("nop");
-
-    // });
 
 }

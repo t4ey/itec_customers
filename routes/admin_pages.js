@@ -159,6 +159,8 @@ router.get('/edit_category/:id', requireAuth, async (req, res) => {
     });
 });
 
+// orders pages
+
 router.get('/orders', requireAuth, product_tables.orders);
 
 
