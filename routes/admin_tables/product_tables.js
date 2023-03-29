@@ -352,9 +352,6 @@ exports.orders = async (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
 
-    // format timestamp
-    // const timeAgo = new TimeAgo('es-ES')
-
     // console.log(message);
     
 
