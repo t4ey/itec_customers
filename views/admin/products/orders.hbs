@@ -219,11 +219,22 @@
                                 <td class="order align-middle white-space-nowrap"><a class="fw-semi-bold" href="#!">#{{id}}</a>
                                 <td class="total align-middle fw-semi-bold text-1000">Bs. {{total_amount}}</td>
                                 <td class="align-middle white-space-nowrap ps-8">
-                                    <a class=" align-items-center" href="#">
+                                    <a class=" align-items-center" href="/admin/edit_client/{{client_id}}">
                                         <h6 class="mb-0 text-900">{{client_name}}</h6>
                                     </a>
                                 </td>
-                                <td><span class="badge bg-success">Confirmado <i class="fa-solid fa-check"></i></span></td>
+                                {{#if completed}}
+                                    <td><span class="badge bg-primary">Completado <i class="fa-solid fa-check"></i></span></td>
+                                {{/if}}
+                                {{#if new}}
+                                    <td><span class="badge bg-success" style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-check"></i></span></td>
+                                {{/if}}
+                                {{#if ready-to-pay}}
+                                    <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
+                                {{/if}}
+                                {{#if cancelled}}
+                                    <td><span class="badge bg-danger">Cancelled <i class="fa-solid fa-xmark"></i></span></td>
+                                {{/if}}
                                 <td class="date align-middle white-space-nowrap text-700 fs--1 ">{{fecha_de_pedido}}</td>
                             </tr>
                             {{/each}}

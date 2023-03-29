@@ -1,5 +1,15 @@
 const { db } = require("../../database/database");
 
+// timestamp formatter
+const timeAgo = require('timeago.js/dist/timeago.full.min');
+// const { es } = require('timeago.js/lib/lang/es').default;
+// timeAgo.register('es', es);
+// const date = timeAgo.format('2016-06-12', 'fr')
+// console.log(date);
+// const { es } = require('javascript-time-ago/locale/es');
+
+// timeAgo.addDefaultLocale(es);
+
 // resize the given image
 const sharp = require('sharp');
 
@@ -342,6 +352,9 @@ exports.orders = async (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
 
+    // format timestamp
+    // const timeAgo = new TimeAgo('es-ES')
+
     // console.log(message);
     
 
@@ -361,6 +374,24 @@ exports.orders = async (req, res) => {
             for (var j = 0; j < clients_data.length; j++) {
                 if (orders[i].client_id == clients_data[j].id){
                     orders[i].client_name = clients_data[j].first_name;
+
+                    orders[i].fecha_de_pedido = timeAgo.format(orders[i].fecha_de_pedido, "es");
+
+                    switch (orders[i].status ) {
+                        case 'new':
+                            orders[i].new = true;
+                            break;
+                        case 'confirmed':
+                            orders[i].confirmed = true;
+                            break;
+                        case 'new':
+                            orders[i].ready_to_pay = true;
+                            break;
+                        case 'new':
+                            orders[i].canceled = true;
+                            break;
+                        default:
+                    }
                     // console.log("match")
                 }
             }            
