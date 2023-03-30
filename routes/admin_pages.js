@@ -163,6 +163,7 @@ router.get('/edit_category/:id', requireAuth, async (req, res) => {
 
 router.get('/orders', requireAuth, product_tables.orders);
 
+router.get('/orders/details/:id', requireAuth, product_tables.order_details);
 
 // POST REQUESTS
 

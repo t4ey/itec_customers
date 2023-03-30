@@ -381,10 +381,10 @@ exports.orders = async (req, res) => {
                         case 'confirmed':
                             orders[i].confirmed = true;
                             break;
-                        case 'new':
+                        case 'ready-to-pay':
                             orders[i].ready_to_pay = true;
                             break;
-                        case 'new':
+                        case 'canceled':
                             orders[i].canceled = true;
                             break;
                         default:
@@ -399,6 +399,71 @@ exports.orders = async (req, res) => {
             message: message,
             alertType: alertType,
             orders: orders,
+        });
+
+    });
+
+}
+
+exports.order_details = async (req, res) => {
+    const { id } = req.params;
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+
+    // console.log(message);
+
+
+    await db.query("SELECT * FROM pedido WHERE id = ?", [id], async (error, result) => {
+        if (error)
+            console.log(error);
+
+        const order = result[0];
+        const client_details = await db.query("SELECT * FROM client WHERE id = ?", [order.client_id]);
+        const order_details = await db.query("SELECT * FROM detalle_pedido WHERE pedido_id = ?", [order.id]);
+        let list_product_ids = [];
+        for(var i = 0; i<order_details.length ;i++) {
+            list_product_ids.push(order_details[i].producto_id);
+        }
+
+        const ordered_products = await db.query("SELECT * FROM producto WHERE id IN (?);", [list_product_ids]);
+        for (var i = 0; i < ordered_products.length; i++) {
+            ordered_products[i].total = ordered_products[i].price * order_details[i].cantidad;
+            ordered_products[i].quantity = order_details[i].cantidad;
+        }
+        // console.log(client_details);
+        // console.log(order_details);
+        // console.log(ordered_products);
+        console.log(order);
+   
+
+        order.fecha_de_pedido = timeAgo.format(order.fecha_de_pedido, "es");
+
+        switch (order.status) {
+            case 'new':
+                order.new = true;
+                break;
+            case 'confirmed':
+                order.confirmed = true;
+                break;
+            case 'ready-to-pay':
+                order.ready_to_pay = true;
+                break;
+            case 'canceled':
+                order.canceled = true;
+                break;
+            default:
+        }
+            // console.log("match")
+        // }
+
+        // console.log(order);
+        return res.render('./admin/products/order_details.hbs', {
+            message: message,
+            alertType: alertType,
+            order: order,
+            client: client_details[0],
+            ordered_products: ordered_products,
+            order_details: order_details,
         });
 
     });

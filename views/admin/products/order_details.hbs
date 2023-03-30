@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OVA admins</title>
+
+    <!-- boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;900&family=Ubuntu:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <!-- font awesome icons -->
+    <script src="https://kit.fontawesome.com/8faedc4425.js" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="../css/styles_dashboard.css">
+</head>
+<body>
+    
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">Tienda Virtual OVA</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="pt-1 pt-sm-5 col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3 sidebar-sticky">
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="./dashboard.html" class="nav-link link-dark" aria-current="page">
+                                <i class="fa-solid fa-house"></i>
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./orders.html" class="nav-link link-dark">
+                                <i class="fa-regular fa-note-sticky"></i>
+                                Ordenes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link active">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                Productos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./clients.html" class="nav-link link-dark">
+                                <i class="fa-solid fa-user-group"></i>
+                                Clientes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./salesperson.html" class="nav-link link-dark">
+                                <span class="me-2">
+                                    <i class="fa-regular fa-id-badge"></i>
+                                </span>
+                                Vendedores
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./reports.html" class="nav-link link-dark">
+                                <span class="me-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-bar-chart-2 align-text-bottom" aria-hidden="true">
+                                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                                    </svg>
+                                </span>
+                                Reportes
+                            </a>
+                        </li>
+                    </ul>
+
+                    <hr class="">
+                    <div class="dropdown px-3" bis_skin_checked="1">
+                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                            <strong>User1</strong>
+                        </a>
+                        <ul class="dropdown-menu text-small shadow">
+                            <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </nav>
+
+            <!-- dashboard -->
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Detalles de la Orden</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <a class="btn btn-success" href="/links/add">Añadir Producto <i class="fa-solid fa-plus"></i></a>
+                    </div>
+                </div>
+                
+                
+                <h3>Orden #{{order.id}}</h3>
+                
+                <div class="container-fluid pt-2">
+                    <div class="row">
+                        <div class="col px-0">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th>Precio</th>
+                                        <th>Cantidad</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-group-divider">
+                                    {{!-- <tr class="">
+                                        <td class="order align-middle white-space-nowrap">23</td>
+                                        <td class="align-middle white-space-nowrap ps-8">
+                                            <a class=" align-items-center" href="#">
+                                                <h6 class="mb-0 text-900">Arduino Uno</h6>
+                                            </a>
+                                        </td>
+                                        <td class="total align-middle fw-semi-bold text-1000">95 Bs.</td>
+                                        
+                                        <td class="date align-middle white-space-nowrap text-700 "><span class="h2">45</span> unidades</td>
+                                    </tr>
+                                    <tr class="">
+                                        <td class="order align-middle white-space-nowrap">23</td>
+                                        <td class="align-middle white-space-nowrap ps-8">
+                                            <a class=" align-items-center" href="#">
+                                                <h6 class="mb-0 text-900">Arduino Uno</h6>
+                                            </a>
+                                        </td>
+                                        <td class="total align-middle fw-semi-bold text-1000">95 Bs.</td>
+                                        <td class="date align-middle white-space-nowrap text-700 "><span class="h3">45</span> unidades</td>
+                                    </tr> --}}
+                                    {{#each ordered_products}}
+                                    <tr class="">
+                                        <td class="order align-middle white-space-nowrap">23</td>
+                                        <td class="align-middle white-space-nowrap ps-8">
+                                            <a class=" align-items-center" href="#">
+                                                <h6 class="mb-0 text-900">{{name}}</h6>
+                                            </a>
+                                        </td>
+                                        <td class="total align-middle fw-semi-bold text-1000">{{price}} Bs.</td>
+                                        <td class="date align-middle white-space-nowrap text-700 "><span class="h5"></span>{{quantity}} unidades</td>
+                                        <td class="total align-middle fw-semi-bold text-1000">{{total}} Bs.</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                            <h3>Detalles de Cliente</h3>
+                            
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card mb-2 mt-2">
+                                        <div class="card-body">
+                                            {{#with client}}
+                                            <form action="/links/add" method="POST">
+                                                <div class="form-group pb-3">
+                                                    <label class="" for="">Nombre(s) :</label>
+                                                    <h5>{{first_name}}</h5>
+                                                </div>
+                                                <div class="form-group pb-3">
+                                                    <label class="" for="">Apellido(s) :</label>
+                                                    <h5>{{last_name}}</h5>
+                                                </div>
+                                                <div class="form-group pb-2">
+                                                    <label class="" for="">Email :</label>
+                                                    <a href="/admin/edit_client/{{id}}">
+                                                        <h5>{{email}}</h5>
+                                                    </a>
+                                                </div>
+                                            </form>
+                                            {{/with}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-7"></div>
+                            </div>   
+                            
+                        </div>
+
+
+                        <div class="col-md-4 mx-auto ps-4 pe-0">
+                            <div class="card mb-3">
+                                <div class="card-header text-center">
+                                    <h4>Resumen</h4>
+                                </div>
+                                <div class="card-body mx-3">
+                                    <form action="/links/add" method="POST">
+                                        <div class="form-group pb-3">
+                                            <div class="row">
+                                                <div class="col text-start">
+                                                    <label class="" for="">N° Productos</label>
+
+                                                </div>
+                                                <div class="col text-end">
+                                                    <h4>{{order.n_products}} productos</h4>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            <div class="row">
+                                                <div class="col text-start">
+                                                    <label class="" for="">Sub Total : </label>
+                                        
+                                                </div>
+                                                <div class="col text-end">
+                                                    <h5>{{order.total_amount}} Bs.</h5>
+                                        
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group pb-3">
+                                            <div class="row">
+                                                <div class="col text-start">
+                                                    <h4 class="" for="">Total : </h4>
+                                        
+                                                </div>
+                                                <div class="col text-end">
+                                                    <h4>{{order.total_amount}} Bs.</h4>
+                                        
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header text-center">
+                                    <h4>Estado del Pedido</h4>
+                                </div>
+                                <div class="card-body">
+                                    <form action="/links/add" method="POST">
+                                        <div class="form-group pb-3">
+                                            <label class="" for="">Pedido realizado hace :</label>
+                                            <h4>{{order.fecha_de_pedido}}</h4>
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            
+                                            <label class="" for="">Estado Actual :</label>
+                                            <div class="d-block pt-3">
+                                            {{#with order}}
+                                            {{#if completed}}
+                                                <span class="badge rounded-pill text-bg-success fs-6">Completado <i class="fa-solid fa-check"></i></span>
+                                                {{!-- <td><span class="badge bg-primary">Completado <i class="fa-solid fa-check"></i></span></td> --}}
+                                            {{/if}}
+                                            {{#if new}}
+                                            <span class="badge rounded-pill text-bg-success fs-6"  style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-asterisk"></i></span>
+                                                {{!-- <td><span class="badge bg-success" style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-asterisk"></i></span></td> --}}
+                                            {{/if}}
+                                            {{#if ready-to-pay}}
+                                            <span class="badge rounded-pill text-bg-warning fs-6" >Por Pagar <i class="fa-regular fa-clock"></i></span>
+                                                {{!-- <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td> --}}
+                                            {{/if}}
+                                            {{#if cancelled}}
+                                            <span class="badge rounded-pill text-bg-danger fs-6" >Cancelado <i class="fa-solid fa-xmark"></i></span>
+                                                {{!-- <td><span class="badge bg-danger">Cancelled <i class="fa-solid fa-xmark"></i></span></td> --}}
+                                            {{/if}}
+                                            {{/with}}
+                                            </div>
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            
+                                            <label class="" for="">Actualizar Estado :</label>
+                                            <select class="form-select" aria-label="Default select example">
+                                                <option class="text-bg-success" style="--bs-bg-opacity: .7;" value="new" selected>Nuevo</option>
+                                                <option class="text-bg-success" value="confirmed">Completado</option>
+                                                <option class="text-bg-warning" value="ready-to-pay">Por Pagar</option>
+                                                <option class="text-bg-danger" value="cancelled">Cancelado</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group pb-3">
+                                            <div class="btn-group w-100" role="group" aria-label="Basic mixed styles example">
+                                                <a class="btn btn-secondary">Cancelar</a>
+                                                <button type="submit" class="btn btn-success">Confirmar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- bootstrap js cdn -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+       
+</body>
+</html>                    
+               
+                                               
+                                                                                                                                                                                                             
+                                       
+                                       
+                                       
+                                       
+                                        
+                                        
+                                                                                                                                                            
+                                       
+                                       
+                                       
+                                       
+                                        
+                                        
+                                                                                                                                                            
+                                       
+                                       
+                                       
+                                       
+                                        
+                                        
+                                        
+                                                                                                                                                            
+                                       
+                                       
+                                       
+                                       
+                                        
+                                        
+                                        
+                                        
+                                                                                                                                                            
+                                       
+                                       
+                                       
+                                       
+                                        
+                                        
+                                        
+                                                                                                                                                            
+                                       
+                                       
+                                       
+                                       
+                                        
+                                        
+                                        
+                                                                                                                                    
+                                                                                   
+                                   
+                                   
+                                   
+                                   
+                                    
+                                    
+                                    
+                                                                                                                                              
+                                       
+                                       
+                                       
+                                       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                                                                                                                                            
+                                       
+                                       
+                                       
+                                       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                                                                                                                                            
+                                       
+                                       
+                                       
+                                       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                                                                                                                                            
+                                       
+                                       
+                                       
+                                       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                                                                                                                                          
+                    
+                        
+                            
+                        
+                        
+                            
+                        
+                                  
+                                                                                                                                                                         
+                                   
+                                   
+                                   
+                                   
+                                    
+                                    
+                                    
+                                    
+                                                                                                                      
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+           
+                 
+           
+           
+        
+           
+           
+                      
+        
+        
+        
+    

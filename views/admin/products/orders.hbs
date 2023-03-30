@@ -223,7 +223,7 @@
                         <tbody class="table-group-divider">
                             {{#each orders}}
                             <tr class="">
-                                <td class="order align-middle white-space-nowrap"><a class="fw-semi-bold" href="#!">#{{id}}</a>
+                                <td class="order align-middle white-space-nowrap"><a class="fw-semi-bold" href="/admin/orders/details/{{id}}">#{{id}}</a>
                                 <td class="total align-middle fw-semi-bold text-1000">Bs. {{total_amount}}</td>
                                 <td class="align-middle white-space-nowrap ps-8">
                                     <a class=" align-items-center" href="/admin/edit_client/{{client_id}}">
@@ -245,42 +245,6 @@
                                 <td class="date align-middle white-space-nowrap text-700 fs--1 ">{{fecha_de_pedido}}</td>
                             </tr>
                             {{/each}}
-                            {{!-- <tr class="">
-                                <td class="order align-middle white-space-nowrap"><a class="fw-semi-bold" href="#!">#2448</a>
-                                <td class="total align-middle fw-semi-bold text-1000">$9562</td>
-                                <td class="align-middle white-space-nowrap ps-8">
-                                    <a class=" align-items-center" href="#">
-                                        <h6 class="mb-0 text-900">Igor Borvibson</h6>
-                                    </a>
-                                </td>
-                                <td><span class="badge bg-danger">Cancelled <i class="fa-solid fa-xmark"></i></span></td>
-                                <td class="date align-middle white-space-nowrap text-700 fs--1 ">Nov 24, 10:16 AM</td>
-                            </tr>
-                            <tr class="">
-                                <td class="order align-middle white-space-nowrap"><a class="fw-semi-bold" href="#!">#2448</a>
-                                <td class="total align-middle fw-semi-bold text-1000">$9562</td>
-                                <td class="align-middle white-space-nowrap ps-8">
-                                    <a class=" align-items-center" href="#">
-                                        <h6 class="mb-0 text-900">Igor Borvibson</h6>
-                                    </a>
-                                </td>
-                                <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
-                                <td class="date align-middle white-space-nowrap text-700 fs--1 ">Nov 24, 10:16 AM</td>
-                            </tr>
-                            <tr class="">
-                                <td class="sorting_1">Project Fireball</td>
-                                <td class="d-none d-xl-table-cell">01/01/2022</td>
-                                <td class="d-none d-xl-table-cell">31/06/2022</td>
-                                <td><span class="badge bg-danger">Cancelled <i class="fa-solid fa-xmark"></i></span></td>
-                                <td class="d-none d-md-table-cell">Bertha Martin</td>
-                            </tr>
-                            <tr class="">
-                                <td class="sorting_1">Project Nitro</td>
-                                <td class="d-none d-xl-table-cell">01/01/2022</td>
-                                <td class="d-none d-xl-table-cell">31/06/2022</td>
-                                <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
-                                <td class="d-none d-md-table-cell">Carl Jenkins</td>
-                            </tr> --}}
                         </tbody>
                     </table>
                     {{else}}

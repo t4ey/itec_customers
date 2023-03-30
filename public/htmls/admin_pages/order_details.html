@@ -24,7 +24,7 @@
 <body>
     
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="/admin/home">Tienda Virtual OVA</a>
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">Tienda Virtual OVA</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -37,75 +37,68 @@
                 <div class="position-sticky pt-3 sidebar-sticky">
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
-                            <a href="/admin/home" class="nav-link link-dark" aria-current="page">
+                            <a href="./dashboard.html" class="nav-link link-dark" aria-current="page">
                                 <i class="fa-solid fa-house"></i>
                                 Home
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/orders" class="nav-link link-dark">
+                            <a href="./orders.html" class="nav-link link-dark">
                                 <i class="fa-regular fa-note-sticky"></i>
                                 Ordenes
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/products" class="nav-link active">
+                            <a href="#" class="nav-link active">
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 Productos
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/categories" class="nav-link link-dark">
-                                <i class="fa-solid fa-tag"></i>
-                                Categorias
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/admin/clients" class="nav-link link-dark">
-                                <i class="fa-solid fa-users"></i>
+                            <a href="./clients.html" class="nav-link link-dark">
+                                <i class="fa-solid fa-user-group"></i>
                                 Clientes
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/salesperson" class="nav-link link-dark">
+                            <a href="./salesperson.html" class="nav-link link-dark">
                                 <span class="me-2">
-                                    <i class="fa-regular fa-id-badge"></i> 
+                                    <i class="fa-regular fa-id-badge"></i>
                                 </span>
                                 Vendedores
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/reports" class="nav-link link-dark">
-                            <span class="me-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                class="feather feather-bar-chart-2 align-text-bottom" aria-hidden="true">
-                                    <line x1="18" y1="20" x2="18" y2="10"></line>
-                                    <line x1="12" y1="20" x2="12" y2="4"></line>
-                                    <line x1="6" y1="20" x2="6" y2="14"></line>
-                                </svg>
-                            </span>
+                            <a href="./reports.html" class="nav-link link-dark">
+                                <span class="me-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-bar-chart-2 align-text-bottom" aria-hidden="true">
+                                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                                    </svg>
+                                </span>
                                 Reportes
                             </a>
                         </li>
                     </ul>
 
-                    <div class="py-3" height="20px"></div>
                     <hr class="">
                     <div class="dropdown px-3" bis_skin_checked="1">
                         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                            <strong>{{admin.first_name}}</strong>
+                            <strong>User1</strong>
                         </a>
                         <ul class="dropdown-menu text-small shadow">
-                            <li><a class="dropdown-item" href="/admin/add_employee">Crear Nuevo Usuario</a></li>
-                            <li><a class="dropdown-item" href="/admin/settings">Ajustes</a></li>
-                            <li><a class="dropdown-item" href="/admin/edit_employee/{{admin.id}}">Perfil</a></li>
+                            <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="/admin/logout">Cerrar Sesión</a></li>
+                            <li><a class="dropdown-item" href="#">Sign out</a></li>
                         </ul>
                     </div>
 
@@ -115,65 +108,181 @@
             <!-- dashboard -->
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div class="container-fluid px-0">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Productos</h1>
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <a class="btn btn-success" href="/admin/add_product">Añadir Producto <i class="fa-solid fa-plus"></i></a>
-                        </div>
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Detalles de la Orden</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <a class="btn btn-success" href="/links/add">Añadir Producto <i class="fa-solid fa-plus"></i></a>
                     </div>
-                    {{#if message}}
-                        <div class="alert {{alertType}} alert-dismissible fade show" role="alert">
-                            {{message}}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    {{/if}}
                 </div>
+                
+                
+                <h3>Orden #234</h3>
+                
+                <div class="container-fluid pt-2">
+                    <div class="row">
+                        <div class="col px-0">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th>Precio</th>
+                                        <th>Cantidad</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-group-divider">
+                                    <tr class="">
+                                        <td class="order align-middle white-space-nowrap">23</td>
+                                        <td class="align-middle white-space-nowrap ps-8">
+                                            <a class=" align-items-center" href="#">
+                                                <h6 class="mb-0 text-900">Arduino Uno</h6>
+                                            </a>
+                                        </td>
+                                        <td class="total align-middle fw-semi-bold text-1000">95 Bs.</td>
+                                        
+                                        <td class="date align-middle white-space-nowrap text-700 "><span class=h2">45</span> unidades</td>
+                                    </tr>
+                                    <tr class="">
+                                        <td class="order align-middle white-space-nowrap">23</td>
+                                        <td class="align-middle white-space-nowrap ps-8">
+                                            <a class=" align-items-center" href="#">
+                                                <h6 class="mb-0 text-900">Arduino Uno</h6>
+                                            </a>
+                                        </td>
+                                        <td class="total align-middle fw-semi-bold text-1000">95 Bs.</td>
+                                        <td class="date align-middle white-space-nowrap text-700 "><span class=h2">45</span> unidades</td>
+                                    </tr>
+                                    <tr class="">
+                                        <td class="order align-middle white-space-nowrap">23</td>
+                                        <td class="align-middle white-space-nowrap ps-8">
+                                            <a class=" align-items-center" href="#">
+                                                <h6 class="mb-0 text-900">Arduino Uno</h6>
+                                            </a>
+                                        </td>
+                                        <td class="total align-middle fw-semi-bold text-1000">95 Bs.</td>
+        
+                                        <td class="date align-middle white-space-nowrap text-700 "><span class=h2">45</span> unidades</td>
+                                        <td class="total align-middle fw-semi-bold text-1000">95 Bs.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h3>Detalles de Cliente</h3>
+                            
 
-                <h2>Productos Registrados</h2>
-                <div class="table-sm-responsive mt-4">
-                {{#if products}}
-                    <table class="table table-hover table-bordered">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Imagen</th>
-                                <th>Nombre</th>
-                                <th>Precio</th>
-                                <th>Categoria</th>
-                                <th>Stock</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                        {{#each products}}
-                            <tr class="">
-                                <td class="order align-middle white-space-nowrap">{{id}}</td>
-                                <td class="order align-middle white-space-nowrap"><img src="{{img_dir}}" alt="img" width="50" ></td>
-                                <td class="align-middle white-space-nowrap ps-8">
-                                    <a class=" align-items-center" href="/admin/edit_product/{{id}}">
-                                        <h6 class="mb-0 text-900">{{name}}</h6>
-                                    </a>
-                                </td>
-                                <td class="total align-middle fw-semi-bold text-1000">{{price}} Bs.</td>
-                                <td>
-                                    {{#each categories}}
-                                        <span class="badge text-bg-light">{{this}}</span>                                         
-                                    {{/each}}
-                                    {{!-- <span class="badge text-bg-light">Electronica</span> --}}
-                                </td>
-                                <td class="date align-middle white-space-nowrap text-700 "><span class="h5">{{stock}}</span> unidades</td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                        {{else}}
-                        <div class="col-md-8 mx-auto text-center pt-5">
-                            <div class="card card-body">
-                                <h2>No hay ningún producto registrado</h2>
-                                <a href="/admin/add_product"><h3>Añadir Un nuevo Producto</h3></a>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card mb-2 mt-2">
+                                        <div class="card-body">
+                                            <form action="/links/add" method="POST">
+                                                <div class="form-group pb-3">
+                                                    <label class="" for="">Nombre(s) :</label>
+                                                    <h5>Donovan Mitchel</h5>
+                                                </div>
+                                                <div class="form-group pb-3">
+                                                    <label class="" for="">Apellido(s) :</label>
+                                                    <h5>asdk sdlkas</h5>
+                                                </div>
+                                                <div class="form-group pb-2">
+                                                    <label class="" for="">Email :</label>
+                                                    <a href="/client_details/id">
+                                                        <h5>ggog@gmail.com</h5>
+                                                    </a>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-7"></div>
+                            </div>   
+                            
+                        </div>
+
+
+                        <div class="col-md-4 mx-auto ps-4 pe-0">
+                            <div class="card mb-3">
+                                <div class="card-header text-center">
+                                    <h4>Resumen</h4>
+                                </div>
+                                <div class="card-body mx-3">
+                                    <form action="/links/add" method="POST">
+                                        <div class="form-group pb-3">
+                                            <div class="row">
+                                                <div class="col text-start">
+                                                    <label class="" for="">N° Productos</label>
+
+                                                </div>
+                                                <div class="col text-end">
+                                                    <h4>5 productos</h4>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            <div class="row">
+                                                <div class="col text-start">
+                                                    <label class="" for="">Sub Total : </label>
+                                        
+                                                </div>
+                                                <div class="col text-end">
+                                                    <h5>23453 Bs</h5>
+                                        
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group pb-3">
+                                            <div class="row">
+                                                <div class="col text-start">
+                                                    <h4 class="" for="">Total : </h4>
+                                        
+                                                </div>
+                                                <div class="col text-end">
+                                                    <h4>234 bBs</h4>
+                                        
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header text-center">
+                                    <h4>Estado del Pedido</h4>
+                                </div>
+                                <div class="card-body">
+                                    <form action="/links/add" method="POST">
+                                        <div class="form-group pb-3">
+                                        
+                                            <label class="" for="">Estado Actual :</label>
+                                            <div class="d-block pt-3">
+                                                <span class="badge rounded-pill text-bg-success fs-6">Completed</span>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            
+                                            <label class="" for="">Cambiar Estado :</label>
+                                            <select class="form-select" aria-label="Default select example">
+                                                <option value="0" selected>Zero</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group pb-3">
+                                            <div class="btn-group w-100" role="group" aria-label="Basic mixed styles example">
+                                                <a class="btn btn-secondary">Cancelar</a>
+                                                <button type="submit" class="btn btn-success">Confirmar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    {{/if}}
+                
+                    </div>
                 </div>
             </main>
         </div>
