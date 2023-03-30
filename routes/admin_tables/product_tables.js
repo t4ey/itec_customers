@@ -437,6 +437,7 @@ exports.order_details = async (req, res) => {
    
 
         order.fecha_de_pedido = timeAgo.format(order.fecha_de_pedido, "es");
+        order.n_products = order_details.length;
 
         switch (order.status) {
             case 'new':
