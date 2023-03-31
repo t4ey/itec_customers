@@ -391,8 +391,8 @@ exports.orders = async (req, res) => {
                         case 'new':
                             orders[i].new = true;
                             break;
-                        case 'confirmed':
-                            orders[i].confirmed = true;
+                        case 'completed':
+                            orders[i].completed = true;
                             break;
                         case 'ready-to-pay':
                             orders[i].ready_to_pay = true;
@@ -401,6 +401,8 @@ exports.orders = async (req, res) => {
                             orders[i].canceled = true;
                             break;
                         default:
+                            orders[i].new = true;
+                            break;
                     }
                     // console.log("match")
                 }
@@ -456,16 +458,18 @@ exports.order_details = async (req, res) => {
             case 'new':
                 order.new = true;
                 break;
-            case 'confirmed':
-                order.confirmed = true;
+            case 'completed':
+                order.completed = true;
                 break;
             case 'ready-to-pay':
                 order.ready_to_pay = true;
                 break;
-            case 'cancelled':
+            case 'canceled':
                 order.canceled = true;
                 break;
             default:
+                order.new = true;
+                break;
         }
             // console.log("match")
         // }
@@ -490,7 +494,7 @@ exports.order_status = async (req, res) => {
     console.log(req.body);
     console.log(id);
 
-    // await db.query("UPDATE pedido WHERE id = ? SET ?", [id,{status: updated_status}]);
+    await db.query("UPDATE pedido SET ? WHERE id = ?", [{ status: updated_status}, id ]);
 
-    return res.redirect('/admin/orders');
+    return res.redirect('/admin/orders/details/' + id);
 }

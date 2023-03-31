@@ -18,7 +18,7 @@
     <!-- font awesome icons -->
     <script src="https://kit.fontawesome.com/8faedc4425.js" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="../css/styles_dashboard.css">
+    <link rel="stylesheet" href="/css/styles_dashboard.css">
 </head>
 <body>
     
@@ -231,15 +231,15 @@
                                     </a>
                                 </td>
                                 {{#if completed}}
-                                    <td><span class="badge bg-primary">Completado <i class="fa-solid fa-check"></i></span></td>
+                                    <td><span class="badge bg-success">Completado <i class="fa-solid fa-check"></i></span></td>
                                 {{/if}}
                                 {{#if new}}
                                     <td><span class="badge bg-success" style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-asterisk"></i></span></td>
                                 {{/if}}
-                                {{#if ready-to-pay}}
+                                {{#if ready_to_pay}}
                                     <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
                                 {{/if}}
-                                {{#if cancelled}}
+                                {{#if canceled}}
                                     <td><span class="badge bg-danger">Cancelled <i class="fa-solid fa-xmark"></i></span></td>
                                 {{/if}}
                                 <td class="date align-middle white-space-nowrap text-700 fs--1 ">{{fecha_de_pedido}}</td>
