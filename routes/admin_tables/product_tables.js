@@ -471,8 +471,12 @@ exports.order_details = async (req, res) => {
                 order.new = true;
                 break;
         }
-            // console.log("match")
-        // }
+
+        // use the micro version to display the images
+
+        for (var i = 0; i < ordered_products.length; i++) {
+            ordered_products[i].img_dir = micro_img_dir(ordered_products[i].img_dir);
+        }
 
         // console.log(order);
         return res.render('./admin/products/order_details.hbs', {
