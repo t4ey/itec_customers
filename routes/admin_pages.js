@@ -197,4 +197,8 @@ router.post('/edit_category/:id', requireAuth, product_tables.edit_category);
 
 router.get('/delete_category/:id', requireAuth, product_tables.delete_category);
 
+    // orders
+
+router.post('/orders/details/:id/status', requireAuth, product_tables.order_status);
+
 module.exports = router;

@@ -359,7 +359,20 @@ exports.orders = async (req, res) => {
         if (error)
             console.log(error);
 
+        
         const orders = result;
+
+        if(!(orders.length > 0)) {
+            return res.render('./admin/products/orders.hbs', {
+                message: message,
+                alertType: alertType,
+                orders: orders,
+            });
+
+        }
+        console.log("orders",orders);
+
+
         let list_client_ids = [];
         for(var i = 0; i < orders.length ; i++){
             list_client_ids.push(orders[i].client_id);
@@ -449,7 +462,7 @@ exports.order_details = async (req, res) => {
             case 'ready-to-pay':
                 order.ready_to_pay = true;
                 break;
-            case 'canceled':
+            case 'cancelled':
                 order.canceled = true;
                 break;
             default:
@@ -469,4 +482,15 @@ exports.order_details = async (req, res) => {
 
     });
 
+}
+
+exports.order_status = async (req, res) => {
+    const updated_status = req.body.status;
+    const id = req.params.id;
+    console.log(req.body);
+    console.log(id);
+
+    // await db.query("UPDATE pedido WHERE id = ? SET ?", [id,{status: updated_status}]);
+
+    return res.redirect('/admin/orders');
 }
