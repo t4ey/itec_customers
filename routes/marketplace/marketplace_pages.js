@@ -16,10 +16,12 @@ exports.add_to_shopping_cart = async (req, res) => {
         return res.redirect('/marketplace/product/' + product_id);
     }
 
+    // if there's an order active
+
     const orderActive = await db.query("SELECT * FROM pedido WHERE client_id = ?" , [client_id]);
     // console.log(orderActive);
 
-    if (orderActive.length > 0) {
+    if ((orderActive[orderActive.length - 1] == 'canceled') || (orderActive[orderActive.length - 1] == 'completed') || (orderActive[orderActive.length - 1] == 'new')) {
         req.flash('message', "Tiene un pedido en curso, no puede añadir o eliminar productos hasta que el pedido sea completado");
         req.flash('alertType', "alert-warning");
         return res.redirect('/marketplace/cart_shopping');
@@ -71,7 +73,7 @@ exports.make_order = async (req, res) => {
 
     const cart_products = req.body;
 
-    console.log(cart_products);
+    // console.log(cart_products);
 
     for(var i = 0; i < cart_products.length; i++) {
         if (!cart_products.quantity[i] || (cart_products.quantity[i] > 50) || (cart_products.quantity[i] < 0) || !client_id) {
@@ -85,7 +87,9 @@ exports.make_order = async (req, res) => {
         if (error)
             console.log(error);
 
-        if (result.length > 0) {
+        const last_order = result[result.length - 1];
+        console.log(last_order);
+        if (last_order.status != 'canceled' && last_order.status != 'completed') {
             req.flash('message', "El pedido ya fue realizado");
             req.flash('alertType', "alert-danger");
             return res.redirect('back');
@@ -97,15 +101,13 @@ exports.make_order = async (req, res) => {
             
             console.log('result', result);
             const db_cart_products = result;
-            // if (result.length > 0) {
-                //     req.flash('message', "Ya ha añadido este producto al carrito de compras");
-                //     req.flash('alertType', "alert-danger");
-            //     return res.redirect('back');
-            // }
-            let product_prices = [];
-            for( var i = 0; i < db_cart_products.length; i++){
-                product_prices.push((await db.query("SELECT price FROM producto WHERE id = ?", [db_cart_products[i].producto_id]))[0]);
+
+            const list_id_db_cart_products = [];
+            for(var i = 0; i < db_cart_products.length;i++){
+                list_id_db_cart_products.push(db_cart_products[i].producto_id);
             }
+
+            let product_prices = (await db.query("SELECT price FROM producto WHERE id IN (?)", [list_id_db_cart_products]));
             // console.log(product_prices);
             
             let total_cash = 0;
@@ -120,10 +122,11 @@ exports.make_order = async (req, res) => {
             // make order
             await db.query('INSERT INTO pedido SET ?', {total_amount: total_cash, client_id: client_id});
             
-            const pedido_id = (await db.query("SELECT id FROM pedido WHERE client_id = ?", [client_id]))[0].id;
+            const pedidos_id = (await db.query("SELECT id FROM pedido WHERE client_id = ?", [client_id]));
+            const last_pedido_id = pedidos_id[pedidos_id.length - 1].id;
             
             for (var i = 0; i < db_cart_products.length; i++) {
-                await db.query('INSERT INTO detalle_pedido SET ?', { pedido_id: pedido_id, producto_id: db_cart_products[i].producto_id, cantidad: cart_products.quantity[i] });
+                await db.query('INSERT INTO detalle_pedido SET ?', { pedido_id: last_pedido_id, producto_id: db_cart_products[i].producto_id, cantidad: cart_products.quantity[i] });
             }
             req.flash('message', "Se ha realizado el Pedido, Puede pasar a recoger el pedido hasta el 'fecha'");
             req.flash('alertType', "alert-success");
@@ -147,14 +150,14 @@ exports.cancel_order = async (req, res) => {
         if (error)
             console.log(error);
 
-        const pedido_id = result[0].id;
+        const pedido_id = result[result.length - 1].id;
         
-        await db.query("DELETE FROM pedido WHERE client_id = ?", [client_id]);
-        
-        const db_cart_products = await db.query("SELECT * FROM detalle_pedido WHERE pedido_id = ?", [pedido_id]);
-
         await db.query("DELETE FROM cart_shopping WHERE client_id = ?", [client_id]);
-        await db.query("DELETE FROM detalle_pedido WHERE pedido_id = ?", [pedido_id]);
+        
+        // const db_cart_products = await db.query("SELECT * FROM detalle_pedido WHERE pedido_id = ?", [pedido_id]);
+        
+        await db.query("UPDATE pedido SET ? WHERE id = ?", [{status: 'canceled'}, pedido_id]);
+        // await db.query("DELETE FROM detalle_pedido WHERE pedido_id = ?", [pedido_id]);
 
         // console.log(product_prices);
 

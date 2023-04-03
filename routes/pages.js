@@ -91,7 +91,9 @@ router.get('/marketplace/cart_shopping', requireAuth, async (req, res) => {
     }
 
     let pedido = false;
-    if((await db.query("SELECT * FROM pedido WHERE client_id = ?", [client_id])).length > 0)
+    const client_orders = await db.query("SELECT * FROM pedido WHERE client_id = ?", [client_id]);
+    console.log(client_orders[client_orders.length - 1].status);
+    if (!(client_orders[client_orders.length - 1].status == 'canceled') && !(client_orders[client_orders.length - 1].status == 'completed'))
         pedido = true;
     else { pedido = false }
     // console.log(products);

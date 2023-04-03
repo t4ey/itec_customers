@@ -355,7 +355,7 @@ exports.orders = async (req, res) => {
     // console.log(message);
     
 
-    await db.query("SELECT * FROM pedido", async (error, result) => {
+    await db.query("SELECT * FROM pedido ORDER BY id DESC", async (error, result) => {
         if (error)
             console.log(error);
 
@@ -448,7 +448,7 @@ exports.order_details = async (req, res) => {
         // console.log(client_details);
         // console.log(order_details);
         // console.log(ordered_products);
-        console.log(order);
+        // console.log(order);
    
 
         order.fecha_de_pedido = timeAgo.format(order.fecha_de_pedido, "es");
@@ -497,6 +497,14 @@ exports.order_status = async (req, res) => {
     const id = req.params.id;
     console.log(req.body);
     console.log(id);
+
+    const client_id = (await db.query('SELECT client_id FROM pedido WHERE id = ?', [id]))[0].client_id;
+
+    
+    if(updated_status == 'completed' || updated_status == 'canceled'){
+        console.log(updated_status, client_id);
+        await db.query("DELETE FROM cart_shopping WHERE client_id = ?", [client_id]);
+    }
 
     await db.query("UPDATE pedido SET ? WHERE id = ?", [{ status: updated_status}, id ]);
 
