@@ -139,7 +139,7 @@ router.get('/marketplace/search/', async (req, res) => {
         });
     }
     
-    else if (search_string && products.length > 0) {
+    else if (search_string) {
         const products = await db.query("SELECT * FROM producto WHERE name LIKE '%"+search_string+"%'");
         // console.log(products);
         return res.render('./marketplace/market.hbs', {
