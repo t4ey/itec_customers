@@ -115,12 +115,16 @@
             <!-- dashboard -->
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Detalles de la Orden</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                    </div>
-                </div>
-                
+                    <div class="row pt-3 pb-2 mb-3 border-bottom">
+                        <div class="col mb-2">
+                            <a class="btn btn-primary" href="/admin/products"><i class="fa-solid fa-chevron-left"></i> Atras</a>
+                        </div>
+                        <div class="col text-center">
+                            <h1 class="h2">Detalles de la Orden</h1>
+                        </div>
+                        <div class="col">
+                        </div>
+                    </div>                
                 
                 <h3>Orden #{{order.id}}</h3>
                 
@@ -177,7 +181,7 @@
                             <h3>Detalles de Cliente</h3>
                             
 
-                            <div class="row">
+                            <div class="row pb-5">
                                 <div class="col">
                                     <div class="card mb-2 mt-2">
                                         <div class="card-body">
