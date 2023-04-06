@@ -372,11 +372,39 @@ exports.orders = async (req, res) => {
         }
         console.log("orders",orders);
 
+        let filters = {};
+
+        filters.all = orders.length;
+        filters.new = 0;
+        filters.ready_to_pay = 0;
+        filters.completed = 0;
+        filters.canceled = 0;
 
         let list_client_ids = [];
         for(var i = 0; i < orders.length ; i++){
             list_client_ids.push(orders[i].client_id);
+
+            // check filter numbers 
+            switch (orders[i].status) {
+                case 'new':
+                    filters.new++;
+                    break;
+                case 'completed':
+                    filters.completed++;
+                    break;
+                case 'ready-to-pay':
+                    filters.ready_to_pay++;
+                    break;
+                case 'canceled':
+                    filters.canceled++;
+                    break;
+                default:
+                    filters.all = orders.length;
+                    break;
+            }
         }
+        console.log(filters);
+
         const clients_data = await db.query('SELECT * FROM client WHERE id IN(?)', [list_client_ids]);
 
         for(var i = 0; i < orders.length ; i++) {
@@ -409,15 +437,108 @@ exports.orders = async (req, res) => {
             }            
         }
 
-        console.log(orders);
+        // console.log(orders);
         return res.render('./admin/products/orders.hbs', {
             message: message,
             alertType: alertType,
             orders: orders,
+            filters: filters,
         });
 
     });
 
+}
+
+exports.filter_orders = async (req, res) => {
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+
+    const data = req.params.data;
+    console.log(data);
+
+    if(data == 'all'){
+        res.redirect('/admin/orders/');
+    }
+
+    const orders = await db.query("SELECT * FROM pedido WHERE status = ? ORDER BY id DESC", [data]);
+    const filter_data_orders = await db.query("SELECT * FROM pedido ORDER BY id DESC");
+    let filters = {};
+
+    filters.all = filter_data_orders.length;
+    filters.new = 0;
+    filters.ready_to_pay = 0;
+    filters.completed = 0;
+    filters.canceled = 0;
+    
+    let list_client_ids = [];
+
+    for (var i = 0; i < orders.length; i++) {
+        list_client_ids.push(orders[i].client_id);
+    }
+
+    for (var i = 0; i < filter_data_orders.length; i++) {
+        // check filter numbers 
+        switch (filter_data_orders[i].status) {
+            case 'new':
+                filters.new++;
+                break;
+            case 'completed':
+                filters.completed++;
+                break;
+            case 'ready-to-pay':
+                filters.ready_to_pay++;
+                break;
+            case 'canceled':
+                filters.canceled++;
+                break;
+            default:
+                filters.all = filter_data_orders.length;
+                break;
+        }
+    }
+    console.log(filters);
+    console.log("c_ids :", list_client_ids)
+    if(list_client_ids.length > 0) {
+        
+        const clients_data = await db.query('SELECT * FROM client WHERE id IN(?)', [list_client_ids]);
+    
+        for (var i = 0; i < orders.length; i++) {
+    
+            for (var j = 0; j < clients_data.length; j++) {
+                if (orders[i].client_id == clients_data[j].id) {
+                    orders[i].client_name = clients_data[j].first_name;
+    
+                    orders[i].fecha_de_pedido = timeAgo.format(orders[i].fecha_de_pedido, "es");
+    
+                    switch (orders[i].status) {
+                        case 'new':
+                            orders[i].new = true;
+                            break;
+                        case 'completed':
+                            orders[i].completed = true;
+                            break;
+                        case 'ready-to-pay':
+                            orders[i].ready_to_pay = true;
+                            break;
+                        case 'canceled':
+                            orders[i].canceled = true;
+                            break;
+                        default:
+                            orders[i].new = true;
+                            break;
+                    }
+                    // console.log("match")
+                }
+            }
+        }
+    }
+    
+    return res.render('./admin/products/orders.hbs', {
+        message: message,
+        alertType: alertType,
+        orders: orders,
+        filters: filters,
+    });
 }
 
 exports.order_details = async (req, res) => {

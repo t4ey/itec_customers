@@ -165,6 +165,8 @@ router.get('/orders', requireAuth, product_tables.orders);
 
 router.get('/orders/details/:id', requireAuth, product_tables.order_details);
 
+router.get('/orders/filter/:data', requireAuth, product_tables.filter_orders)
+
 // POST REQUESTS
 
 router.post('/login', alreadyLogged, adminAuthController.login);
