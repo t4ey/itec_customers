@@ -135,6 +135,7 @@
 
                 <!-- cards -->
                 <div class="container-fluid cards-container px-0 pb-5">
+                    {{#with stats}}
                     <div class="row h-100">
                         <div class="col-12 col-md-4">
                             <!-- Card -->
@@ -148,7 +149,7 @@
                                     <div class="row h-100 justify-content-between">
                                         <div class="col-9 d-flex flex-column text-center">
                                             <!-- Subtitle -->
-                                            <h2 class="mb-0 mt-auto display-5 pb-2"> 213 ordenes</h2>
+                                            <h2 class="mb-0 mt-auto display-5 pb-2">{{new}} ordenes</h2>
                                             <!-- Comment -->
                                             
                                         </div>
@@ -169,7 +170,7 @@
                                     <div class="row h-100 justify-content-between">
                                         <div class="col-9 d-flex flex-column text-center">
                                             <!-- Subtitle -->
-                                            <h2 class="mb-0 mt-auto display-5 pb-2"> 21 ordenes</h2>
+                                            <h2 class="mb-0 mt-auto display-5 pb-2">{{ready_to_pay}} ordenes</h2>
                                             <!-- Comment -->
                             
                                         </div>
@@ -190,7 +191,7 @@
                                     <div class="row h-100 justify-content-between">
                                         <div class="col-9 d-flex flex-column text-center">
                                             <!-- Subtitle -->
-                                            <h2 class="mb-0 mt-auto display-5 pb-2"> 31 productos</h2>
+                                            <h2 class="mb-0 mt-auto display-5 pb-2"> {{out_of_stock}} productos</h2>
                                             <!-- Comment -->
                             
                                         </div>
@@ -200,6 +201,7 @@
                             </div>
                         </div>
                     </div>
+                    {{/with}}
                 </div>
 
                 <!-- table contents dashboard -->

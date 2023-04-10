@@ -41,8 +41,27 @@ router.get('/login', alreadyLogged, (req, res) => {
 
 // SIDE BAR GET REQUESTS
 
-router.get('/home', requireAuth, (req, res) => {
-    res.render('./admin/a_home');
+router.get('/home', requireAuth, async (req, res) => {
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+
+    const new_orders = await db.query('SELECT id FROM pedido WHERE status = "new"');
+    const ready_to_pay_orders = await db.query('SELECT id FROM pedido WHERE status = "ready-to-pay"');
+    const out_of_stock = await db.query('SELECT id FROM producto WHERE stock = 0');
+
+    const order_stats = {
+        new: new_orders.length, 
+        ready_to_pay: ready_to_pay_orders.length,
+        out_of_stock: out_of_stock.length,
+    };
+
+    console.log(order_stats)
+
+    res.render('./admin/a_home', {
+        message: message,
+        alertType: alertType,
+        stats: order_stats,
+    });
 });
 
     // client pages
