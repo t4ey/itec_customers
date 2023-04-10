@@ -28,6 +28,9 @@ const storage = memoryStorage();
 
 const upload_image = multer({ storage: storage });
 
+// time ago formatting 
+const timeAgo = require('timeago.js/dist/timeago.full.min');
+
 // AUTHENTICATION REQUESTS
 
 router.get('/login', alreadyLogged, (req, res) => {
@@ -55,12 +58,95 @@ router.get('/home', requireAuth, async (req, res) => {
         out_of_stock: out_of_stock.length,
     };
 
-    console.log(order_stats)
+    console.log(order_stats);
+
+    // order table
+
+    const orders = await db.query("SELECT * FROM pedido ORDER BY id DESC");
+
+
+    if (!(orders.length > 0)) {
+        return res.render('./admin/products/orders.hbs', {
+            message: message,
+            alertType: alertType,
+            orders: orders,
+        });
+
+    }
+    // console.log("orders", orders);
+
+    // let filters = {};
+
+    // filters.all = orders.length;
+    // filters.new = 0;
+    // filters.ready_to_pay = 0;
+    // filters.completed = 0;
+    // filters.canceled = 0;
+
+    let list_client_ids = [];
+    for (var i = 0; i < orders.length; i++) {
+        list_client_ids.push(orders[i].client_id);
+
+        // check filter numbers 
+        // switch (orders[i].status) {
+        //     case 'new':
+        //         filters.new++;
+        //         break;
+        //     case 'completed':
+        //         filters.completed++;
+        //         break;
+        //     case 'ready-to-pay':
+        //         filters.ready_to_pay++;
+        //         break;
+        //     case 'canceled':
+        //         filters.canceled++;
+        //         break;
+        //     default:
+        //         filters.all = orders.length;
+        //         break;
+        // }
+    }
+    // console.log(filters);
+
+    const clients_data = await db.query('SELECT * FROM client WHERE id IN(?)', [list_client_ids]);
+
+    for (var i = 0; i < orders.length; i++) {
+
+        for (var j = 0; j < clients_data.length; j++) {
+            if (orders[i].client_id == clients_data[j].id) {
+                orders[i].client_name = clients_data[j].first_name;
+
+                orders[i].fecha_de_pedido = timeAgo.format(orders[i].fecha_de_pedido, "es");
+
+                switch (orders[i].status) {
+                    case 'new':
+                        orders[i].new = true;
+                        break;
+                    case 'completed':
+                        orders[i].completed = true;
+                        break;
+                    case 'ready-to-pay':
+                        orders[i].ready_to_pay = true;
+                        break;
+                    case 'canceled':
+                        orders[i].canceled = true;
+                        break;
+                    default:
+                        orders[i].new = true;
+                        break;
+                }
+                // console.log("match")
+            }
+        }
+    }
+
+    console.log(orders);
 
     res.render('./admin/a_home', {
         message: message,
         alertType: alertType,
         stats: order_stats,
+        orders: orders,
     });
 });
 
