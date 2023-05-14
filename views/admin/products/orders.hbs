@@ -138,6 +138,8 @@
 
                 <!-- table contents dashboard -->
                 <h2>Ordenes Recientes</h2>
+
+                {{!-- filters --}}
                 {{#with filters}}
                 <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
                     <li class="nav-item"><a href="/admin/orders/filter/all" class="nav-link active" aria-current="page" href="#">Todos <span
@@ -209,6 +211,8 @@
                 
                     </div>
                 </div> -->
+
+                {{!-- table --}}
                 <div class="table-sm-responsive">
                     {{#if orders}}
                     <table class="table table-hover table-bordered">
@@ -224,7 +228,7 @@
                         <tbody class="table-group-divider">
                             {{#each orders}}
                             <tr class="">
-                                <td class="order align-middle white-space-nowrap"><a class="fw-semi-bold" href="/admin/orders/details/{{id}}">#{{id}}</a>
+                                <td class="order align-middle white-space-nowrap"><a class="h4 color-primary text-primary fw-semi-bold" href="/admin/orders/details/{{id}}">#{{id}}</a>
                                 <td class="total align-middle fw-semi-bold text-1000">Bs. {{total_amount}}</td>
                                 <td class="align-middle white-space-nowrap ps-8">
                                     <a class=" align-items-center" href="/admin/edit_client/{{client_id}}">
