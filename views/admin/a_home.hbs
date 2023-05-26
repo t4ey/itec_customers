@@ -145,7 +145,7 @@
                     <div class="row h-100">
                         <div class="col-12 col-md-4">
                             <!-- Card -->
-                            <a href="/admin/orders/filter/new" class="link-underline-opacity-0 " style="text-decoration: inherit">
+                            <a href="/admin/orders/filter/new" style="text-decoration: inherit">
                                 <div class="card border-0 h-100 shadow card-n-orders">
                                     <div class="card-header border-0 card-header-space-between pt-3">
                                         <!-- Title -->
@@ -168,24 +168,26 @@
                         </div>
                         <div class="col-12 col-md-4">
                             <!-- Card -->
-                            <div class="card border-0 h-100 shadow card-orders">
-                                <div class="card-header border-0 card-header-space-between pt-3">
-                                    <!-- Title -->
-                                    <h2 class="card-header-title h3 card-orders-title"> Ordenes en Espera </h2>
-                                    <p class="h6 ps-3 card-orders-sub">Ordenes Preparadas por Pagar</p>
+                            <a href="/admin/orders/filter/ready-to-pay" style="text-decoration: inherit">
+                                <div class="card border-0 h-100 shadow card-orders">
+                                    <div class="card-header border-0 card-header-space-between pt-3">
+                                        <!-- Title -->
+                                        <h2 class="card-header-title h3 card-orders-title"> Ordenes en Espera </h2>
+                                        <p class="h6 ps-3 card-orders-sub">Ordenes Preparadas por Pagar</p>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row h-100 justify-content-between">
+                                            <div class="col-9 d-flex flex-column text-center">
+                                                <!-- Subtitle -->
+                                                <h2 class="mb-0 mt-auto display-5 pb-2">{{ready_to_pay}} ordenes</h2>
+                                                <!-- Comment -->
+                                
+                                            </div>
+                                
+                                        </div> <!-- / .row -->
+                                    </div>
                                 </div>
-                                <div class="card-body">
-                                    <div class="row h-100 justify-content-between">
-                                        <div class="col-9 d-flex flex-column text-center">
-                                            <!-- Subtitle -->
-                                            <h2 class="mb-0 mt-auto display-5 pb-2">{{ready_to_pay}} ordenes</h2>
-                                            <!-- Comment -->
-                            
-                                        </div>
-                            
-                                    </div> <!-- / .row -->
-                                </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="col-12 col-md-4">
                             <!-- Card -->
