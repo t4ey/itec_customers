@@ -35,57 +35,98 @@ const resize_image = (file, filename,width = 350, height = 250) => {
 }
 
 exports.products = async (req, res) => {
+    const filter = req.params.filter;
     const message = req.flash('message');
     const alertType = req.flash('alertType');
 
     // console.log(message);
 
+    let products;
 
-    await db.query("SELECT * FROM producto", async(error, result) => {
-        if (error)
-            console.log(error);
-        
-        let products = result;
+    // filtering
+    filtered_products = await filter_products();
+    console.log(filtered_products);
 
-        // display categories part
+    if (filter == undefined || filter == "all"){
+        products = filtered_products.all;
+    }
+    else if (filter == "published") {
+        products = filtered_products.published;
+    }
+    else if (filter == "out_of_stock") {
+        products = filtered_products.out_of_stock;
+    }
+    
+    const filters = 1;
+    
+    // filters.all = products.all.length 
+    // filters.published products.published
+    // products.f_
+    console.log(products);
 
-        for(var i = 0; i < products.length; i++){
-            products[i].img_dir = micro_img_dir(products[i].img_dir); // change to micro img dir
+
+    // display categories part
+
+    // if(products.length > 0) {
+    //     for(var i = 0; i < products.length; i++){
+    //         products[i].img_dir = micro_img_dir(products[i].img_dir); // change to micro img dir
             
-            product_category_ids = await db.query("SELECT cat_id FROM clasificacion WHERE prod_id = ?", [products[i].id]);
+    //         product_category_ids = await db.query("SELECT cat_id FROM clasificacion WHERE prod_id = ?", [products[i].id]);
             
-            let name_categories = [];
-            // console.log(product_category_ids);
-            // console.log(cat_ids);
+    //         let name_categories = [];
+    //         // console.log(product_category_ids);
+    //         // console.log(cat_ids);
 
-            for(var j = 0; j < product_category_ids.length; j++) {
-                if(product_category_ids[j]) {
-                    let get_cat_name = await db.query("SELECT name FROM categoria WHERE id = ?", [product_category_ids[j].cat_id]);
-                    // console.log(get_cat_name[0].name);
-                    name_categories.push(get_cat_name[0].name);
-                    // console.log("categories push: ", categories);
-                }
+    //         for(var j = 0; j < product_category_ids.length; j++) {
+    //             if(product_category_ids[j]) {
+    //                 let get_cat_name = await db.query("SELECT name FROM categoria WHERE id = ?", [product_category_ids[j].cat_id]);
+    //                 // console.log(get_cat_name[0].name);
+    //                 name_categories.push(get_cat_name[0].name);
+    //                 // console.log("categories push: ", categories);
+    //             }
 
-            }
-            products[i].categories = name_categories;
-            // console.log(products[i]);
-            // console.log("next id", categories);
-        }
+    //         }
+    //         products[i].categories = name_categories;
+    //         // console.log(products[i]);
+    //         // console.log("next id", categories);
+    //     }    
+    // }
 
-        // console.log(products);
-        if (products) {
-            // console.log(result);
-            return res.render('./admin/products/products.hbs', {
-                message: message,
-                alertType: alertType, 
-                products: products,
-            });
-        }
-        else
-            console.log("nop");
+    // console.log(products);
 
+    // console.log(result);
+    return res.render('./admin/products/products.hbs', {
+        message: message,
+        alertType: alertType, 
+        products: products,
+        filters: filters,
     });
+}
 
+async function filter_products () {
+
+    //const orders = await db.query("SELECT * FROM pedido WHERE status = ? ORDER BY id DESC", [filter]);
+    //const filter_filter_orders = await db.query("SELECT * FROM pedido ORDER BY id DESC");
+    let products = {};
+
+    products.all = await db.query("SELECT * FROM producto");
+    products.published = [];
+    products.out_of_stock = [];
+    // console.log("filtered prods: ", products);
+
+    for (var i = 0; i < products.all.length; i++) {
+        // insert in filters ( published && out of stock)
+        // console.log(products.all[i].stock > 0);
+        if (products.all[i].stock > 0) {
+            products.published.push(products.all[i]);
+        }
+        else {
+            products.out_of_stock.push(products.all[i]);
+        }
+    }
+    // console.log("filtered prods: ", products);
+
+    return products;
 }
 
 exports.add_product = async (req, res) => {

@@ -192,6 +192,8 @@ router.get('/edit_employee/:id', requireAuth, async (req, res) => {
 
 router.get('/products', requireAuth, product_tables.products);
 
+router.get('/products/:filter', requireAuth, product_tables.products);
+
 router.get('/add_product', requireAuth, async (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
