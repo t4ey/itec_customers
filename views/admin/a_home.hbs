@@ -190,25 +190,27 @@
                             </a>
                         </div>
                         <div class="col-12 col-md-4">
-                            <!-- Card -->
-                            <div class="card border-0 h-100 shadow card-out-stock">
-                                <div class="card-header border-0 card-header-space-between pt-3">
-                                    <!-- Title -->
-                                    <h2 class="card-header-title h3 card-out-stock-title"> Fuera de Stock </h2>
-                                    <p class="h6 ps-3 card-out-stock-sub">Productos agotados</p>
+                            <a href="/admin/products/out_of_stock" style="text-decoration: inherit">
+                                <!-- Card -->
+                                <div class="card border-0 h-100 shadow card-out-stock">
+                                    <div class="card-header border-0 card-header-space-between pt-3">
+                                        <!-- Title -->
+                                        <h2 class="card-header-title h3 card-out-stock-title"> Fuera de Stock </h2>
+                                        <p class="h6 ps-3 card-out-stock-sub">Productos agotados</p>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row h-100 justify-content-between">
+                                            <div class="col-9 d-flex flex-column text-center">
+                                                <!-- Subtitle -->
+                                                <h2 class="mb-0 mt-auto display-5 pb-2"> {{out_of_stock}} productos</h2>
+                                                <!-- Comment -->
+                                
+                                            </div>
+                                
+                                        </div> <!-- / .row -->
+                                    </div>
                                 </div>
-                                <div class="card-body">
-                                    <div class="row h-100 justify-content-between">
-                                        <div class="col-9 d-flex flex-column text-center">
-                                            <!-- Subtitle -->
-                                            <h2 class="mb-0 mt-auto display-5 pb-2"> {{out_of_stock}} productos</h2>
-                                            <!-- Comment -->
-                            
-                                        </div>
-                            
-                                    </div> <!-- / .row -->
-                                </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                     {{/with}}
