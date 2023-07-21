@@ -57,7 +57,11 @@ exports.products = async (req, res) => {
         products = filtered_products.out_of_stock;
     }
     
-    const filters = 1;
+    let filters = {};
+
+    filters.all = filtered_products.all.length;
+    filters.published = filtered_products.published.length;
+    filters.out_of_stock = filtered_products.out_of_stock.length;
     
     // filters.all = products.all.length 
     // filters.published products.published
