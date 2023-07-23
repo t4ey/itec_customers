@@ -175,11 +175,19 @@
                                         <a href="/marketplace/product/{{id}}"><img src="{{img_dir}}" class="card-img-top" alt="..."></a>
                                         <div class="card-body">
                                             <a href="/marketplace/product/{{id}}"><h5 class="card-title">{{name}}</h5></a>
+
+                                            {{!-- display according to stock --}}
+                                            {{#if little_stock}}
+                                            <p class="text-warning"><i class="fa-solid fa-triangle-exclamation"></i> Pocas existencias</p>
+                                            {{/if}}
+                                            {{#unless stock}}
+                                            <p class="text-danger"><i class="fa-solid fa-ban"></i> No hay existencias</p>
+                                            {{/unless}}
                                             <p class="card-text">{{price}} Bs.</p>
                                             {{!-- post add to cart shopping --}}
                                             <form action="/marketplace/cart_shopping/add_product/{{id}}" method="post">
                                                 <input type="number" class="form-control d-none" id="inputNumberQuantity" value="1" min="1" max="1" name="quantity">
-                                                <button class="btn btn-primary w-100"><i class="fa-solid fa-cart-plus"></i> <span>Añadir al carrito</span></button>
+                                                <button class="btn btn-primary w-100" {{#unless stock}}disabled{{/unless}}><i class="fa-solid fa-cart-plus" ></i> <span>Añadir al carrito</span></button>
                                             </form>
                                         </div>
                                     </div>
