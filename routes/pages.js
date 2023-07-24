@@ -41,7 +41,7 @@ router.get('/marketplace', requireAuth, async (req, res) => {
 
     for(var i = 0; i < products.length; i++) {
         
-        if (products[i].stock <= 5) {
+        if (products[i].stock <= 5 && products[i].stock > 0) {
             products[i].little_stock = true;
             // console.log("little product", products[i].little_stock);
         }
