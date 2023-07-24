@@ -66,6 +66,13 @@ router.get('/marketplace/product/:id', requireAuth, async (req, res) => {
     let product = await db.query("SELECT * FROM producto WHERE id = ?", [id]);
     let categories = await db.query("SELECT * FROM categoria");
 
+    //stock functionality for one product
+
+    if (product[0].stock <= 5 && product[0].stock > 0) {
+        product[0].little_stock = true;
+        // console.log("little product", products[i].little_stock);
+    }
+
     // console.log(product);
     // console.log(categories);
     res.render('./marketplace/product.hbs', {

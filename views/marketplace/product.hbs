@@ -185,7 +185,18 @@
                                 <h3 class="card-text">{{price}} Bs.</h3>
                                 <hr>
                                 <p>Código de Producto : <strong>EL-42</strong></p>
-                                <p>Existencias: <span class="avalability">Disponible</span></p>
+                                <p>Existencias:
+                                
+                                    {{!-- display according to stock --}}
+                                    {{#if little_stock}}
+                                    <span class="text-warning"><i class="fa-solid fa-triangle-exclamation"></i> Pocas existencias</span>
+                                    {{else}}
+                                    {{#if stock}}<span class="text-success"><i class="fa-solid fa-check"></i> Hay existencias</span>{{/if}}
+                                    {{/if}}
+                                    {{#unless stock}}
+                                    <span class="text-danger"><i class="fa-solid fa-ban"></i> No hay existencias</span>
+                                    {{/unless}}
+                                </p>
                                 <form action="/marketplace/cart_shopping/add_product/{{id}}" method="POST" class="row g-3">
                                     <div class="col-4 col-lg-2">
                                         <label for="inputNumberQuantity" class="form-label">Cantidad:</label>
@@ -195,7 +206,7 @@
                                         <input type="number" class="form-control" id="inputNumberQuantity" value="1" min="1" max="50" name="quantity">
                                     </div>
                                     <div class="col-12">
-                                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cart-plus"></i>
+                                        <button type="submit" class="btn btn-primary" {{#unless stock}}disabled{{/unless}}><i class="fa-solid fa-cart-plus"></i>
                                             <span>Añadir al carrito</span></button>
 
                                     </div>
