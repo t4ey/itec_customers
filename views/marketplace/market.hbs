@@ -180,8 +180,7 @@
                                             {{#if little_stock}}
                                             <p class="text-warning"><i class="fa-solid fa-triangle-exclamation"></i> Pocas existencias</p>
                                             {{else}}
-                                            {{!-- { {#if stock} }<p>&nbsp</p>{ {/if} } --}}
-                                            {{#if stock}}hr{{/if}}
+                                            {{#if stock}}<p>&nbsp</p>{{/if}}
                                             {{/if}}
                                             {{#unless stock}}
                                             <p class="text-danger"><i class="fa-solid fa-ban"></i> No hay existencias</p>
