@@ -73,7 +73,7 @@ exports.make_order = async (req, res) => {
 
     const cart_products = req.body;
 
-    // console.log(cart_products);
+    console.log(cart_products);
 
     for(var i = 0; i < cart_products.length; i++) {
         if (!cart_products.quantity[i] || (cart_products.quantity[i] > 50) || (cart_products.quantity[i] < 0) || !client_id) {
@@ -106,6 +106,21 @@ exports.make_order = async (req, res) => {
             for(var i = 0; i < db_cart_products.length;i++){
                 list_id_db_cart_products.push(db_cart_products[i].producto_id);
             }
+
+            // make order if there's enough stock
+            let ordered_products = (await db.query("SELECT * FROM producto WHERE id IN (?)", [list_id_db_cart_products]));
+            for(var i = 0;i<ordered_products.length;i++) {
+                console.log("stock???", ordered_products[i])
+                if (cart_products.quantity[i] > ordered_products[i].stock) {
+                    req.flash('message', "No hay stock suficiente del producto " + "\"" + ordered_products[i].name + "\"");
+                    req.flash('alertType', "alert-danger");
+                    return res.redirect('back');
+                }
+            }
+
+            // if there's stock substract the number of items to order on the "producto db" to make the accountability of stock
+            for (var i = 0; i < ordered_products.length; i++)
+                await db.query('UPDATE producto SET stock = ? WHERE id = ?', [ordered_products[i].stock - cart_products.quantity[i], ordered_products[i].id]);
 
             let product_prices = (await db.query("SELECT price FROM producto WHERE id IN (?)", [list_id_db_cart_products]));
             // console.log(product_prices);
