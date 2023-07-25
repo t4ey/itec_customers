@@ -31,31 +31,7 @@ router.get('/profile', requireAuth, (req, res) => {
 
 ///marketplace section
 
-router.get('/marketplace', requireAuth, async (req, res) => {
-    const message = req.flash('message');
-    const alertType = req.flash('alertType');
-
-    let categories = await db.query("SELECT * FROM categoria");
-
-    let products = await db.query("SELECT * FROM producto");
-
-    for(var i = 0; i < products.length; i++) {
-        
-        if (products[i].stock <= 5 && products[i].stock > 0) {
-            products[i].little_stock = true;
-            // console.log("little product", products[i].little_stock);
-        }
-    }
-    
-    // console.log(products);
-    // console.log(categories);
-    res.render('./marketplace/market.hbs',{
-        categories: categories,
-        products: products,
-        message: message,
-        alertType: alertType,
-    });
-});
+router.get('/marketplace', requireAuth, marketplace.marketplace);
 
 router.get('/marketplace/product/:id', requireAuth, async (req, res) => {
     const { id } = req.params;

@@ -1,5 +1,83 @@
 const { db } = require("../../database/database");
 
+// FUNCIONS
+
+    // pagination funcion
+
+async function pagination(db_name, req, res) {
+
+    const db_result = await db.query(`SELECT * FROM ${db_name}`);
+
+    const resultsPerPage = 20;
+    const numberOfResults = db_result.length;
+    const numberOfPages = Math.ceil(numberOfResults / resultsPerPage);
+
+    let page = req.query.page ? Number(req.query.page) : 1;
+
+    if(page > numberOfPages) {
+        // redirect inserting query number
+        res.redirect('back'+'/?page='+encodeURIComponent(numberOfPages));
+    } else if (page < 1) {
+        res.redirect('back' + '/?page=' + encodeURIComponent(1));
+    }
+
+    // setting up result start and end limits according to the page number
+
+    const startLimit = (page - 1) * resultsPerPage;
+
+    const get_page_result = await db.query(`SELECT * FROM ${db_name} LIMIT ${startLimit}, ${resultsPerPage}`);
+
+    // bar iteration for pagination numbers and buttons foward and backward
+
+    let iterator = (page - 5) < 1 ? 1 : page - 5;
+    let endingLink = (iterator + 9) <= numberOfPages ? (iterator + 0) : page + (numberOfPages - page);
+     
+
+    let result = {
+        result: get_page_result,
+        page,
+        numberOfPages,
+        iterator,
+        endingLink
+    };
+
+    return result;
+}
+
+// get requests
+
+exports.marketplace = async (req, res) => {
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+
+    let categories = await db.query("SELECT * FROM categoria");
+
+    const pagination_format = await pagination('producto', req, res)
+    console.log(pagination_format);
+
+    let products = pagination_format.result;
+
+
+    for (var i = 0; i < products.length; i++) {
+
+        if (products[i].stock <= 5 && products[i].stock > 0) {
+            products[i].little_stock = true;
+            // console.log("little product", products[i].little_stock);
+        }
+    }
+
+    // console.log(products);
+    // console.log(categories);
+    res.render('./marketplace/market.hbs', {
+        categories: categories,
+        products: products,
+        message: message,
+        alertType: alertType,
+    });
+}
+
+// post requests
+
 exports.add_to_shopping_cart = async (req, res) => {
     const { id } = req.params;
     const product_id = id;
