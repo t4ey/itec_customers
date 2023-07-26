@@ -4,11 +4,11 @@ const { db } = require("../../database/database");
 
     // pagination funcion
 
-async function pagination(db_name, req, res) {
+async function pagination(db_query, req, res) {
 
-    const db_result = await db.query(`SELECT * FROM ${db_name}`);
+    const db_result = await db.query(`${db_query}`);
 
-    const resultsPerPage = 20;
+    const resultsPerPage = 15;
     const numberOfResults = db_result.length;
     const numberOfPages = Math.ceil(numberOfResults / resultsPerPage);
 
@@ -28,7 +28,7 @@ async function pagination(db_name, req, res) {
 
     const startLimit = (page - 1) * resultsPerPage;
 
-    const get_page_result = await db.query(`SELECT * FROM ${db_name} LIMIT ${startLimit}, ${resultsPerPage}`);
+    const get_page_result = await db.query(`${db_query} LIMIT ${startLimit}, ${resultsPerPage}`);
 
     // bar iteration for pagination numbers and buttons foward and backward
 
@@ -77,7 +77,7 @@ function pagination_bar(pagination_data){
     return result;
 }
 
-// get requests
+// GET requests
 
 exports.marketplace = async (req, res) => {
     const message = req.flash('message');
@@ -87,7 +87,7 @@ exports.marketplace = async (req, res) => {
 
     // pagination
 
-    const pagination_format = await pagination('producto', req, res);
+    const pagination_format = await pagination('SELECT * FROM producto', req, res);
     const pagination_data = {
         page: pagination_format.page,
         numberOfPages: pagination_format.numberOfPages,
