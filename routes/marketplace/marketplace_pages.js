@@ -100,6 +100,8 @@ exports.marketplace = async (req, res) => {
     const pag_bar = pagination_bar(pagination_data);
     console.log(pag_bar);
 
+    // end pagination
+
     let products = pagination_format.result;
 
     for (var i = 0; i < products.length; i++) {
