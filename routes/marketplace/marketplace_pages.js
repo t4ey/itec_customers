@@ -14,6 +14,9 @@ async function pagination(db_name, req, res) {
 
     let page = req.query.page ? Number(req.query.page) : 1;
 
+    if(Number.isNaN(page)) 
+        page = 1;
+
     if(page > numberOfPages) {
         // redirect inserting query number
         res.redirect('back'+'/?page='+encodeURIComponent(numberOfPages));
@@ -44,6 +47,36 @@ async function pagination(db_name, req, res) {
     return result;
 }
 
+function pagination_bar(pagination_data){
+    let result = pagination_data;
+
+    if(result.page > 1){
+        result.previous = result.page - 1;
+    } else {
+        result.previous = false;
+    }
+
+    if (result.page < result.numberOfPages) {
+        result.next = result.page + 1;
+    } else {
+        result.next = false;
+    }
+
+    result.display_nums = [];
+    result.currentPageActive = [];
+    for (let i = 0; i < result.endingLink; i++) {
+        if (i+1 == result.page)
+            result.currentPageActive.push(true);
+        else
+            result.currentPageActive.push(false);
+
+        result.display_nums.push(i + 1);
+    }
+
+
+    return result;
+}
+
 // get requests
 
 exports.marketplace = async (req, res) => {
@@ -52,11 +85,22 @@ exports.marketplace = async (req, res) => {
 
     let categories = await db.query("SELECT * FROM categoria");
 
-    const pagination_format = await pagination('producto', req, res)
-    console.log(pagination_format);
+    // pagination
+
+    const pagination_format = await pagination('producto', req, res);
+    const pagination_data = {
+        page: pagination_format.page,
+        numberOfPages: pagination_format.numberOfPages,
+        iterator: pagination_format.iterator,
+        endingLink: pagination_format.endingLink
+    }
+    // console.log(pagination_format);
+
+    // pagination bar
+    const pag_bar = pagination_bar(pagination_data);
+    console.log(pag_bar);
 
     let products = pagination_format.result;
-
 
     for (var i = 0; i < products.length; i++) {
 
@@ -73,6 +117,7 @@ exports.marketplace = async (req, res) => {
         products: products,
         message: message,
         alertType: alertType,
+        pagination_bar: pag_bar,
     });
 }
 

@@ -7,8 +7,7 @@
     <title>Tienda Virtual</title>
 
     <!-- boostrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -196,6 +195,23 @@
                                 </div>
                             {{/each}}
                             </div>
+                        </div>
+
+                        {{!-- pagination bar --}}
+                        <div class="container-fluid">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    {{#with pagination_bar}}
+                                        <li class="page-item {{#unless previous}}disabled{{/unless}}"><a class="page-link" href="/marketplace?page=1"><i class="fa-solid fa-angles-left"></i></a></li>
+                                        <li class="page-item {{#unless previous}}disabled{{/unless}}"><a class="page-link" href="/marketplace?page={{previous}}">Anterior</a></li>
+                                        {{#each display_nums}}
+                                            <li class="page-item {{#if (lookup ../currentPageActive @index)}}active{{/if}}"><a class="page-link" href="/marketplace?page={{this}}">{{this}}</a></li>
+                                        {{/each}}
+                                        <li class="page-item {{#unless next}}disabled{{/unless}}"><a class="page-link" href="/marketplace?page={{next}}">Siguiente</a></li>
+                                        <li class="page-item {{#unless next}}disabled{{/unless}}"><a class="page-link" href="/marketplace?page={{numberOfPages}}"><i class="fa-solid fa-angles-right"></i></a></li>
+                                    {{/with}}
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
