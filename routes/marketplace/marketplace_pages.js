@@ -123,6 +123,97 @@ exports.marketplace = async (req, res) => {
     });
 }
 
+exports.searchInMarketplace = async (req, res) => {
+    const search_string = req.query.search;
+    const category = req.query.category;
+
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+    // console.log("name : ", search_string);
+    let categories = await db.query("SELECT * FROM categoria");
+
+    
+
+    if (category) {
+
+        // get id from products in the same category
+
+        if(category > categories[categories.length - 1] || category < 0 || Number.isNaN(category)){
+            console.log( "categories checker: ",category,categories.length)
+            res.redirect('/marketplace');
+        }
+
+        const p_cat = await db.query("SELECT prod_id FROM clasificacion WHERE cat_id = ?", [category]);
+        let p_cat_list = [];
+        for (var i = 0; i < p_cat.length; i++) {
+            p_cat_list.push(p_cat[i].prod_id);
+        }
+
+        // get products
+        
+        let products;
+        if (p_cat < 1) {
+            return res.render('./marketplace/market.hbs', {
+                categories: categories,
+                products: products,
+                message: message,
+                alertType: alertType,
+            });
+        }
+
+        // products = await db.query(`SELECT * FROM producto WHERE id IN (${p_cat_list})`);
+        
+        // // pagination
+        
+        const pagination_format = await pagination(`SELECT * FROM producto WHERE id IN (${p_cat_list})`, req, res);
+        const pagination_data = {
+            page: pagination_format.page,
+            numberOfPages: pagination_format.numberOfPages,
+            iterator: pagination_format.iterator,
+            endingLink: pagination_format.endingLink
+        }
+        // console.log(pagination_format);
+
+        // pagination bar
+        const pag_bar = pagination_bar(pagination_data);
+        console.log(pag_bar);
+
+        // end pagination
+
+        products = pagination_format.result;
+        
+        // console.log("pcat : ", p_cat);
+        // console.log(pagination_format);
+
+        return res.render('./marketplace/market.hbs', {
+            categories: categories,
+            products: products,
+            message: message,
+            alertType: alertType,
+            pagination_bar: pag_bar,
+        });
+    }
+
+    else if (search_string) {
+        const products = await db.query("SELECT * FROM producto WHERE name LIKE '%" + search_string + "%'");
+        // console.log(products);
+        return res.render('./marketplace/market.hbs', {
+            categories: categories,
+            products: products,
+            message: message,
+            alertType: alertType,
+        });
+    } else {
+        req.flash('message', 'no se encontro ningún producto');
+        req.flash('alertType', 'alert-danger');
+        res.redirect('/marketplace');
+        // res.locals.products = null;
+        // console.log("user checked", req.originalUrl);
+        // console.log(await db.query("SELECT * FROM client WHERE id = 4"));
+    }
+
+}
+
 // post requests
 
 exports.add_to_shopping_cart = async (req, res) => {
