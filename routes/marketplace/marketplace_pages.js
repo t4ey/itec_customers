@@ -8,6 +8,16 @@ async function pagination(db_query, req, res) {
 
     const db_result = await db.query(`${db_query}`);
 
+    if(db_result.length <=0) {
+        return { status: "no results" }; 
+        req.flash('message', 'no se encontro ningún producto');
+        req.flash('alertType', 'alert-danger');
+        return res.redirect('/marketplace');
+        // res.locals.products = null;
+        // console.log("user checked", req.originalUrl);
+        // console.log(await db.query("SELECT * FROM client WHERE id = 4"));
+    }
+
     const resultsPerPage = 15;
     const numberOfResults = db_result.length;
     const numberOfPages = Math.ceil(numberOfResults / resultsPerPage);
@@ -17,18 +27,20 @@ async function pagination(db_query, req, res) {
     if(Number.isNaN(page)) 
         page = 1;
     
-    console.log("current_page: ", page, "N of pages: "+ numberOfPages);
+    console.log("current_page: ", page, "N of pages: " + numberOfPages, numberOfResults,numberOfResults / resultsPerPage);
     console.log(req.originalUrl);
     if(page > numberOfPages) {
         // redirect inserting query number
         console.log("page: ", page, " page more than the minimunPages");
-        res.redirect('/marketplace' +'?page='+encodeURIComponent(numberOfPages));
+        return {status:"return if over pages", numberOfPages};
     } else if (page < 1) {
-        res.redirect('/marketplace' + '?page=' + encodeURIComponent(1));
         console.log("page: ", page, " page less than the minimunPages");
+        return {status:"return if lower pages", numberOfPages};
     }
-    else console.log("None of the page security conditions matched");
-
+    else {
+        {status: ""}
+        console.log("None of the page security conditions matched");
+}
     // setting up result start and end limits according to the page number
 
     const startLimit = (page - 1) * resultsPerPage;
@@ -87,10 +99,10 @@ function pagination_bar(pagination_data){
 exports.marketplace = async (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
-    const category = req.query.category;
-    const search = req.query.search;
+    // const category = req.query.category;
+    const {search, page, category} = req.query;
 
-    console.log("category query", category);
+    console.log(" querys", search, page, category);
 
     let categories = await db.query("SELECT * FROM categoria");
     let products;
@@ -98,10 +110,10 @@ exports.marketplace = async (req, res) => {
 
     if(category) {
         // get id from products in the same category
-
+        console.log("category??????");
         if (category > categories[categories.length - 1] || category < 0 || Number.isNaN(category)) {
             console.log("categories checker: ", category, categories.length)
-            res.redirect('/marketplace');
+            return res.redirect('/marketplace');
         }
 
         const p_cat = await db.query("SELECT prod_id FROM clasificacion WHERE cat_id = ?", [category]);
@@ -127,19 +139,56 @@ exports.marketplace = async (req, res) => {
 
         pagination_format = await pagination(`SELECT * FROM producto WHERE id IN (${p_cat_list})`, req, res);
 
+        // in case out of page 
+
+        if (pagination_format.status == "return if over pages") { 
+            return res.redirect('/marketplace' + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
+        }
+        else if (pagination_format.status == "return if lower pages"){
+            return res.redirect('/marketplace' + '?page=' + encodeURIComponent(1))
+        }
+        else if (pagination_format.status == "no results") {
+            req.flash('message', 'no se encontro ningún producto');
+            req.flash('alertType', 'alert-danger');
+            return res.redirect('/marketplace');
+        }
         // console.log("pcat : ", p_cat);
         // console.log(pagination_format);
     }
     else if (search) {
         // const products = await db.query("SELECT * FROM producto WHERE name LIKE '%" + search_string + "%'");
         // pagination
-        console.log("with_search");
+        console.log("with_search :", search);
         pagination_format = await pagination("SELECT * FROM producto WHERE name LIKE '%" + search + "%'", req, res);
+
+        if (pagination_format.status == "return if over pages") {
+            return res.redirect('/marketplace' + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
+        }
+        else if (pagination_format.status == "return if lower pages") {
+            return res.redirect('/marketplace' + '?page=' + encodeURIComponent(1))
+        }
+        else if (pagination_format.status == "no results") {
+            req.flash('message', 'no se encontro ningún producto');
+            req.flash('alertType', 'alert-danger');
+            return res.redirect('/marketplace');
+        }
     }
     else {
         // pagination
-
+        console.log("deffff");
         pagination_format = await pagination('SELECT * FROM producto', req, res);
+
+        if (pagination_format.status == "return if over pages") {
+            return res.redirect('/marketplace' + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
+        }
+        else if (pagination_format.status == "return if lower pages") {
+            return res.redirect('/marketplace' + '?page=' + encodeURIComponent(1))
+        }
+        else if (pagination_format.status == "no results") {
+            req.flash('message', 'no se encontro ningún producto');
+            req.flash('alertType', 'alert-danger');
+            return res.redirect('/marketplace');
+        }
         
     }
     const pagination_data = {
@@ -158,6 +207,8 @@ exports.marketplace = async (req, res) => {
 
     products = pagination_format.result;
     
+    // adding the stock state that lefts
+
     for (var i = 0; i < products.length; i++) {
 
         if (products[i].stock <= 5 && products[i].stock > 0) {
@@ -168,7 +219,8 @@ exports.marketplace = async (req, res) => {
     
     // console.log(products);
     // console.log(categories);
-    res.render('./marketplace/market.hbs', {
+    console.log("sending data");
+    return res.render('./marketplace/market.hbs', {
         categories: categories,
         products: products,
         message: message,
@@ -184,21 +236,18 @@ exports.searchInMarketplace = async (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
     // console.log("name : ", search_string);
-
-    let categories = await db.query("SELECT * FROM categoria");
-
     const cat_or_search = req.body;
     
     if (cat_or_search.category) {
-        res.redirect("/marketplace?category=" + encodeURIComponent(cat_or_search.category));  
+        return res.redirect("/marketplace?category=" + encodeURIComponent(cat_or_search.category));  
     }
 
     else if (cat_or_search.search) {
-        res.redirect("/marketplace?search=" + encodeURIComponent(cat_or_search.search));
+        return res.redirect("/marketplace?search=" + encodeURIComponent(cat_or_search.search));
     } else {
         req.flash('message', 'no se encontro ningún producto');
         req.flash('alertType', 'alert-danger');
-        res.redirect('/marketplace');
+        return res.redirect('/marketplace');
         // res.locals.products = null;
         // console.log("user checked", req.originalUrl);
         // console.log(await db.query("SELECT * FROM client WHERE id = 4"));
