@@ -27,7 +27,7 @@ async function pagination(db_query, req, res) {
     if(Number.isNaN(page)) 
         page = 1;
     
-    console.log("current_page: ", page, "N of pages: " + numberOfPages, numberOfResults,numberOfResults / resultsPerPage);
+    // console.log("current_page: ", page, "N of pages: " + numberOfPages, numberOfResults,numberOfResults / resultsPerPage);
     console.log(req.originalUrl);
     if(page > numberOfPages) {
         // redirect inserting query number
@@ -110,7 +110,7 @@ exports.marketplace = async (req, res) => {
 
     if(category) {
         // get id from products in the same category
-        console.log("category??????");
+        // console.log("category??????");
         if (category > categories[categories.length - 1] || category < 0 || Number.isNaN(category)) {
             console.log("categories checker: ", category, categories.length)
             return res.redirect('/marketplace');
@@ -158,7 +158,7 @@ exports.marketplace = async (req, res) => {
     else if (search) {
         // const products = await db.query("SELECT * FROM producto WHERE name LIKE '%" + search_string + "%'");
         // pagination
-        console.log("with_search :", search);
+        // console.log("with_search :", search);
         pagination_format = await pagination("SELECT * FROM producto WHERE name LIKE '%" + search + "%'", req, res);
 
         if (pagination_format.status == "return if over pages") {
@@ -175,7 +175,7 @@ exports.marketplace = async (req, res) => {
     }
     else {
         // pagination
-        console.log("deffff");
+        // console.log("deffff");
         pagination_format = await pagination('SELECT * FROM producto', req, res);
 
         if (pagination_format.status == "return if over pages") {
