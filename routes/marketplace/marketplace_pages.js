@@ -13,16 +13,21 @@ async function pagination(db_query, req, res) {
     const numberOfPages = Math.ceil(numberOfResults / resultsPerPage);
 
     let page = req.query.page ? Number(req.query.page) : 1;
-
+    console.log("query page: ", req.query.page);
     if(Number.isNaN(page)) 
         page = 1;
-
+    
+    console.log("current_page: ", page, "N of pages: "+ numberOfPages);
+    console.log(req.originalUrl);
     if(page > numberOfPages) {
         // redirect inserting query number
-        res.redirect('back'+'/?page='+encodeURIComponent(numberOfPages));
+        console.log("page: ", page, " page more than the minimunPages");
+        res.redirect('/marketplace' +'?page='+encodeURIComponent(numberOfPages));
     } else if (page < 1) {
-        res.redirect('back' + '/?page=' + encodeURIComponent(1));
+        res.redirect('/marketplace' + '?page=' + encodeURIComponent(1));
+        console.log("page: ", page, " page less than the minimunPages");
     }
+    else console.log("None of the page security conditions matched");
 
     // setting up result start and end limits according to the page number
 
@@ -82,12 +87,61 @@ function pagination_bar(pagination_data){
 exports.marketplace = async (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
+    const category = req.query.category;
+    const search = req.query.search;
+
+    console.log("category query", category);
 
     let categories = await db.query("SELECT * FROM categoria");
+    let products;
+    let pagination_format;
 
-    // pagination
+    if(category) {
+        // get id from products in the same category
 
-    const pagination_format = await pagination('SELECT * FROM producto', req, res);
+        if (category > categories[categories.length - 1] || category < 0 || Number.isNaN(category)) {
+            console.log("categories checker: ", category, categories.length)
+            res.redirect('/marketplace');
+        }
+
+        const p_cat = await db.query("SELECT prod_id FROM clasificacion WHERE cat_id = ?", [category]);
+        let p_cat_list = [];
+        for (var i = 0; i < p_cat.length; i++) {
+            p_cat_list.push(p_cat[i].prod_id);
+        }
+
+        // get products
+
+        if (p_cat.length < 1) {
+            return res.render('./marketplace/market.hbs', {
+                categories: categories,
+                products: products,
+                message: message,
+                alertType: alertType,
+            });
+        }
+
+        // products = await db.query(`SELECT * FROM producto WHERE id IN (${p_cat_list})`);
+
+        // pagination
+
+        pagination_format = await pagination(`SELECT * FROM producto WHERE id IN (${p_cat_list})`, req, res);
+
+        // console.log("pcat : ", p_cat);
+        // console.log(pagination_format);
+    }
+    else if (search) {
+        // const products = await db.query("SELECT * FROM producto WHERE name LIKE '%" + search_string + "%'");
+        // pagination
+        console.log("with_search");
+        pagination_format = await pagination("SELECT * FROM producto WHERE name LIKE '%" + search + "%'", req, res);
+    }
+    else {
+        // pagination
+
+        pagination_format = await pagination('SELECT * FROM producto', req, res);
+        
+    }
     const pagination_data = {
         page: pagination_format.page,
         numberOfPages: pagination_format.numberOfPages,
@@ -102,8 +156,8 @@ exports.marketplace = async (req, res) => {
 
     // end pagination
 
-    let products = pagination_format.result;
-
+    products = pagination_format.result;
+    
     for (var i = 0; i < products.length; i++) {
 
         if (products[i].stock <= 5 && products[i].stock > 0) {
@@ -111,7 +165,7 @@ exports.marketplace = async (req, res) => {
             // console.log("little product", products[i].little_stock);
         }
     }
-
+    
     // console.log(products);
     // console.log(categories);
     res.render('./marketplace/market.hbs', {
@@ -123,86 +177,24 @@ exports.marketplace = async (req, res) => {
     });
 }
 
-exports.searchInMarketplace = async (req, res) => {
-    const search_string = req.query.search;
-    const category = req.query.category;
 
+// post requests
+
+exports.searchInMarketplace = async (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
     // console.log("name : ", search_string);
+
     let categories = await db.query("SELECT * FROM categoria");
 
+    const cat_or_search = req.body;
     
-
-    if (category) {
-
-        // get id from products in the same category
-
-        if(category > categories[categories.length - 1] || category < 0 || Number.isNaN(category)){
-            console.log( "categories checker: ",category,categories.length)
-            res.redirect('/marketplace');
-        }
-
-        const p_cat = await db.query("SELECT prod_id FROM clasificacion WHERE cat_id = ?", [category]);
-        let p_cat_list = [];
-        for (var i = 0; i < p_cat.length; i++) {
-            p_cat_list.push(p_cat[i].prod_id);
-        }
-
-        // get products
-        
-        let products;
-        if (p_cat < 1) {
-            return res.render('./marketplace/market.hbs', {
-                categories: categories,
-                products: products,
-                message: message,
-                alertType: alertType,
-            });
-        }
-
-        // products = await db.query(`SELECT * FROM producto WHERE id IN (${p_cat_list})`);
-        
-        // // pagination
-        
-        const pagination_format = await pagination(`SELECT * FROM producto WHERE id IN (${p_cat_list})`, req, res);
-        const pagination_data = {
-            page: pagination_format.page,
-            numberOfPages: pagination_format.numberOfPages,
-            iterator: pagination_format.iterator,
-            endingLink: pagination_format.endingLink
-        }
-        // console.log(pagination_format);
-
-        // pagination bar
-        const pag_bar = pagination_bar(pagination_data);
-        console.log(pag_bar);
-
-        // end pagination
-
-        products = pagination_format.result;
-        
-        // console.log("pcat : ", p_cat);
-        // console.log(pagination_format);
-
-        return res.render('./marketplace/market.hbs', {
-            categories: categories,
-            products: products,
-            message: message,
-            alertType: alertType,
-            pagination_bar: pag_bar,
-        });
+    if (cat_or_search.category) {
+        res.redirect("/marketplace?category=" + encodeURIComponent(cat_or_search.category));  
     }
 
-    else if (search_string) {
-        const products = await db.query("SELECT * FROM producto WHERE name LIKE '%" + search_string + "%'");
-        // console.log(products);
-        return res.render('./marketplace/market.hbs', {
-            categories: categories,
-            products: products,
-            message: message,
-            alertType: alertType,
-        });
+    else if (cat_or_search.search) {
+        res.redirect("/marketplace?search=" + encodeURIComponent(cat_or_search.search));
     } else {
         req.flash('message', 'no se encontro ningún producto');
         req.flash('alertType', 'alert-danger');
@@ -213,8 +205,6 @@ exports.searchInMarketplace = async (req, res) => {
     }
 
 }
-
-// post requests
 
 exports.add_to_shopping_cart = async (req, res) => {
     const { id } = req.params;

@@ -100,7 +100,7 @@ router.get('/marketplace/cart_shopping', requireAuth, async (req, res) => {
     });
 });
 
-router.get('/marketplace/search/', marketplace.searchInMarketplace);
+router.post('/marketplace/search', marketplace.searchInMarketplace);
 
 // POST ROUTES
 
