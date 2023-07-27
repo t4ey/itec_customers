@@ -107,6 +107,7 @@ exports.marketplace = async (req, res) => {
     let categories = await db.query("SELECT * FROM categoria");
     let products;
     let pagination_format;
+    let hasFilter;
 
     if(category) {
         // get id from products in the same category
@@ -138,6 +139,7 @@ exports.marketplace = async (req, res) => {
         // pagination
 
         pagination_format = await pagination(`SELECT * FROM producto WHERE id IN (${p_cat_list})`, req, res);
+        hasFilter = {category: category};
 
         // in case out of page 
 
@@ -160,7 +162,8 @@ exports.marketplace = async (req, res) => {
         // pagination
         // console.log("with_search :", search);
         pagination_format = await pagination("SELECT * FROM producto WHERE name LIKE '%" + search + "%'", req, res);
-
+        hasFilter = {search: search};
+        
         if (pagination_format.status == "return if over pages") {
             return res.redirect('/marketplace' + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
         }
@@ -174,10 +177,13 @@ exports.marketplace = async (req, res) => {
         }
     }
     else {
+        // default state
+
         // pagination
         // console.log("deffff");
         pagination_format = await pagination('SELECT * FROM producto', req, res);
-
+        hasFilter = false;
+        
         if (pagination_format.status == "return if over pages") {
             return res.redirect('/marketplace' + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
         }
@@ -201,6 +207,7 @@ exports.marketplace = async (req, res) => {
 
     // pagination bar
     const pag_bar = pagination_bar(pagination_data);
+    pag_bar.filter = hasFilter;
     console.log(pag_bar);
 
     // end pagination

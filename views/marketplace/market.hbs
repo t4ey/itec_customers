@@ -205,13 +205,28 @@
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-center">
                                     {{#with pagination_bar}}
-                                        <li class="page-item {{#unless previous}}disabled{{/unless}}"><a class="page-link" href="/marketplace?page=1"><i class="fa-solid fa-angles-left"></i></a></li>
-                                        <li class="page-item {{#unless previous}}disabled{{/unless}}"><a class="page-link" href="/marketplace?page={{previous}}">Anterior</a></li>
+                                        <li class="page-item {{#unless previous}}disabled{{/unless}}"><a class="page-link" href="/marketplace{{#with filter}}{{#if search}}?search={{search}}&{{/if}}{{#if category}}?category={{category}}&{{/if}}{{else}}?{{/with}}page=1"><i class="fa-solid fa-angles-left"></i></a></li>
+                                        <li class="page-item {{#unless previous}}disabled{{/unless}}"><a class="page-link" 
+                                            href="/marketplace{{#with filter}}{{#if search}}?search={{search}}&{{/if}}{{#if category}}?category={{category}}&{{/if}}{{else}}?{{/with}}page={{previous}}">Anterior</a></li>
                                         {{#each display_nums}}
-                                            <li class="page-item {{#if (lookup ../currentPageActive @index)}}active{{/if}}"><a class="page-link" href="/marketplace?page={{this}}">{{this}}</a></li>
+                                            <li class="page-item {{#if (lookup ../currentPageActive @index)}}active{{/if}}"><a class="page-link" 
+                                                href="/marketplace{{#with ../filter}}{{#if search}}?search={{search}}&{{/if}}{{#if category}}?category={{category}}&{{/if}}{{else}}?{{/with}}page={{this}}">{{this}}</a></li>
                                         {{/each}}
-                                        <li class="page-item {{#unless next}}disabled{{/unless}}"><a class="page-link" href="/marketplace?page={{next}}">Siguiente</a></li>
-                                        <li class="page-item {{#unless next}}disabled{{/unless}}"><a class="page-link" href="/marketplace?page={{numberOfPages}}"><i class="fa-solid fa-angles-right"></i></a></li>
+                                        <li class="page-item {{#unless next}}disabled{{/unless}}"><a class="page-link" 
+                                            href="/marketplace{{#with filter}}{{#if search}}?search={{search}}&{{/if}}{{#if category}}?category={{category}}&{{/if}}{{else}}?{{/with}}page={{next}}">Siguiente</a></li>
+
+                                        <!--{{#with filter}}
+                                            <li>filter???</li>
+                                            {{#if search}}
+                                                <li>{{search}}</li>
+                                            {{/if}}
+                                            {{#if category}}
+                                                <li>{{category}}</li>
+                                            {{/if}}
+                                        {{else}}
+                                        <li>adjsñlfd</li>
+                                        {{/with}}-->
+                                        <li class="page-item {{#unless next}}disabled{{/unless}}"><a class="page-link" href="/marketplace{{#with filter}}{{#if search}}?search={{search}}&{{/if}}{{#if category}}?category={{category}}&{{/if}}{{else}}?{{/with}}page={{numberOfPages}}"><i class="fa-solid fa-angles-right"></i></a></li>
                                     {{/with}}
                                 </ul>
                             </nav>
