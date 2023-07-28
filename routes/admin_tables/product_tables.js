@@ -628,18 +628,62 @@ exports.filter_orders = async (req, res) => {
     const alertType = req.flash('alertType');
 
     const data = req.params.data;
-    console.log(data);
+    console.log("data: ", data);
+
+    // filter's bar numbers
+
+    const filter_data_orders = await db.query("SELECT * FROM pedido ORDER BY id DESC");
+
+    let filters = {};
+    // image.png
+    filters.all = filter_data_orders.length;
+    filters.new = 0;
+    filters.ready_to_pay = 0;
+    filters.completed = 0;
+    filters.canceled = 0;
+
+    for (var i = 0; i < filter_data_orders.length; i++) {
+        // check filter numbers 
+        switch (filter_data_orders[i].status) {
+            case 'new':
+                filters.new++;
+                break;
+            case 'completed':
+                filters.completed++;
+                break;
+            case 'ready-to-pay':
+                filters.ready_to_pay++;
+                break;
+            case 'canceled':
+                filters.canceled++;
+                break;
+            default:
+                filters.all = filter_data_orders.length;
+                break;
+        }
+    }
+    console.log(filters);
 
     if(data == 'all'){
-        res.redirect('/admin/orders/');
+        return res.redirect('/admin/orders/');
     }
-
+    else if(data == "undefined") {
+        const orders = 0;
+        console.log("no data in orders so error");
+        return res.render('./admin/products/orders.hbs', {
+            message: message,
+            alertType: alertType,
+            orders: orders,
+            filters: filters,
+            // pagination_bar: pag_bar,
+        });
+    }
     // pagination
 
     // console.log("deffff");
     // data query request await db.query(`SELECT * FROM pedido WHERE status = ${data} ORDER BY id DESC`);
-    const pagination_format = await pagination(`SELECT * FROM pedido WHERE status = ${data} ORDER BY id DESC`, req, res);
-    const link_page = "/admin/orders";
+    const pagination_format = await pagination(`SELECT * FROM pedido WHERE status = '${data}' ORDER BY id DESC`, req, res);
+    const link_page = res.originalUrl;
 
     // if try to ingress to a different page range
     if (pagination_format.status == "return if over pages") {
@@ -670,43 +714,15 @@ exports.filter_orders = async (req, res) => {
     // end pagination
 
     const orders = pagination_format.result; 
-    
-    const filter_data_orders = await db.query("SELECT * FROM pedido ORDER BY id DESC");
-    let filters = {};
-    image.png
-    filters.all = filter_data_orders.length;
-    filters.new = 0;
-    filters.ready_to_pay = 0;
-    filters.completed = 0;
-    filters.canceled = 0;
+        
+    // get order's clients
     
     let list_client_ids = [];
-
+    
     for (var i = 0; i < orders.length; i++) {
         list_client_ids.push(orders[i].client_id);
     }
-
-    for (var i = 0; i < filter_data_orders.length; i++) {
-        // check filter numbers 
-        switch (filter_data_orders[i].status) {
-            case 'new':
-                filters.new++;
-                break;
-            case 'completed':
-                filters.completed++;
-                break;
-            case 'ready-to-pay':
-                filters.ready_to_pay++;
-                break;
-            case 'canceled':
-                filters.canceled++;
-                break;
-            default:
-                filters.all = filter_data_orders.length;
-                break;
-        }
-    }
-    console.log(filters);
+    
     console.log("c_ids :", list_client_ids)
     if(list_client_ids.length > 0) {
         
@@ -748,6 +764,7 @@ exports.filter_orders = async (req, res) => {
         alertType: alertType,
         orders: orders,
         filters: filters,
+        pagination_bar: pag_bar,
     });
 }
 
