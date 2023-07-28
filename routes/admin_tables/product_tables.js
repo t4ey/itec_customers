@@ -135,32 +135,47 @@ exports.products = async (req, res) => {
     const alertType = req.flash('alertType');
 
     // console.log(message);
+    let products = {}
+    products.all = await db.query("SELECT * FROM producto");
 
-    let products;
+    // filter's bar counter
 
-    // filtering
-    filtered_products = await filter_products();
-    console.log(filtered_products);
+    products.published = [];
+    products.out_of_stock = [];
+    // console.log("filtered prods: ", products);
 
-    if (filter == undefined || filter == "all"){
-        products = filtered_products.all;
+    for (var i = 0; i < products.all.length; i++) {
+        // insert in filters ( published && out of stock)
+        // console.log(products.all[i].stock > 0);
+        if (products.all[i].stock > 0) {
+            products.published.push(products.all[i]);
+        }
+        else {
+            products.out_of_stock.push(products.all[i]);
+        }
     }
-    else if (filter == "published") {
-        products = filtered_products.published;
-    }
-    else if (filter == "out_of_stock") {
-        products = filtered_products.out_of_stock;
-    }
-    
+
     let filters = {};
 
-    filters.all = filtered_products.all.length;
-    filters.published = filtered_products.published.length;
-    filters.out_of_stock = filtered_products.out_of_stock.length;
+    filters.all = products.all.length;
+    filters.published = products.published.length;
+    filters.out_of_stock = products.out_of_stock.length;
     
+    // filtering
+
+    // if (filter == undefined || filter == "all") {
+    //     products = filtered_products.all;
+    // }
+    // else if (filter == "published") {
+    //     products = filtered_products.published;
+    // }
+    // else if (filter == "out_of_stock") {
+    //     products = filtered_products.out_of_stock;
+    // }
     // filters.all = products.all.length 
     // filters.published products.published
     // products.f_
+    products = products.all;
     console.log(products);
 
 
@@ -202,13 +217,19 @@ exports.products = async (req, res) => {
     });
 }
 
-async function filter_products () {
-
+exports.filter_products = async (req, res) => {
     //const orders = await db.query("SELECT * FROM pedido WHERE status = ? ORDER BY id DESC", [filter]);
     //const filter_filter_orders = await db.query("SELECT * FROM pedido ORDER BY id DESC");
-    let products = {};
+    const filter = req.params.filter;
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
 
+    // console.log(message);
+    let products = {}
     products.all = await db.query("SELECT * FROM producto");
+
+    // filter's bar counter
+
     products.published = [];
     products.out_of_stock = [];
     // console.log("filtered prods: ", products);
@@ -223,9 +244,68 @@ async function filter_products () {
             products.out_of_stock.push(products.all[i]);
         }
     }
-    // console.log("filtered prods: ", products);
 
-    return products;
+    let filters = {};
+
+    filters.all = products.all.length;
+    filters.published = products.published.length;
+    filters.out_of_stock = products.out_of_stock.length;
+
+    // filtering
+
+    if (filter == undefined || filter == "all") {
+        console.log("no filter ");
+        res.redirect("/admin/products");
+    }
+    else if (filter == "published") {
+        products = products.published;
+    }
+    else if (filter == "out_of_stock") {
+        products = products.out_of_stock;
+    }
+    // filters.all = products.all.length 
+    // filters.published products.published
+    // products.f_
+
+    console.log(products);
+    console.log(filter);
+
+    // display categories part
+
+    if (products.length > 0) {
+        for (var i = 0; i < products.length; i++) {
+            products[i].img_dir = micro_img_dir(products[i].img_dir); // change to micro img dir
+
+            product_category_ids = await db.query("SELECT cat_id FROM clasificacion WHERE prod_id = ?", [products[i].id]);
+
+            let name_categories = [];
+            // console.log(product_category_ids);
+            // console.log(cat_ids);
+
+            for (var j = 0; j < product_category_ids.length; j++) {
+                if (product_category_ids[j]) {
+                    let get_cat_name = await db.query("SELECT name FROM categoria WHERE id = ?", [product_category_ids[j].cat_id]);
+                    // console.log(get_cat_name[0].name);
+                    name_categories.push(get_cat_name[0].name);
+                    // console.log("categories push: ", categories);
+                }
+
+            }
+            products[i].categories = name_categories;
+            // console.log(products[i]);
+            // console.log("next id", categories);
+        }
+    }
+
+    // console.log(products);
+
+    // console.log(result);
+    return res.render('./admin/products/products.hbs', {
+        message: message,
+        alertType: alertType,
+        products: products,
+        filters: filters,
+    });
 }
 
 exports.add_product = async (req, res) => {
