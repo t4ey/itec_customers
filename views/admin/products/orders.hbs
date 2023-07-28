@@ -276,19 +276,7 @@
                                 {{/each}}
                                 <li class="page-item {{#unless next}}disabled{{/unless}}"><a class="page-link" 
                                     href="{{link}}?page={{next}}">Siguiente</a></li>
-
-                                <!--{{#with filter}}
-                                    <li>filter???</li>
-                                    {{#if search}}
-                                        <li>{{search}}</li>
-                                    {{/if}}
-                                    {{#if category}}
-                                        <li>{{category}}</li>
-                                    {{/if}}
-                                {{else}}
-                                <li>adjsñlfd</li>
-                                {{/with}}-->
-                                <li class="page-item {{#unless next}}disabled{{/unless}}"><a class="page-link" href="/admin/orders?page={{numberOfPages}}"><i class="fa-solid fa-angles-right"></i></a></li>
+                                <li class="page-item {{#unless next}}disabled{{/unless}}"><a class="page-link" href="{{link}}?page={{numberOfPages}}"><i class="fa-solid fa-angles-right"></i></a></li>
                             {{/with}}
                         </ul>
                     </nav>
