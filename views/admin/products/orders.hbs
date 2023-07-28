@@ -261,6 +261,38 @@
                         </div>
                     {{/if}}
                 </div>
+
+                {{!-- pagination bar --}}
+                <div class="container-fluid mt-4">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            {{#with pagination_bar}}
+                                <li class="page-item {{#unless previous}}disabled{{/unless}}"><a class="page-link" href="{{link}}?page=1"><i class="fa-solid fa-angles-left"></i></a></li>
+                                <li class="page-item {{#unless previous}}disabled{{/unless}}"><a class="page-link" 
+                                    href="{{link}}?page={{previous}}">Anterior</a></li>
+                                {{#each display_nums}}
+                                    <li class="page-item {{#if (lookup ../currentPageActive @index)}}active{{/if}}"><a class="page-link" 
+                                        href="{{link}}?page={{this}}">{{this}}</a></li>
+                                {{/each}}
+                                <li class="page-item {{#unless next}}disabled{{/unless}}"><a class="page-link" 
+                                    href="{{link}}?page={{next}}">Siguiente</a></li>
+
+                                <!--{{#with filter}}
+                                    <li>filter???</li>
+                                    {{#if search}}
+                                        <li>{{search}}</li>
+                                    {{/if}}
+                                    {{#if category}}
+                                        <li>{{category}}</li>
+                                    {{/if}}
+                                {{else}}
+                                <li>adjsñlfd</li>
+                                {{/with}}-->
+                                <li class="page-item {{#unless next}}disabled{{/unless}}"><a class="page-link" href="/admin/orders?page={{numberOfPages}}"><i class="fa-solid fa-angles-right"></i></a></li>
+                            {{/with}}
+                        </ul>
+                    </nav>
+                </div>
             </main>
         </div>
     </div>
