@@ -502,19 +502,20 @@ exports.orders = async (req, res) => {
         // pagination
 
         // console.log("deffff");
-        pagination_format = await pagination('SELECT * FROM pedido ORDER BY id DESC', req, res);
+        const pagination_format = await pagination('SELECT * FROM pedido ORDER BY id DESC', req, res);
+        const link_page = "/admin/orders";
 
             // if try to ingress to a different page range
         if (pagination_format.status == "return if over pages") {
-            return res.redirect('/marketplace' + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
+            return res.redirect(link_page + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
         }
         else if (pagination_format.status == "return if lower pages") {
-            return res.redirect('/marketplace' + '?page=' + encodeURIComponent(1))
+            return res.redirect(link_page + '?page=' + encodeURIComponent(1))
         }
         else if (pagination_format.status == "no results") {
             req.flash('message', 'no se encontro ningún producto');
             req.flash('alertType', 'alert-danger');
-            return res.redirect('/marketplace');
+            return res.redirect(link_page);
         }
         
         const pagination_data = {
@@ -527,7 +528,7 @@ exports.orders = async (req, res) => {
         
         // pagination bar
         const pag_bar = pagination_bar(pagination_data);
-        pag_bar.link = "/admin/orders";
+        pag_bar.link = link_page;
         console.log(pag_bar);
 
         // end pagination
@@ -633,10 +634,46 @@ exports.filter_orders = async (req, res) => {
         res.redirect('/admin/orders/');
     }
 
-    const orders = await db.query("SELECT * FROM pedido WHERE status = ? ORDER BY id DESC", [data]);
+    // pagination
+
+    // console.log("deffff");
+    // data query request await db.query(`SELECT * FROM pedido WHERE status = ${data} ORDER BY id DESC`);
+    const pagination_format = await pagination(`SELECT * FROM pedido WHERE status = ${data} ORDER BY id DESC`, req, res);
+    const link_page = "/admin/orders";
+
+    // if try to ingress to a different page range
+    if (pagination_format.status == "return if over pages") {
+        return res.redirect(link_page + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
+    }
+    else if (pagination_format.status == "return if lower pages") {
+        return res.redirect(link_page + '?page=' + encodeURIComponent(1))
+    }
+    else if (pagination_format.status == "no results") {
+        req.flash('message', 'no se encontro ningún producto');
+        req.flash('alertType', 'alert-danger');
+        return res.redirect(link_page);
+    }
+
+    const pagination_data = {
+        page: pagination_format.page,
+        numberOfPages: pagination_format.numberOfPages,
+        iterator: pagination_format.iterator,
+        endingLink: pagination_format.endingLink
+    }
+    // console.log(pagination_format);
+
+    // pagination bar
+    const pag_bar = pagination_bar(pagination_data);
+    pag_bar.link = link_page;
+    console.log(pag_bar);
+
+    // end pagination
+
+    const orders = pagination_format.result; 
+    
     const filter_data_orders = await db.query("SELECT * FROM pedido ORDER BY id DESC");
     let filters = {};
-
+    image.png
     filters.all = filter_data_orders.length;
     filters.new = 0;
     filters.ready_to_pay = 0;
