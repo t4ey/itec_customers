@@ -161,22 +161,42 @@ exports.products = async (req, res) => {
     filters.published = products.published.length;
     filters.out_of_stock = products.out_of_stock.length;
     
-    // filtering
+    // pagination
 
-    // if (filter == undefined || filter == "all") {
-    //     products = filtered_products.all;
-    // }
-    // else if (filter == "published") {
-    //     products = filtered_products.published;
-    // }
-    // else if (filter == "out_of_stock") {
-    //     products = filtered_products.out_of_stock;
-    // }
-    // filters.all = products.all.length 
-    // filters.published products.published
-    // products.f_
-    products = products.all;
-    console.log(products);
+    // console.log("deffff");
+    // data query request await db.query(`SELECT * FROM pedido WHERE status = ${data} ORDER BY id DESC`);
+    const pagination_format = await pagination('SELECT * FROM producto', req, res);
+    const link_page = res.originalUrl;
+
+    // if try to ingress to a different page range
+    if (pagination_format.status == "return if over pages") {
+        return res.redirect(link_page + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
+    }
+    else if (pagination_format.status == "return if lower pages") {
+        return res.redirect(link_page + '?page=' + encodeURIComponent(1))
+    }
+    else if (pagination_format.status == "no results") {
+        req.flash('message', 'no se encontro ningún producto');
+        req.flash('alertType', 'alert-danger');
+        return res.redirect(link_page);
+    }
+
+    const pagination_data = {
+        page: pagination_format.page,
+        numberOfPages: pagination_format.numberOfPages,
+        iterator: pagination_format.iterator,
+        endingLink: pagination_format.endingLink
+    }
+    // console.log(pagination_format);
+
+    // pagination bar
+    const pag_bar = pagination_bar(pagination_data);
+    pag_bar.link = link_page;
+    console.log(pag_bar);
+
+    // end pagination
+    products = pagination_format.result;
+    console.log("result length: ",pagination_format.result.length);
 
 
     // display categories part
@@ -214,6 +234,7 @@ exports.products = async (req, res) => {
         alertType: alertType, 
         products: products,
         filters: filters,
+        pagination_bar: pag_bar,
     });
 }
 
@@ -250,23 +271,58 @@ exports.filter_products = async (req, res) => {
     filters.all = products.all.length;
     filters.published = products.published.length;
     filters.out_of_stock = products.out_of_stock.length;
-
-    // filtering
-
+    
+    // pagination
+    // filtering queries
+    let pagination_format;
     if (filter == undefined || filter == "all") {
         console.log("no filter ");
-        res.redirect("/admin/products");
+        return res.redirect("/admin/products");
     }
     else if (filter == "published") {
-        products = products.published;
+        pagination_format = await pagination(`SELECT * FROM producto WHERE stock >= 1`, req, res);
     }
     else if (filter == "out_of_stock") {
-        products = products.out_of_stock;
+        pagination_format = await pagination(`SELECT * FROM producto WHERE stock = 0`, req, res);
     }
+
+    // console.log("deffff");
+    // data query request await db.query(`SELECT * FROM pedido WHERE status = ${data} ORDER BY id DESC`);
+    // pagination_format = await pagination(`SELECT * FROM pedido WHERE status = '${filter}' ORDER BY id DESC`, req, res);
+    const link_page = res.originalUrl;
+
+    // if try to ingress to a different page range
+    if (pagination_format.status == "return if over pages") {
+        return res.redirect(link_page + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
+    }
+    else if (pagination_format.status == "return if lower pages") {
+        return res.redirect(link_page + '?page=' + encodeURIComponent(1))
+    }
+    else if (pagination_format.status == "no results") {
+        req.flash('message', 'no se encontro ningún producto');
+        req.flash('alertType', 'alert-danger');
+        return res.redirect(link_page);
+    }
+
+    const pagination_data = {
+        page: pagination_format.page,
+        numberOfPages: pagination_format.numberOfPages,
+        iterator: pagination_format.iterator,
+        endingLink: pagination_format.endingLink
+    }
+    // console.log(pagination_format);
+
+    // pagination bar
+    const pag_bar = pagination_bar(pagination_data);
+    pag_bar.link = link_page;
+    console.log(pag_bar);
+
+    // end pagination
+    
     // filters.all = products.all.length 
     // filters.published products.published
     // products.f_
-
+    products = pagination_format.result;
     console.log(products);
     console.log(filter);
 
@@ -305,6 +361,7 @@ exports.filter_products = async (req, res) => {
         alertType: alertType,
         products: products,
         filters: filters,
+        pagination_bar: pag_bar,
     });
 }
 
