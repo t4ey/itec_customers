@@ -41,7 +41,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/orders" class="nav-link active">
+                            <a href="/admin/orders" class="nav-link link-dark">
                                 <i class="fa-regular fa-note-sticky"></i>
                                 Ordenes
                             </a>
@@ -73,7 +73,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/reports" class="nav-link link-dark">
+                            <a href="/admin/reports" class="nav-link active">
                             <span class="me-0">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -115,7 +115,7 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="container-fluid px-0">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Ordenes</h1>
+                        <h1 class="h2">Reportes</h1>
                         <div class="btn-toolbar mb-2 mb-md-0">
                             <div class="btn-group me-2">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -137,7 +137,7 @@
 
 
                 <!-- table contents dashboard -->
-                <h2>Ordenes Recientes</h2>
+                <h2>Reportes Creados</h2>
 
                 {{!-- filters --}}
                 {{#with filters}}
@@ -215,48 +215,91 @@
                 {{!-- table --}}
                 <div class="table-sm-responsive">
                     {{#if orders}}
-                    <table class="table table-hover table-bordered">
-                        <thead>
-                            <tr>
-                                <th>N° ORDEN</th>
-                                <th>TOTAL</th>
-                                <th>CLIENTE</th>
-                                <th>ESTADO</th>
-                                <th>FECHA</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                            {{#each orders}}
-                            <tr class="">
-                                <td class="order align-middle white-space-nowrap"><a class="h5 color-primary text-primary fw-semi-bold" href="/admin/orders/details/{{id}}">#{{id}}</a>
-                                <td class="total align-middle fw-semi-bold text-1000">Bs. {{total_amount}}</td>
-                                <td class="align-middle white-space-nowrap ps-8">
-                                    <a class=" align-items-center" href="/admin/edit_client/{{client_id}}">
-                                        <h6 class="mb-0 text-900 h5">{{client_name}}</h6>
-                                    </a>
-                                </td>
-                                {{#if completed}}
-                                    <td><span class="badge bg-success">Completado <i class="fa-solid fa-check"></i></span></td>
-                                {{/if}}
-                                {{#if new}}
-                                    <td><span class="badge bg-success" style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-asterisk"></i></span></td>
-                                {{/if}}
-                                {{#if ready_to_pay}}
-                                    <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
-                                {{/if}}
-                                {{#if canceled}}
-                                    <td><span class="badge bg-danger">Cancelado <i class="fa-solid fa-xmark"></i></span></td>
-                                {{/if}}
-                                <td class="date align-middle white-space-nowrap text-700 fs--1 ">{{fecha_de_pedido}}</td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
+                    <div class="row">
+                        <div class="col col-6 my-3">
+                            <div class="card p-2" >
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title">Report Name: Clientes Nuevos</h5>
+                                        <p class="card-text">Clientes que crearon su cuenta para comprar produtos</p>
+                                        
+                                    </div>
+                                    <div class="col text-end">
+                                        <h6 class="card-subtitle mb-2 text-body-secondary">Date created: 17-05-2022</h6>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="#" class=" h6 text-primary card-link link-underline-opacity-0 mb-auto">Card link</a>
+                                    </div>
+                                    <div class="col text-end">
+                                        <h6 class="card-subtitle text-body-secondary mt-0">Reportes del Cliente/Producto/pedido</h6>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col col-6 my-3">
+                            <div class="card p-2" >
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title">Report Name: Clientes Nuevos</h5>
+                                        <p class="card-text">Clientes que crearon su cuenta para comprar produtos</p>
+                                        
+                                    </div>
+                                    <div class="col text-end">
+                                        <h6 class="card-subtitle mb-2 text-body-secondary">Date created: 17-05-2022</h6>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="#" class="card-link link-underline-opacity-0">Card link</a>
+                                    </div>
+                                    <div class="col text-end">
+                                        <h6 class="card-subtitle text-body-secondary">Reportes del Cliente/Producto/pedido</h6>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col col-6 my-3">
+                            <div class="card p-2" >
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title">Report Name: Clientes Nuevos</h5>
+                                        <p class="card-text">Clientes que crearon su cuenta para comprar produtos</p>
+                                        
+                                    </div>
+                                    <div class="col text-end">
+                                        <h6 class="card-subtitle mb-2 text-body-secondary">Date created: 17-05-2022</h6>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="#" class="card-link link-underline-opacity-0">Card link</a>
+                                    </div>
+                                    <div class="col text-end">
+                                        <h6 class="card-subtitle text-body-secondary">Reportes del Cliente/Producto/pedido</h6>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
                     {{else}}
                         <div class="col-md-8 mx-auto text-center pt-5">
                             <div class="card card-body">
-                                <h2>No hay ningún pedido</h2>
-                                <a href="/admin/add_product"><h3>Añadir Un nuevo Producto</h3></a>
+                                <h2>No se creo ningún reporte</h2>
+                                <a href="/admin/add_product"><h3>Crear reporte</h3></a>
                             </div>
                         </div>
                     {{/if}}
@@ -291,4 +334,4 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
 </body>
-</html>                    
+</html>    

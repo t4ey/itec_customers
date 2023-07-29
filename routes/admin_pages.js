@@ -273,7 +273,23 @@ router.get('/orders', requireAuth, product_tables.orders);
 
 router.get('/orders/details/:id', requireAuth, product_tables.order_details);
 
-router.get('/orders/filter/:data', requireAuth, product_tables.filter_orders)
+router.get('/orders/filter/:data', requireAuth, product_tables.filter_orders);
+
+// reports
+
+router.get('/reports', requireAuth, async (req, res) => {
+    // const { id } = req.params;
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+
+    let client = true;
+    // let client = await db.query('SELECT * FROM client WHERE id = ?', [id]);
+    res.render('./admin/products/reports.hbs', {
+        orders: client,
+        message: message,
+        alertType: alertType
+    });
+});
 
 // POST REQUESTS
 
