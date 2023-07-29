@@ -62,8 +62,9 @@ router.get('/home', requireAuth, async (req, res) => {
 
     // order table
 
-    const orders = await db.query("SELECT * FROM pedido ORDER BY id DESC");
-
+    // get orders from the last week
+    const orders = await db.query("select * from pedido where fecha_de_pedido > now() -  interval 7 day ORDER BY id DESC");
+    // const orders = await db.query("SELECT * FROM pedido ORDER BY id DESC");
 
     if (!(orders.length > 0)) {
         return res.render('./admin/products/orders.hbs', {
