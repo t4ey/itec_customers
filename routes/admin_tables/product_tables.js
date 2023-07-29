@@ -533,14 +533,49 @@ exports.categories = async (req, res) => {
     await db.query("SELECT * FROM categoria", async (error, result) => {
         if (error)
             console.log(error);
+        // pagination
 
-        categorias = result;
+        // console.log("deffff");
+        // data query request await db.query(`SELECT * FROM pedido WHERE status = ${data} ORDER BY id DESC`);
+        const pagination_format = await pagination('SELECT * FROM categoria', req, res);
+        const link_page = res.originalUrl;
+
+        // if try to ingress to a different page range
+        if (pagination_format.status == "return if over pages") {
+            return res.redirect(link_page + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
+        }
+        else if (pagination_format.status == "return if lower pages") {
+            return res.redirect(link_page + '?page=' + encodeURIComponent(1))
+        }
+        else if (pagination_format.status == "no results") {
+            req.flash('message', 'no se encontro ningún producto');
+            req.flash('alertType', 'alert-danger');
+            return res.redirect(link_page);
+        }
+
+        const pagination_data = {
+            page: pagination_format.page,
+            numberOfPages: pagination_format.numberOfPages,
+            iterator: pagination_format.iterator,
+            endingLink: pagination_format.endingLink
+        }
+        // console.log(pagination_format);
+
+        // pagination bar
+        const pag_bar = pagination_bar(pagination_data);
+        pag_bar.link = link_page;
+        console.log(pag_bar);
+
+        // end pagination
+        categorias = pagination_format.result;
+        
         if (result) {
             // console.log(result);
             return res.render('./admin/products/categories.hbs', {
                 categories: categorias,
                 message: message,
                 alertType: alertType,
+                pagination_bar: pag_bar,
             });
         }
         else
