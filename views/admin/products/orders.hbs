@@ -228,11 +228,11 @@
                         <tbody class="table-group-divider">
                             {{#each orders}}
                             <tr class="">
-                                <td class="order align-middle white-space-nowrap"><a class="h4 color-primary text-primary fw-semi-bold" href="/admin/orders/details/{{id}}">#{{id}}</a>
+                                <td class="order align-middle white-space-nowrap"><a class="h5 color-primary text-primary fw-semi-bold" href="/admin/orders/details/{{id}}">#{{id}}</a>
                                 <td class="total align-middle fw-semi-bold text-1000">Bs. {{total_amount}}</td>
                                 <td class="align-middle white-space-nowrap ps-8">
                                     <a class=" align-items-center" href="/admin/edit_client/{{client_id}}">
-                                        <h6 class="mb-0 text-900">{{client_name}}</h6>
+                                        <h6 class="mb-0 text-900 h5">{{client_name}}</h6>
                                     </a>
                                 </td>
                                 {{#if completed}}
@@ -245,7 +245,7 @@
                                     <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
                                 {{/if}}
                                 {{#if canceled}}
-                                    <td><span class="badge bg-danger">Cancelled <i class="fa-solid fa-xmark"></i></span></td>
+                                    <td><span class="badge bg-danger">Cancelado <i class="fa-solid fa-xmark"></i></span></td>
                                 {{/if}}
                                 <td class="date align-middle white-space-nowrap text-700 fs--1 ">{{fecha_de_pedido}}</td>
                             </tr>

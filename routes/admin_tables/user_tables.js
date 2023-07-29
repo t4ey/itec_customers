@@ -143,6 +143,7 @@ exports.admins = async (req, res) => {
         // end pagination
 
         employees = pagination_format.result;
+        console.log("N of employees : ", employees.length)
         if (result) {
             // console.log(result);
             return res.render('./admin/clientsNcustomers/salesperson', {
