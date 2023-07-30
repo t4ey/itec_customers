@@ -31,6 +31,9 @@ const upload_image = multer({ storage: storage });
 // time ago formatting 
 const timeAgo = require('timeago.js/dist/timeago.full.min');
 
+// date and time module for data from the timestamps db
+const date = require('date-and-time')
+
 // AUTHENTICATION REQUESTS
 
 router.get('/login', alreadyLogged, (req, res) => {
@@ -282,12 +285,32 @@ router.get('/reports', requireAuth, async (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
 
-    let client = true;
+    const reports = await db.query('SELECT * FROM reportes');
+    // console.log("formatted date : ", date.format(reports[0].date_created, 'YYYY/MM/DD HH:mm:ss'))
+    reports[0].date_created = date.format(reports[0].date_created, 'YYYY-MM-DD');
+
     // let client = await db.query('SELECT * FROM client WHERE id = ?', [id]);
     res.render('./admin/products/reports.hbs', {
-        orders: client,
         message: message,
-        alertType: alertType
+        alertType: alertType,
+        reports: reports,
+    });
+});
+
+// report details
+
+router.get('/reports/:id', requireAuth, async (req, res) => {
+    const { id } = req.params;
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+
+    const report_details = await db.query(`SELECT * FROM detalles_de_reportes WHERE id = ${id}`);
+
+    // let client = await db.query('SELECT * FROM client WHERE id = ?', [id]);
+    res.render('./admin/products/reports.hbs', {
+        message: message,
+        alertType: alertType,
+        report_details,
     });
 });
 

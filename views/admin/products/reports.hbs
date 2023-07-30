@@ -214,8 +214,36 @@
 
                 {{!-- table --}}
                 <div class="table-sm-responsive">
-                    {{#if orders}}
+                    {{#if reports}}
                     <div class="row">
+                        {{#each reports}}
+                            <div class="col col-6 my-3">
+                                <div class="card p-2" >
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title">Reporte de {{name}}</h5>
+                                            <p class="card-text">Clientes que crearon su cuenta para comprar produtos</p>
+                                            
+                                        </div>
+                                        <div class="col text-end">
+                                            <h6 class="card-subtitle mb-2 text-body-secondary">Creado el: {{date_created}}</h6>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col col-4">
+                                            <a href="/admin/reports/{{id}}" class="card-link h6 text-primary link-underline link-underline-opacity-0 "><i class="fa-solid fa-folder-closed"></i> Ver Reporte</a>
+                                        </div>
+                                        <div class="col col-8 text-end">
+                                            <h6 class="card-subtitle text-body-secondary mt-0 mb-auto"><i class="fa-solid fa-database"></i> Reportes del {{db}} db</h6>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        {{/each}}
                         <div class="col col-6 my-3">
                             <div class="card p-2" >
                             <div class="card-body">
@@ -231,11 +259,11 @@
                                 </div>
                                 <hr>
                                 <div class="row">
-                                    <div class="col">
-                                        <a href="#" class=" h6 text-primary card-link link-underline-opacity-0 mb-auto">Card link</a>
+                                    <div class="col col-4">
+                                        <a href="#" class="card-link h6 text-primary link-underline link-underline-opacity-0 "><i class="fa-solid fa-folder-closed"></i> Ver Reporte</a>
                                     </div>
-                                    <div class="col text-end">
-                                        <h6 class="card-subtitle text-body-secondary mt-0">Reportes del Cliente/Producto/pedido</h6>
+                                    <div class="col col-8 text-end">
+                                        <h6 class="card-subtitle text-body-secondary mt-0 mb-auto"><i class="fa-solid fa-database"></i> Reportes del Cliente/Producto/pedido</h6>
                                         
                                     </div>
                                 </div>
@@ -257,37 +285,11 @@
                                 </div>
                                 <hr>
                                 <div class="row">
-                                    <div class="col">
-                                        <a href="#" class="card-link link-underline-opacity-0">Card link</a>
+                                    <div class="col col-4">
+                                        <a href="#" class="card-link h6 text-primary link-underline link-underline-opacity-0 "><i class="fa-solid fa-folder-closed"></i> Ver Reporte</a>
                                     </div>
-                                    <div class="col text-end">
-                                        <h6 class="card-subtitle text-body-secondary">Reportes del Cliente/Producto/pedido</h6>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col col-6 my-3">
-                            <div class="card p-2" >
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <h5 class="card-title">Report Name: Clientes Nuevos</h5>
-                                        <p class="card-text">Clientes que crearon su cuenta para comprar produtos</p>
-                                        
-                                    </div>
-                                    <div class="col text-end">
-                                        <h6 class="card-subtitle mb-2 text-body-secondary">Date created: 17-05-2022</h6>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col">
-                                        <a href="#" class="card-link link-underline-opacity-0">Card link</a>
-                                    </div>
-                                    <div class="col text-end">
-                                        <h6 class="card-subtitle text-body-secondary">Reportes del Cliente/Producto/pedido</h6>
+                                    <div class="col col-8 text-end">
+                                        <h6 class="card-subtitle text-body-secondary mt-0 mb-auto"><i class="fa-solid fa-database"></i> Reportes del Cliente/Producto/pedido</h6>
                                         
                                     </div>
                                 </div>
