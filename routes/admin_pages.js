@@ -68,47 +68,20 @@ router.get('/home', requireAuth, async (req, res) => {
     // get orders from the last week
     const orders = await db.query("select * from pedido where fecha_de_pedido > now() -  interval 7 day ORDER BY id DESC");
     // const orders = await db.query("SELECT * FROM pedido ORDER BY id DESC");
-
+    console.log(orders);
     if (!(orders.length > 0)) {
-        return res.render('./admin/products/orders.hbs', {
+        return res.render('./admin/a_home', {
             message: message,
             alertType: alertType,
+            stats: order_stats,
             orders: orders,
         });
 
     }
-    // console.log("orders", orders);
-
-    // let filters = {};
-
-    // filters.all = orders.length;
-    // filters.new = 0;
-    // filters.ready_to_pay = 0;
-    // filters.completed = 0;
-    // filters.canceled = 0;
 
     let list_client_ids = [];
     for (var i = 0; i < orders.length; i++) {
         list_client_ids.push(orders[i].client_id);
-
-        // check filter numbers 
-        // switch (orders[i].status) {
-        //     case 'new':
-        //         filters.new++;
-        //         break;
-        //     case 'completed':
-        //         filters.completed++;
-        //         break;
-        //     case 'ready-to-pay':
-        //         filters.ready_to_pay++;
-        //         break;
-        //     case 'canceled':
-        //         filters.canceled++;
-        //         break;
-        //     default:
-        //         filters.all = orders.length;
-        //         break;
-        // }
     }
     // console.log(filters);
 
