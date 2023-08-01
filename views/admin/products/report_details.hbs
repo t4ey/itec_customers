@@ -55,7 +55,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/categories" class="nav-link active">
+                            <a href="/admin/categories" class="nav-link link-dark">
                                 <i class="fa-solid fa-tag"></i>
                                 Categorias
                             </a>
@@ -75,7 +75,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/reports" class="nav-link link-dark">
+                            <a href="/admin/reports" class="nav-link active">
                             <span class="me-0">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -118,13 +118,14 @@
                 <div class="container-fluid px-0">
                     <div class="row pt-3 pb-2 mb-3 border-bottom">
                         <div class="col mb-2">
-                            <a class="btn btn-primary" href="/admin/salesperson"><i class="fa-solid fa-chevron-left"></i> Atras</a>
+                            <a class="btn btn-primary" href="/admin/reports"><i class="fa-solid fa-chevron-left"></i> Atras</a>
                         </div>
                         <div class="col text-center">
-                            <h2>Detalles del Vendedor</h2>
+                            {{#with report_details}}
+                                <h2>Detalles del Reporte <strong>{{name}}</strong> </h2>
+                            {{/with}}
                         </div>
                         <div class="col text-end">
-                            <a class="btn btn-danger" href="/admin/delete_employee/{{employee.id}}"><i class="fa-regular fa-trash-can"></i> Eliminar Vendedor</a>
                         </div>
                     </div>
                     {{#if message}}
@@ -135,27 +136,28 @@
                     {{/if}}
                 </div>
 
-                <h2>Categorias Registradas</h2>
+                <h2>Reportes Registrados hasta la Fecha</h2>
                 <div class="table-sm-responsive mt-4">
-                    {{#if categories}}
+                    {{#if report_details.data}}
                     <table class="table table-hover table-bordered">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Desciption</th>
+                                <th>Referencia</th>
+                                <th>Fecha</th>
+                                <th>Mensaje</th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
-                        {{#each categories}}
+                        {{#each report_details.data}}
                             <tr class="">
                                 <td class="order align-middle white-space-nowrap">{{id}}</td>
                                 <td class="align-middle white-space-nowrap ps-8">
-                                    <a class=" align-items-center" href="/admin/edit_category/{{id}}">
-                                        <h6 class="mb-0 text-900 h5">{{name}}</h6>
-                                    </a>
+                                    <h6 class="mb-0 text-900 h5">{{object_modified}}</h6>
+
                                 </td>
-                                <td class="total align-middle fw-semi-bold text-1000">{{description}}</td>
+                                <td class="order align-middle white-space-nowrap">{{date_triggered}}</td>
+                                <td class="total align-middle fw-semi-bold text-1000">{{message}}</td>
                             </tr>
                             {{/each}}
                         </tbody>
@@ -163,8 +165,8 @@
                         {{else}}
                         <div class="col-md-8 mx-auto text-center pt-5">
                             <div class="card card-body">
-                                <h2>No hay ningún producto registrado</h2>
-                                <a href="/admin/add_product"><h3>Añadir Un nuevo Producto</h3></a>
+                                <h2>No hay ningún reporte registrado</h2>
+                                {{!-- <a href="/admin/add_product"><h3>Añadir Un nuevo Producto</h3></a> --}}
                             </div>
                         </div>
                     {{/if}}

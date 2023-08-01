@@ -280,11 +280,19 @@ router.get('/reports/:id', requireAuth, async (req, res) => {
     const alertType = req.flash('alertType');
 
     const report_details = {};
-    
+
     const report_db = await db.query(`SELECT * FROM detalles_de_reportes WHERE report_id = ${id}`);
+    
+    // format datetype timestamps from db
+    for(let i = 0; i < report_db.length;i++){
+        report_db[i].date_triggered = date.format(report_db[i].date_triggered, 'YYYY-MM-DD');
+    }
+    
     report_details.data = report_db;
     const reports = await db.query(`SELECT name FROM reportes WHERE id = ${id}`);
-    report_details.name = reports[0];
+    report_details.name = reports[0].name;
+
+
     console.log(report_details);
     // let client = await db.query('SELECT * FROM client WHERE id = ?', [id]);
     res.render('./admin/products/report_details.hbs', {
