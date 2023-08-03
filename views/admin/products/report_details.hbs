@@ -126,6 +126,7 @@
                             {{/with}}
                         </div>
                         <div class="col text-end">
+                            <button type="button" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i> Eliminar Reporte</button>
                         </div>
                     </div>
                     {{#if message}}
@@ -136,7 +137,24 @@
                     {{/if}}
                 </div>
 
-                <h2>Reportes Registrados hasta la Fecha</h2>
+                <div class="row pt-3 pb-2 mb-3 border-bottom">
+                    <div class="col mb-2">
+                        <h2>Reportes Registrados hasta la Fecha</h2>
+                    </div>
+                    <div class="col text-end">
+                        {{#if report_details.data}}
+                        <form action="/admin/report/export-to-csv" method="get">
+                            {{#with report_details}}
+                            <input class="invisible" type="text" id="{{name}}" name="name" value="{{name}}">
+                            
+                            <button type="submit" class="btn btn-outline-success"><i class="fa-solid fa-file-arrow-down">
+                            </i> Descarcar como CSV</button>
+                            {{/with}}
+                        </form>
+                        {{/if}}
+                    </div>
+                </div>
+
                 <div class="table-sm-responsive mt-4">
                     {{#if report_details.data}}
                     <table class="table table-hover table-bordered">

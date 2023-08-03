@@ -302,6 +302,10 @@ router.get('/reports/:id', requireAuth, async (req, res) => {
     });
 });
 
+router.get('/report/export-to-csv', requireAuth, async (req, res) => {
+    return res.send('export');
+});
+
 // POST REQUESTS
 
 router.post('/login', alreadyLogged, adminAuthController.login);
