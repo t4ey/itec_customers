@@ -356,6 +356,27 @@ router.get('/report/delete_report/:id', requireAuth, async (req, res) => {
     });
 });
 
+router.post('/report/add_report', requireAuth, async (req, res) => {
+    const {id} = req.body;
+    // console.log(id);
+
+    if(id == 'null') {
+        return res.redirect('/admin/reports');
+    }
+
+    // DELETE PREVIOUS REPORTS IF NECESSARY TO WIPE ALL PREVIOUS DATA FROM DB;
+    // const delete_previous_reports = await db.query(`DELETE FROM detalles_de_reportes WHERE report_id = ${id}`);
+    await db.query(`UPDATE reportes SET isActive = 1 WHERE id = ${id}`, (error, result) => {
+        if (error)
+            console.log(error);
+
+        req.flash('message', 'El reporte se añadió exitosamente');
+        req.flash('alertType', 'alert-success');
+        return res.redirect('/admin/reports');
+    });
+    // res.status(200).send("dfsd", ar);
+});
+
 // POST REQUESTS
 
 router.post('/login', alreadyLogged, adminAuthController.login);

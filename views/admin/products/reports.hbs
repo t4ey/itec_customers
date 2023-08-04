@@ -116,15 +116,37 @@
                 <div class="container-fluid px-0">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Reportes</h1>
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <div class="btn-group me-2">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                        {{!-- <div class="btn-toolbar mb-2 mb-md-0">
+                            <a class="btn btn-success" href="/admin/add_report">Añadir Reporte <i class="fa-solid fa-plus"></i></a>
+                        </div> --}}
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            Añadir Reporte <i class="fa-solid fa-plus"></i>
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Añadir Reporte</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <form action="/admin/report/add_report" method="post">
+                                        <select class="form-select" aria-label="Default select example" id="rep_add_id" name="id">
+                                            <option selected value="null">Seleccionar Reporte</option>
+                                            {{#each reports}}
+                                                {{#unless isActive}}
+                                                    <option value="{{id}}">{{name}}</option>
+                                                {{/unless}}
+                                            {{/each}}
+                                        </select>
+                                        <button type="submit" class="btn btn-primary mt-3">Añadir Reporte</button>
+                                    </form>
+                                </div>
                             </div>
-                            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                                <span data-feather="calendar" class="align-text-bottom"></span>
-                                This week
-                            </button>
+                        </div>
                         </div>
                     </div>
                     {{#if message}}

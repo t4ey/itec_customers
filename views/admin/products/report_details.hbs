@@ -125,7 +125,40 @@
                                 <h2>Detalles del Reporte <strong>{{name}}</strong> </h2>
                             </div>
                             <div class="col text-end">
-                                <a href="/admin/report/delete_report/{{data.0.report_id}}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i> Eliminar Reporte</a>
+                                {{!-- <a href="/admin/report/delete_report/{{data.0.report_id} }" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i> Eliminar Reporte</a> --}}
+
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    <i class="fa-regular fa-trash-can"></i> Eliminar Reporte
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Eliminar Reporte</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-start">
+                                        <p>Los datos del reporte serán eliminados</p>
+                                        <p>Desea guardar los datos del reporte?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        {{#if data}}
+                                        <form action="/admin/report/export-to-csv" method="get" class="d-inline">
+                                            <input class="d-none" type="text" id="{{name}}" name="name" value="{{name}}">
+                                            
+                                            <button type="submit" class="btn btn-outline-success"><i class="fa-solid fa-file-arrow-down">
+                                            </i> Descarcar como CSV</button>
+                                        </form>
+                                        {{/if}}
+                                        {{!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> --}}
+                                        <a href="/admin/report/delete_report/{{data.0.report_id}}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i> Eliminar Reporte</a>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
                             </div>
                         {{/with}}
                     </div>
