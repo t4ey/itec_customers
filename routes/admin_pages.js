@@ -32,7 +32,12 @@ const upload_image = multer({ storage: storage });
 const timeAgo = require('timeago.js/dist/timeago.full.min');
 
 // date and time module for data from the timestamps db
-const date = require('date-and-time')
+const date = require('date-and-time');
+const { db } = require('../database/database.js');
+
+// from json to csv request download file, from the db
+
+var data_exporter = require('json2csv').Parser;
 
 // AUTHENTICATION REQUESTS
 
@@ -302,8 +307,40 @@ router.get('/reports/:id', requireAuth, async (req, res) => {
     });
 });
 
-router.get('/report/export-to-csv', requireAuth, async (req, res) => {
-    return res.send('export');
+router.get('/report/export-to-csv', requireAuth, async (req, res, next) => {
+    const {name} = req.query;
+    // console.log(name);
+
+    const query_from_name = (await db.query(`SELECT id,db FROM reportes WHERE name = '${name}'`))[0];
+    const query_id = query_from_name.id;
+    const query_db = query_from_name.db;
+    // THERES THE NEXT PART OF THE VIDEO LEFT FROM MINUTE 10:30
+    // console.log(query_id);
+    db.query(`SELECT * FROM detalles_de_reportes WHERE report_id = ${query_id}`, (error, result) => {
+        if(error)
+            console.log(error);
+
+        const result_date_format = result;
+        for (let i = 0; i < result.length; i++) {
+            result_date_format[i].date_triggered = date.format(result[i].date_triggered, 'YYYY-MM-DD');
+        }
+
+        console.log("result",result_date_format);
+        var mysql_data = JSON.parse(JSON.stringify(result_date_format));
+
+        // convert json data to CSV
+
+        var file_header = ['ID',query_db,'Fecha','Mensaje'];
+
+        var json_data = new data_exporter({file_header});
+
+        var csv_data = json_data.parse(mysql_data);
+
+        res.setHeader("Content-Type", "text/csv");
+        res.setHeader("Content-Disposition", `attachment; filename=Reporte\ de\ ${name}.csv`);
+        return res.end(csv_data);
+    });
+
 });
 
 // POST REQUESTS
