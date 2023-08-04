@@ -217,6 +217,7 @@
                     {{#if reports}}
                     <div class="row">
                         {{#each reports}}
+                            {{#if isActive}}
                             <div class="col col-6 my-3">
                                 <div class="card p-2" >
                                 <div class="card-body">
@@ -243,6 +244,7 @@
                                 </div>
                                 </div>
                             </div>
+                            {{/if}}
                         {{/each}}
                         <!--
                         <div class="col col-6 my-3">

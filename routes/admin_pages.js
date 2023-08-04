@@ -343,6 +343,19 @@ router.get('/report/export-to-csv', requireAuth, async (req, res, next) => {
 
 });
 
+router.get('/report/delete_report/:id', requireAuth, async (req, res) => {
+    const { id } = req.params;
+    // console.log(id);
+    await db.query(`UPDATE reportes SET isActive = 0 WHERE id = ${id}`, (error, result) => {
+        if(error)
+            console.log(error);
+
+        req.flash('message', 'El reporte se eliminó exitosamente');
+        req.flash('alertType', 'alert-success');
+        return res.redirect('/admin/reports');
+    });
+});
+
 // POST REQUESTS
 
 router.post('/login', alreadyLogged, adminAuthController.login);

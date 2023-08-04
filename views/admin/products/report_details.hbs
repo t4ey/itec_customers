@@ -120,14 +120,14 @@
                         <div class="col mb-2">
                             <a class="btn btn-primary" href="/admin/reports"><i class="fa-solid fa-chevron-left"></i> Atras</a>
                         </div>
-                        <div class="col text-center">
-                            {{#with report_details}}
+                        {{#with report_details}}
+                            <div class="col text-center">
                                 <h2>Detalles del Reporte <strong>{{name}}</strong> </h2>
-                            {{/with}}
-                        </div>
-                        <div class="col text-end">
-                            <button type="button" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i> Eliminar Reporte</button>
-                        </div>
+                            </div>
+                            <div class="col text-end">
+                                <a href="/admin/report/delete_report/{{data.0.report_id}}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i> Eliminar Reporte</a>
+                            </div>
+                        {{/with}}
                     </div>
                     {{#if message}}
                         <div class="alert {{alertType}} alert-dismissible fade show" role="alert">
