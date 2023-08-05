@@ -152,6 +152,8 @@
                     {{/if}}
                 </div>
                 
+                {{!-- Display client data --}}
+
                 <div class="container p-4">
                     <div class="row">
                         <div class="col-md-4 mx-auto">
@@ -200,6 +202,77 @@
                         </div>
                 
                     </div>
+                </div>
+
+
+                <h2>Historial de Pedidos</h2>
+                {{!-- table --}}
+                <div class="table-sm-responsive">
+                    {{#if orders}}
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>N° ORDEN</th>
+                                <th>TOTAL</th>
+                                <th>CLIENTE</th>
+                                <th>ESTADO</th>
+                                <th>FECHA</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            {{#each orders}}
+                            <tr class="">
+                                <td class="order align-middle white-space-nowrap"><a class="h5 color-primary text-primary fw-semi-bold" href="/admin/orders/details/{{id}}">#{{id}}</a>
+                                <td class="total align-middle fw-semi-bold text-1000">Bs. {{total_amount}}</td>
+                                <td class="align-middle white-space-nowrap ps-8">
+                                    <a class=" align-items-center" href="/admin/edit_client/{{client_id}}">
+                                        <h6 class="mb-0 text-900 h5">{{client_name}}</h6>
+                                    </a>
+                                </td>
+                                {{#if completed}}
+                                    <td><span class="badge bg-success">Completado <i class="fa-solid fa-check"></i></span></td>
+                                {{/if}}
+                                {{#if new}}
+                                    <td><span class="badge bg-success" style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-asterisk"></i></span></td>
+                                {{/if}}
+                                {{#if ready_to_pay}}
+                                    <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
+                                {{/if}}
+                                {{#if canceled}}
+                                    <td><span class="badge bg-danger">Cancelado <i class="fa-solid fa-xmark"></i></span></td>
+                                {{/if}}
+                                <td class="date align-middle white-space-nowrap text-700 fs--1 ">{{fecha_de_pedido}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    {{else}}
+                        <div class="col-md-8 mx-auto text-center pt-5">
+                            <div class="card card-body">
+                                <h2>No hay ningún pedido</h2>
+                                {{!-- <a href="/admin/add_product"><h3>Añadir Un nuevo Producto</h3></a> --}}
+                            </div>
+                        </div>
+                    {{/if}}
+                </div>
+                {{!-- pagination bar --}}
+                <div class="container-fluid mt-4">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            {{#with pagination_bar}}
+                                <li class="page-item {{#unless previous}}disabled{{/unless}}"><a class="page-link" href="{{link}}?page=1"><i class="fa-solid fa-angles-left"></i></a></li>
+                                <li class="page-item {{#unless previous}}disabled{{/unless}}"><a class="page-link" 
+                                    href="{{link}}?page={{previous}}">Anterior</a></li>
+                                {{#each display_nums}}
+                                    <li class="page-item {{#if (lookup ../currentPageActive @index)}}active{{/if}}"><a class="page-link" 
+                                        href="{{link}}?page={{this}}">{{this}}</a></li>
+                                {{/each}}
+                                <li class="page-item {{#unless next}}disabled{{/unless}}"><a class="page-link" 
+                                    href="{{link}}?page={{next}}">Siguiente</a></li>
+                                <li class="page-item {{#unless next}}disabled{{/unless}}"><a class="page-link" href="{{link}}?page={{numberOfPages}}"><i class="fa-solid fa-angles-right"></i></a></li>
+                            {{/with}}
+                        </ul>
+                    </nav>
                 </div>
             </main>
         </div>

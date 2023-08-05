@@ -39,6 +39,94 @@ const { db } = require('../database/database.js');
 
 var data_exporter = require('json2csv').Parser;
 
+// FUNCTIONS
+
+// pagination funcion
+
+async function pagination(db_query, req, res) {
+
+    const db_result = await db.query(`${db_query}`);
+
+    if (db_result.length <= 0) {
+        return { status: "no results" };
+    }
+
+    const resultsPerPage = 15;
+    const numberOfResults = db_result.length;
+    const numberOfPages = Math.ceil(numberOfResults / resultsPerPage);
+
+    let page = req.query.page ? Number(req.query.page) : 1;
+    console.log("query page: ", req.query.page);
+    if (Number.isNaN(page))
+        page = 1;
+
+    // console.log("current_page: ", page, "N of pages: " + numberOfPages, numberOfResults,numberOfResults / resultsPerPage);
+    console.log(req.originalUrl);
+    if (page > numberOfPages) {
+        // redirect inserting query number
+        console.log("page: ", page, " page more than the minimunPages");
+        return { status: "return if over pages", numberOfPages };
+    } else if (page < 1) {
+        console.log("page: ", page, " page less than the minimunPages");
+        return { status: "return if lower pages", numberOfPages };
+    }
+    else {
+        { status: "" }
+        console.log("None of the page security conditions matched");
+    }
+    // setting up result start and end limits according to the page number
+
+    const startLimit = (page - 1) * resultsPerPage;
+
+    const get_page_result = await db.query(`${db_query} LIMIT ${startLimit}, ${resultsPerPage}`);
+
+    // bar iteration for pagination numbers and buttons foward and backward
+
+    let iterator = (page - 5) < 1 ? 1 : page - 5;
+    let endingLink = (iterator + 9) <= numberOfPages ? (iterator + 0) : page + (numberOfPages - page);
+
+
+    let result = {
+        result: get_page_result,
+        page,
+        numberOfPages,
+        iterator,
+        endingLink
+    };
+
+    return result;
+}
+
+function pagination_bar(pagination_data) {
+    let result = pagination_data;
+
+    if (result.page > 1) {
+        result.previous = result.page - 1;
+    } else {
+        result.previous = false;
+    }
+
+    if (result.page < result.numberOfPages) {
+        result.next = result.page + 1;
+    } else {
+        result.next = false;
+    }
+
+    result.display_nums = [];
+    result.currentPageActive = [];
+    for (let i = 0; i < result.endingLink; i++) {
+        if (i + 1 == result.page)
+            result.currentPageActive.push(true);
+        else
+            result.currentPageActive.push(false);
+
+        result.display_nums.push(i + 1);
+    }
+
+
+    return result;
+}
+
 // AUTHENTICATION REQUESTS
 
 router.get('/login', alreadyLogged, (req, res) => {
@@ -141,12 +229,99 @@ router.get('/edit_client/:id', requireAuth, async (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
 
-    let client = await db.query('SELECT * FROM client WHERE id = ?', [id]);
-    res.render('./admin/clientsNcustomers/edit_client.hbs', {
-        client: client[0],
-        message: message,
-        alertType: alertType
+    const client = await db.query('SELECT * FROM client WHERE id = ?', [id]);
+
+    await db.query("SELECT * FROM pedido ORDER BY id DESC", async (error, result) => {
+        if (error)
+            console.log(error);
+
+        // pagination
+
+        // console.log("deffff");
+        const pagination_format = await pagination(`SELECT * FROM pedido WHERE client_id = ${client[0].id} ORDER BY id DESC`, req, res);
+        const link_page = "/admin/client/edit_client/" + client[0].id;
+
+        // if try to ingress to a different page range
+        if (pagination_format.status == "return if over pages") {
+            return res.redirect(link_page + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
+        }
+        else if (pagination_format.status == "return if lower pages") {
+            return res.redirect(link_page + '?page=' + encodeURIComponent(1))
+        }
+        else if (pagination_format.status == "no results") {
+            const orders = pagination_format.result;
+            return res.render('./admin/clientsNcustomers/edit_client.hbs', {
+                message: message,
+                alertType: alertType,
+                client: client[0],
+                orders: orders,
+            });
+        }
+
+        const pagination_data = {
+            page: pagination_format.page,
+            numberOfPages: pagination_format.numberOfPages,
+            iterator: pagination_format.iterator,
+            endingLink: pagination_format.endingLink
+        }
+        // console.log(pagination_format);
+
+        // pagination bar
+        const pag_bar = pagination_bar(pagination_data);
+        pag_bar.link = link_page;
+        console.log(pag_bar);
+
+        // end pagination
+
+        const orders = pagination_format.result;
+
+        console.log("orders", orders);
+
+
+        for (var i = 0; i < orders.length; i++) {
+            if (orders[i].client_id == client[0].id) {
+                orders[i].client_name = client[0].first_name;
+
+                orders[i].fecha_de_pedido = timeAgo.format(orders[i].fecha_de_pedido, "es");
+
+                switch (orders[i].status) {
+                    case 'new':
+                        orders[i].new = true;
+                        break;
+                    case 'completed':
+                        orders[i].completed = true;
+                        break;
+                    case 'ready-to-pay':
+                        orders[i].ready_to_pay = true;
+                        break;
+                    case 'canceled':
+                        orders[i].canceled = true;
+                        break;
+                    default:
+                        orders[i].new = true;
+                        break;
+                }
+                // console.log("match")
+            }
+            
+        }
+
+        console.log(orders);
+        return res.render('./admin/clientsNcustomers/edit_client.hbs', {
+            message: message,
+            alertType: alertType,
+            client: client[0],
+            orders: orders,
+            pagination_bar: pag_bar,
+        });
+
     });
+
+    // res.render('./admin/clientsNcustomers/edit_client.hbs', {
+    //     client: client[0],
+    //     message: message,
+    //     alertType: alertType
+    // });
 });
 
     // sales person pages
