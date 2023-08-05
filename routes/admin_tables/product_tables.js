@@ -628,7 +628,7 @@ exports.edit_category_get_req = async (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
     const category = await db.query('SELECT * FROM categoria WHERE id = ?', [id]);
-    console.log("category", category[0], id);
+    // console.log("category", category[0], id);
 
 
     let products = [];
@@ -670,7 +670,7 @@ exports.edit_category_get_req = async (req, res) => {
     // pagination bar
     const pag_bar = pagination_bar(pagination_data);
     pag_bar.link = link_page;
-    console.log(pag_bar);
+    // console.log(pag_bar);
 
     // end pagination
     products = pagination_format.result;
