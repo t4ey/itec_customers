@@ -623,6 +623,99 @@ exports.add_category = async (req, res) => {
     // res.send("ok");
 }
 
+exports.edit_category_get_req = async (req, res) => {
+    const { id } = req.params;
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+    const category = await db.query('SELECT * FROM categoria WHERE id = ?', [id]);
+    console.log("category", category[0], id);
+
+
+    let products = [];
+    // pagination
+
+    // join combination in MYSQL query
+    // const get_prods = await db.query(`SELECT * FROM producto JOIN clasificacion ON producto.id = clasificacion.prod_id WHERE cat_id = ${id}`);
+
+    // console.log("deffff");
+    // data query request await db.query(`SELECT * FROM pedido WHERE status = ${data} ORDER BY id DESC`);
+    const pagination_format = await pagination(`SELECT * FROM producto JOIN clasificacion ON producto.id = clasificacion.prod_id WHERE cat_id = ${id}`, req, res);
+    const link_page = res.originalUrl;
+
+    // if try to ingress to a different page range
+    if (pagination_format.status == "return if over pages") {
+        return res.redirect(link_page + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
+    }
+    else if (pagination_format.status == "return if lower pages") {
+        return res.redirect(link_page + '?page=' + encodeURIComponent(1))
+    }
+    else if (pagination_format.status == "no results") {
+        console.log("products:", products);
+        return res.render('./admin/products/edit_category', {
+            message: message,
+            alertType: alertType,
+            category: category[0],
+            products: products,
+        });
+    }
+
+    const pagination_data = {
+        page: pagination_format.page,
+        numberOfPages: pagination_format.numberOfPages,
+        iterator: pagination_format.iterator,
+        endingLink: pagination_format.endingLink
+    }
+    // console.log(pagination_format);
+
+    // pagination bar
+    const pag_bar = pagination_bar(pagination_data);
+    pag_bar.link = link_page;
+    console.log(pag_bar);
+
+    // end pagination
+    products = pagination_format.result;
+    console.log("result length: ", pagination_format.result.length);
+
+
+    // display categories part
+
+    if (products.length > 0) {
+        for (var i = 0; i < products.length; i++) {
+            products[i].img_dir = micro_img_dir(products[i].img_dir); // change to micro img dir
+
+            product_category_ids = await db.query("SELECT cat_id FROM clasificacion WHERE prod_id = ?", [products[i].id]);
+
+            let name_categories = [];
+            // console.log(product_category_ids);
+            // console.log(cat_ids);
+
+            for (var j = 0; j < product_category_ids.length; j++) {
+                if (product_category_ids[j]) {
+                    let get_cat_name = await db.query("SELECT name FROM categoria WHERE id = ?", [product_category_ids[j].cat_id]);
+                    // console.log(get_cat_name[0].name);
+                    name_categories.push(get_cat_name[0].name);
+                    // console.log("categories push: ", categories);
+                }
+
+            }
+            products[i].categories = name_categories;
+            // console.log(products[i]);
+            // console.log("next id", categories);
+        }
+    }
+
+    console.log("products:",products);
+
+    // console.log(result);
+    return res.render('./admin/products/edit_category', {
+        message: message,
+        alertType: alertType,
+        category: category[0],
+        products: products,
+        pagination_bar: pag_bar,
+    });
+}
+
 exports.edit_category = async (req, res) => {
     const {id} = req.params;
     const { cat_name, description } = req.body;

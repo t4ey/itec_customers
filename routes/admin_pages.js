@@ -409,19 +409,7 @@ router.get('/add_category', requireAuth, (req, res) => {
     });
 });
 
-router.get('/edit_category/:id', requireAuth, async (req, res) => {
-    const { id } = req.params;
-    const message = req.flash('message');
-    const alertType = req.flash('alertType');
-    const category = await db.query('SELECT * FROM categoria WHERE id = ?', [id]);
-    // console.log(category[0]);
-
-    res.render('./admin/products/edit_category', {
-        category: category[0],
-        message: message,
-        alertType: alertType
-    });
-});
+router.get('/edit_category/:id', requireAuth, product_tables.edit_category_get_req);
 
 // orders pages
 
