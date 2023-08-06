@@ -207,7 +207,7 @@ exports.clients = async (req, res) => {
 
         clients = pagination_format.result;
         if (result) {
-            // console.log(result);
+            console.log(result);
             return res.render('./admin/clientsNcustomers/clients', {
                 clients: clients,
                 message: message,
