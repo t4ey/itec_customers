@@ -330,6 +330,8 @@ router.get('/edit_client/:id', requireAuth, async (req, res) => {
 
 router.get('/salesperson', requireAuth, user_tables.admins);
 
+router.get('/salesperson/search', requireAuth, user_tables.search4Salesperson);
+
 router.get('/add_employee', requireAuth, (req, res) => {
     res.render('./admin/clientsNcustomers/add_employee.hbs');
 });
