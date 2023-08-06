@@ -221,3 +221,90 @@ exports.clients = async (req, res) => {
     });
 
 }
+
+exports.search4Clients = async (req,res) => {
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+    const { searchType } = req.query;
+    const { searchText } = req.query;
+
+    let querySearch = `SELECT * FROM client`;
+
+    if(searchText != "") {
+        console.log("textS: ", searchText);
+
+        if (searchType == "all") {
+            querySearch = `SELECT * FROM client WHERE first_name LIKE "%${searchText}%" OR last_name LIKE "%${searchText}%" OR email LIKE "%${searchText}%" `;
+        }else {
+            querySearch = `SELECT * FROM client WHERE ${searchType} LIKE "%${searchText}%"`;
+        }
+    } else {
+        return res.redirect('/admin/clients');
+    }
+
+    // console.log(message);
+
+    await db.query(querySearch, async (error, result) => {
+        if (error)
+            console.log(error);
+
+        if (result.length == 0) {
+            return res.render('./admin/clientsNcustomers/clients', {
+                message: message,
+                alertType: alertType,
+                searchValue: searchText,
+                searchType: (searchType == "first_name") ? { first_name: true } : (searchType == "last_name") ? { last_name: true } : (searchType == "email") ? { email: true }: { all: true },
+            });
+        }
+        // pagination
+
+        // console.log("deffff");
+        // data query request await db.query(`SELECT * FROM pedido WHERE status = ${data} ORDER BY id DESC`);
+        const pagination_format = await pagination(querySearch, req, res);
+        const link_page = res.originalUrl;
+
+        // if try to ingress to a different page range
+        if (pagination_format.status == "return if over pages") {
+            return res.redirect(link_page + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
+        }
+        else if (pagination_format.status == "return if lower pages") {
+            return res.redirect(link_page + '?page=' + encodeURIComponent(1))
+        }
+        else if (pagination_format.status == "no results") {
+            req.flash('message', 'no se encontro ningún producto');
+            req.flash('alertType', 'alert-danger');
+            return res.redirect(link_page);
+        }
+
+        const pagination_data = {
+            page: pagination_format.page,
+            numberOfPages: pagination_format.numberOfPages,
+            iterator: pagination_format.iterator,
+            endingLink: pagination_format.endingLink
+        }
+        // console.log(pagination_format);
+
+        // pagination bar
+        const pag_bar = pagination_bar(pagination_data);
+        pag_bar.link = link_page;
+        console.log(pag_bar);
+
+        // end pagination
+
+        clients = pagination_format.result;
+        if (result) {
+            console.log(result);
+            return res.render('./admin/clientsNcustomers/clients', {
+                clients: clients,
+                message: message,
+                alertType: alertType,
+                pagination_bar: pag_bar,
+                searchValue: searchText,
+                searchType: (searchType == "first_name") ? { first_name: true } : (searchType == "last_name") ? { last_name: true } : (searchType == "email") ? { email: true } : { all: true }
+            });
+        }
+        else
+            console.log("nop");
+
+    });
+}

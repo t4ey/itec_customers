@@ -224,6 +224,8 @@ router.get('/home', requireAuth, async (req, res) => {
 
 router.get('/clients', requireAuth, user_tables.clients);
 
+router.get('/clients/search', requireAuth, user_tables.search4Clients);
+
 router.get('/edit_client/:id', requireAuth, async (req, res) => {
     const { id } = req.params;
     const message = req.flash('message');

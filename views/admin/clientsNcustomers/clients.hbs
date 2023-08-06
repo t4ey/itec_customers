@@ -19,7 +19,7 @@
     <!-- font awesome icons -->
     <script src="https://kit.fontawesome.com/8faedc4425.js" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="../css/styles_dashboard.css">
+    <link rel="stylesheet" href="/css/styles_dashboard.css">
 </head>
 <body>
     
@@ -125,15 +125,24 @@
                                 <div class="row">
                                     <div class="col"></div>
                                     <div class="col col-sm-12 col-md-10 col-xl-10">    
+
+                                        {{!-- search bar  --}}
                                         <form action="/admin/clients/search" method="get">
                                             <div class="input-group flex-nowrap">
                                                     <select class="form-select " style="max-width: 120px" id="searchType" name="searchType">
-                                                        <option value="all" selected>Todo</option>
-                                                        <option value="email">Email</option>
-                                                        <option value="first_name">Nombre/s</option>
-                                                        <option value="last_name">Apellidos</option>
+                                                        {{#with searchType}}
+                                                            <option value="all" {{#if all}}selected{{/if}}>Todo</option>
+                                                            <option value="email"{{#if email}}selected{{/if}}>Email</option>
+                                                            <option value="first_name" {{#if first_name}}selected{{/if}}>Nombre/s</option>
+                                                            <option value="last_name" {{#if last_name}}selected{{/if}}>Apellidos</option>
+                                                        {{else}}
+                                                            <option value="all" selected>Todo</option>
+                                                            <option value="email">Email</option>
+                                                            <option value="first_name">Nombre/s</option>
+                                                            <option value="last_name">Apellidos</option>
+                                                        {{/with}}
                                                     </select>
-                                                <input name="searchText" type="text" class="form-control" placeholder="Buscar en Clientes" aria-label="Username" aria-describedby="addon-wrapping">
+                                                <input name="searchText" type="text" class="form-control" placeholder="Buscar en Clientes" aria-label="Username" aria-describedby="addon-wrapping" value="{{searchValue}}">
                                                 <button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
                                             </div>
                                         </form>
@@ -179,8 +188,8 @@
                     {{else}}
                         <div class="col-md-8 mx-auto text-center pt-5">
                             <div class="card card-body">
-                                <h2>No hay ningún producto registrado</h2>
-                                <a href="/links/add"><h3>Añadir Un nuevo Producto</h3></a>
+                                <h2>No hay resultados de la busqueda</h2>
+                                <a href="/admin/clients"><h3>Volver al Inicio</h3></a>
                             </div>
                         </div>
                     {{/if}}
