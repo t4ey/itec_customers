@@ -238,6 +238,139 @@ exports.products = async (req, res) => {
     });
 }
 
+exports.searchProducts = async (req, res) => {
+    const filter = req.params.filter;
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+
+    const { searchText } = req.query;
+
+    let querySearch = `SELECT * FROM producto`;
+
+    if (searchText != "") {
+        console.log("textS: ", searchText);
+        
+        querySearch = `SELECT * FROM producto WHERE name LIKE "%${searchText}%"`;
+    } else {
+        return res.redirect('/admin/products');
+    }
+
+    
+
+    // console.log(message);
+    let products = {}
+    products.all = await db.query("SELECT * FROM producto");
+
+    // filter's bar counter
+
+    products.published = [];
+    products.out_of_stock = [];
+    // console.log("filtered prods: ", products);
+
+    for (var i = 0; i < products.all.length; i++) {
+        // insert in filters ( published && out of stock)
+        // console.log(products.all[i].stock > 0);
+        if (products.all[i].stock > 0) {
+            products.published.push(products.all[i]);
+        }
+        else {
+            products.out_of_stock.push(products.all[i]);
+        }
+    }
+
+    let filters = {};
+
+    filters.all = products.all.length;
+    filters.published = products.published.length;
+    filters.out_of_stock = products.out_of_stock.length;
+
+    if ((await db.query(querySearch)).length == 0) {
+        return res.render('./admin/products/products.hbs', {
+            message: message,
+            alertType: alertType,
+            filters: filters,
+            searchValue: searchText,
+        });
+    }
+
+    // pagination
+
+    // console.log("deffff");
+    // data query request await db.query(`SELECT * FROM pedido WHERE status = ${data} ORDER BY id DESC`);
+    const pagination_format = await pagination(querySearch, req, res);
+    const link_page = res.originalUrl;
+
+    // if try to ingress to a different page range
+    if (pagination_format.status == "return if over pages") {
+        return res.redirect(link_page + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
+    }
+    else if (pagination_format.status == "return if lower pages") {
+        return res.redirect(link_page + '?page=' + encodeURIComponent(1))
+    }
+    else if (pagination_format.status == "no results") {
+        req.flash('message', 'no se encontro ningún producto');
+        req.flash('alertType', 'alert-danger');
+        return res.redirect(link_page);
+    }
+
+    const pagination_data = {
+        page: pagination_format.page,
+        numberOfPages: pagination_format.numberOfPages,
+        iterator: pagination_format.iterator,
+        endingLink: pagination_format.endingLink
+    }
+    // console.log(pagination_format);
+
+    // pagination bar
+    const pag_bar = pagination_bar(pagination_data);
+    pag_bar.link = link_page;
+    console.log(pag_bar);
+
+    // end pagination
+    products = pagination_format.result;
+    console.log("result length: ", pagination_format.result.length);
+
+
+    // display categories part
+
+    if (products.length > 0) {
+        for (var i = 0; i < products.length; i++) {
+            products[i].img_dir = micro_img_dir(products[i].img_dir); // change to micro img dir
+
+            product_category_ids = await db.query("SELECT cat_id FROM clasificacion WHERE prod_id = ?", [products[i].id]);
+
+            let name_categories = [];
+            // console.log(product_category_ids);
+            // console.log(cat_ids);
+
+            for (var j = 0; j < product_category_ids.length; j++) {
+                if (product_category_ids[j]) {
+                    let get_cat_name = await db.query("SELECT name FROM categoria WHERE id = ?", [product_category_ids[j].cat_id]);
+                    // console.log(get_cat_name[0].name);
+                    name_categories.push(get_cat_name[0].name);
+                    // console.log("categories push: ", categories);
+                }
+
+            }
+            products[i].categories = name_categories;
+            // console.log(products[i]);
+            // console.log("next id", categories);
+        }
+    }
+
+    // console.log(products);
+
+    // console.log(result);
+    return res.render('./admin/products/products.hbs', {
+        message: message,
+        alertType: alertType,
+        products: products,
+        filters: filters,
+        searchValue: searchText,
+        pagination_bar: pag_bar,
+    });
+}
+
 exports.filter_products = async (req, res) => {
     //const orders = await db.query("SELECT * FROM pedido WHERE status = ? ORDER BY id DESC", [filter]);
     //const filter_filter_orders = await db.query("SELECT * FROM pedido ORDER BY id DESC");

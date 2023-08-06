@@ -353,6 +353,8 @@ router.get('/edit_employee/:id', requireAuth, async (req, res) => {
 
 router.get('/products', requireAuth, product_tables.products);
 
+router.get('/products/search', requireAuth, product_tables.searchProducts);
+
 router.get('/products/:filter', requireAuth, product_tables.filter_products);
 
 router.get('/add_product', requireAuth, async (req, res) => {
