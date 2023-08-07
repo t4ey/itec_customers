@@ -423,6 +423,8 @@ router.get('/edit_category/:id', requireAuth, product_tables.edit_category_get_r
 
 router.get('/orders', requireAuth, product_tables.orders);
 
+router.get('/orders/search', requireAuth, product_tables.searchOrder);
+
 router.get('/orders/details/:id', requireAuth, product_tables.order_details);
 
 router.get('/orders/filter/:data', requireAuth, product_tables.filter_orders);

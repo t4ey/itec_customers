@@ -1102,6 +1102,160 @@ exports.orders = async (req, res) => {
 
 }
 
+exports.searchOrder = async (req, res) => {
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+
+    // console.log(message);
+
+    const { searchType } = req.query;
+    const { searchText } = req.query;
+    let querySearch = `SELECT * FROM pedido ORDER BY id DESC`;
+
+    if (searchText != "") {
+        console.log("textS: ", searchText);
+        if (searchType == "id") {
+            querySearch = `SELECT pedido.id, pedido.total_amount, client.id as "client_id",email,status,fecha_de_pedido FROM pedido JOIN client ON pedido.client_id = client.id WHERE pedido.id LIKE "%${searchText}%"`;
+        } else {
+            querySearch = `SELECT pedido.id, pedido.total_amount, client.id as "client_id",email,status,fecha_de_pedido FROM pedido JOIN client ON pedido.client_id = client.id WHERE email LIKE "%${searchText}%"`;
+        }
+    } else {
+        return res.redirect('/admin/orders');
+    }
+
+    await db.query(querySearch, async (error, result) => {
+        if (error)
+            console.log(error);
+
+
+        // pagination
+
+        // console.log("deffff");
+        const pagination_format = await pagination(querySearch, req, res);
+        const link_page = "/admin/orders";
+
+        // if try to ingress to a different page range
+        if (pagination_format.status == "return if over pages") {
+            return res.redirect(link_page + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
+        }
+        else if (pagination_format.status == "return if lower pages") {
+            return res.redirect(link_page + '?page=' + encodeURIComponent(1))
+        }
+        else if (pagination_format.status == "no results") {
+            req.flash('message', 'no se encontro ningún producto');
+            req.flash('alertType', 'alert-danger');
+            return res.redirect(link_page);
+        }
+
+        const pagination_data = {
+            page: pagination_format.page,
+            numberOfPages: pagination_format.numberOfPages,
+            iterator: pagination_format.iterator,
+            endingLink: pagination_format.endingLink
+        }
+        // console.log(pagination_format);
+
+        // pagination bar
+        const pag_bar = pagination_bar(pagination_data);
+        pag_bar.link = link_page;
+        console.log(pag_bar);
+
+        // end pagination
+
+        const orders = pagination_format.result;
+
+        if (!(orders.length > 0)) {
+            return res.render('./admin/products/orders.hbs', {
+                message: message,
+                alertType: alertType,
+                orders: orders,
+                searchValue: searchText,
+                searchType: (searchType == "id") ? { id: true } : { email: true },
+            });
+
+        }
+        console.log("orders", orders);
+
+        let filters = {};
+
+        filters.all = orders.length;
+        filters.new = 0;
+        filters.ready_to_pay = 0;
+        filters.completed = 0;
+        filters.canceled = 0;
+
+        let list_client_ids = [];
+        for (var i = 0; i < orders.length; i++) {
+            list_client_ids.push(orders[i].client_id);
+
+            // check filter numbers 
+            switch (orders[i].status) {
+                case 'new':
+                    filters.new++;
+                    break;
+                case 'completed':
+                    filters.completed++;
+                    break;
+                case 'ready-to-pay':
+                    filters.ready_to_pay++;
+                    break;
+                case 'canceled':
+                    filters.canceled++;
+                    break;
+                default:
+                    filters.all = orders.length;
+                    break;
+            }
+        }
+        console.log(filters);
+
+        const clients_data = await db.query('SELECT * FROM client WHERE id IN(?)', [list_client_ids]);
+
+        for (var i = 0; i < orders.length; i++) {
+
+            for (var j = 0; j < clients_data.length; j++) {
+                if (orders[i].client_id == clients_data[j].id) {
+                    orders[i].client_name = clients_data[j].first_name;
+
+                    orders[i].fecha_de_pedido = timeAgo.format(orders[i].fecha_de_pedido, "es");
+
+                    switch (orders[i].status) {
+                        case 'new':
+                            orders[i].new = true;
+                            break;
+                        case 'completed':
+                            orders[i].completed = true;
+                            break;
+                        case 'ready-to-pay':
+                            orders[i].ready_to_pay = true;
+                            break;
+                        case 'canceled':
+                            orders[i].canceled = true;
+                            break;
+                        default:
+                            orders[i].new = true;
+                            break;
+                    }
+                    // console.log("match")
+                }
+            }
+        }
+
+        // console.log(orders);
+        return res.render('./admin/products/orders.hbs', {
+            message: message,
+            alertType: alertType,
+            orders: orders,
+            filters: filters,
+            searchValue: searchText,
+            searchType: (searchType == "id") ? { id: true } : { email: true },
+            pagination_bar: pag_bar,
+        });
+
+    });
+
+}
+
 exports.filter_orders = async (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');

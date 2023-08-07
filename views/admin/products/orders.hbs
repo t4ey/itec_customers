@@ -114,7 +114,42 @@
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="container-fluid px-0">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <div class="align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <div class="row">
+                            <div class="col">
+                                <h1 class="h2">Ordenes</h1>
+                            </div>
+                            <div class="col col-6">
+                                <div class="row">
+                                    <div class="col"></div>
+                                    <div class="col col-sm-12 col-md-10 col-xl-10">    
+
+                                        {{!-- search bar  --}}
+                                        <form action="/admin/orders/search" method="get">
+                                            <div class="input-group flex-nowrap">
+                                                    <select class="form-select " style="max-width: 120px" id="searchType" name="searchType">
+                                                        {{#with searchType}}
+                                                            <option value="id" {{#if all}}selected{{/if}}>N°</option>
+                                                            <option value="client_id"{{#if email}}selected{{/if}}>Cliente</option>
+                                                        {{else}}
+                                                            <option value="id" selected>N°</option>
+                                                            <option value="client_id">Cliente</option>
+                                                        {{/with}}
+                                                    </select>
+                                                <input name="searchText" type="text" class="form-control" placeholder="Buscar en Clientes" aria-label="Username" aria-describedby="addon-wrapping" value="{{searchValue}}">
+                                                <button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col"></div>
+                                </div>
+                            </div>
+                            <div class="col"></div>
+                        </div>
+                        
+                    </div>
+
+                    {{!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Ordenes</h1>
                         <div class="btn-toolbar mb-2 mb-md-0">
                             <div class="btn-group me-2">
@@ -126,7 +161,7 @@
                                 This week
                             </button>
                         </div>
-                    </div>
+                    </div> --}}
                     {{#if message}}
                         <div class="alert {{alertType}} alert-dismissible fade show" role="alert">
                             {{message}}
