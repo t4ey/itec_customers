@@ -184,7 +184,7 @@ router.get('/home', requireAuth, async (req, res) => {
 
         for (var j = 0; j < clients_data.length; j++) {
             if (orders[i].client_id == clients_data[j].id) {
-                orders[i].client_name = clients_data[j].first_name;
+                orders[i].client_name = clients_data[j].email;
 
                 orders[i].fecha_de_pedido = timeAgo.format(orders[i].fecha_de_pedido, "es");
 
