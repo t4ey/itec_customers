@@ -404,6 +404,8 @@ router.get('/edit_product/:id', requireAuth, async (req, res) => {
 
 router.get('/categories', requireAuth, product_tables.categories);
 
+router.get('/categories/search', requireAuth, product_tables.searchCategories);
+
 router.get('/add_category', requireAuth, (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');

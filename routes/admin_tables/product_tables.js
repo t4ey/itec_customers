@@ -718,6 +718,87 @@ exports.categories = async (req, res) => {
 
 }
 
+exports.searchCategories = async (req, res) => {
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+
+    // console.log(message);
+
+    // search functionality
+
+    const { searchText } = req.query;
+
+    let querySearch = `SELECT * FROM categoria`;
+
+    if (searchText != "") {
+        console.log("textS: ", searchText);
+        querySearch = `SELECT * FROM categoria WHERE name LIKE "%${searchText}%" OR description LIKE "%${searchText}%"`;
+    } else {
+        return res.redirect('/admin/categories');
+    }
+
+    await db.query(querySearch, async (error, result) => {
+        if (error)
+            console.log(error);
+
+        if (result.length == 0) {
+            return res.render('./admin/products/categories.hbs', {
+                message: message,
+                alertType: alertType,
+            });
+        }
+        // pagination
+
+        // console.log("deffff");
+        // data query request await db.query(`SELECT * FROM pedido WHERE status = ${data} ORDER BY id DESC`);
+        const pagination_format = await pagination(querySearch, req, res);
+        const link_page = res.originalUrl;
+
+        // if try to ingress to a different page range
+        if (pagination_format.status == "return if over pages") {
+            return res.redirect(link_page + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
+        }
+        else if (pagination_format.status == "return if lower pages") {
+            return res.redirect(link_page + '?page=' + encodeURIComponent(1))
+        }
+        else if (pagination_format.status == "no results") {
+            req.flash('message', 'no se encontro ningún producto');
+            req.flash('alertType', 'alert-danger');
+            return res.redirect(link_page);
+        }
+
+        const pagination_data = {
+            page: pagination_format.page,
+            numberOfPages: pagination_format.numberOfPages,
+            iterator: pagination_format.iterator,
+            endingLink: pagination_format.endingLink
+        }
+        // console.log(pagination_format);
+
+        // pagination bar
+        const pag_bar = pagination_bar(pagination_data);
+        pag_bar.link = link_page;
+        console.log(pag_bar);
+
+        // end pagination
+        categorias = pagination_format.result;
+
+        if (result) {
+            // console.log(result);
+            return res.render('./admin/products/categories.hbs', {
+                categories: categorias,
+                message: message,
+                alertType: alertType,
+                pagination_bar: pag_bar,
+            });
+        }
+        else
+            console.log("nop");
+
+    });
+
+}
+
 exports.add_category = async (req, res) => {
 
     const { cat_name, description } = req.body;

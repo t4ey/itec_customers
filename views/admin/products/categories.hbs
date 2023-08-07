@@ -19,7 +19,7 @@
     <!-- font awesome icons -->
     <script src="https://kit.fontawesome.com/8faedc4425.js" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="../css/styles_dashboard.css">
+    <link rel="stylesheet" href="/css/styles_dashboard.css">
 </head>
 <body>
     
@@ -116,11 +116,33 @@
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="container-fluid px-0">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Categorias</h1>
-                        <div class="btn-toolbar mb-2 mb-md-0">
+
+                    <div class="align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <div class="row">
+                            <div class="col">
+                                <h1 class="h2">Categorias</h1>
+                            </div>
+                            <div class="col col-6">
+                                <div class="row">
+                                    <div class="col"></div>
+                                    <div class="col col-sm-12 col-md-10 col-xl-10">    
+
+                                        {{!-- search bar  --}}
+                                        <form action="/admin/categories/search" method="get">
+                                            <div class="input-group flex-nowrap">
+                                                <input name="searchText" type="text" class="form-control" placeholder="Buscar Categoria o Descripción" aria-label="Username" aria-describedby="addon-wrapping" value="{{searchValue}}">
+                                                <button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col"></div>
+                                </div>
+                            </div>
+                            <div class="col text-end">
                             <a class="btn btn-success" href="/admin/add_category">Añadir Categoria <i class="fa-solid fa-plus"></i></a>
+                            </div>
                         </div>
+                        
                     </div>
                     {{#if message}}
                         <div class="alert {{alertType}} alert-dismissible fade show" role="alert">
@@ -158,8 +180,8 @@
                         {{else}}
                         <div class="col-md-8 mx-auto text-center pt-5">
                             <div class="card card-body">
-                                <h2>No hay ningún producto registrado</h2>
-                                <a href="/admin/add_product"><h3>Añadir Un nuevo Producto</h3></a>
+                                <h2>No se encontró ninguna categoria o no se registró</h2>
+                                <a href="/admin/add_category"><h3>Añadir Categoria</h3></a>
                             </div>
                         </div>
                     {{/if}}
