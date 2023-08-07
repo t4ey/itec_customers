@@ -1063,7 +1063,7 @@ exports.orders = async (req, res) => {
             
             for (var j = 0; j < clients_data.length; j++) {
                 if (orders[i].client_id == clients_data[j].id){
-                    orders[i].client_name = clients_data[j].first_name;
+                    orders[i].client_name = clients_data[j].email;
 
                     orders[i].fecha_de_pedido = timeAgo.format(orders[i].fecha_de_pedido, "es");
 
@@ -1115,9 +1115,9 @@ exports.searchOrder = async (req, res) => {
     if (searchText != "") {
         console.log("textS: ", searchText);
         if (searchType == "id") {
-            querySearch = `SELECT pedido.id, pedido.total_amount, client.id as "client_id",email,status,fecha_de_pedido FROM pedido JOIN client ON pedido.client_id = client.id WHERE pedido.id LIKE "%${searchText}%"`;
+            querySearch = `SELECT pedido.id, pedido.total_amount, client.id as "client_id",email,status,fecha_de_pedido FROM pedido JOIN client ON pedido.client_id = client.id WHERE pedido.id LIKE "%${searchText}%" ORDER BY pedido.id DESC`;
         } else {
-            querySearch = `SELECT pedido.id, pedido.total_amount, client.id as "client_id",email,status,fecha_de_pedido FROM pedido JOIN client ON pedido.client_id = client.id WHERE email LIKE "%${searchText}%"`;
+            querySearch = `SELECT pedido.id, pedido.total_amount, client.id as "client_id",email,status,fecha_de_pedido FROM pedido JOIN client ON pedido.client_id = client.id WHERE email LIKE "%${searchText}%" ORDER BY pedido.id DESC`;
         }
     } else {
         return res.redirect('/admin/orders');
@@ -1215,7 +1215,7 @@ exports.searchOrder = async (req, res) => {
 
             for (var j = 0; j < clients_data.length; j++) {
                 if (orders[i].client_id == clients_data[j].id) {
-                    orders[i].client_name = clients_data[j].first_name;
+                    orders[i].client_name = clients_data[j].email;
 
                     orders[i].fecha_de_pedido = timeAgo.format(orders[i].fecha_de_pedido, "es");
 
@@ -1365,7 +1365,7 @@ exports.filter_orders = async (req, res) => {
     
             for (var j = 0; j < clients_data.length; j++) {
                 if (orders[i].client_id == clients_data[j].id) {
-                    orders[i].client_name = clients_data[j].first_name;
+                    orders[i].client_name = clients_data[j].email;
     
                     orders[i].fecha_de_pedido = timeAgo.format(orders[i].fecha_de_pedido, "es");
     
