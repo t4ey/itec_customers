@@ -195,10 +195,13 @@
                                                     <label class="" for="">Apellido(s) :</label>
                                                     <h5>{{last_name}}</h5>
                                                 </div>
-                                                <div class="form-group pb-2">
+                                                <div class="form-group pb-3">
                                                     <label class="" for="">Email :</label>
-                                                    <a href="/admin/edit_client/{{id}}">
-                                                        <h5>{{email}}</h5>
+                                                    <h5>{{email}}</h5>
+                                                </div>
+                                                <div class="form-group pb-2 text-center">
+                                                    <a class="btn btn-outline-secondary" href="/admin/edit_client/{{id}}">
+                                                        <h5>Detalles del Cliente</h5>
                                                     </a>
                                                 </div>
                                             </form>
@@ -269,46 +272,105 @@
                                             <label class="" for="">Pedido realizado hace :</label>
                                             <h4>{{order.fecha_de_pedido}}</h4>
                                         </div>
+                                        {{#with order}}
                                         <div class="form-group pb-3">
                                             
                                             <label class="" for="">Estado Actual :</label>
                                             <div class="d-block pt-3">
-                                            {{#with order}}
+                                                {{#if completed}}
+                                                    <span class="badge rounded-pill text-bg-success fs-6">Completado <i class="fa-solid fa-check"></i></span>
+                                                {{/if}}
+                                                {{#if new}}
+                                                <span class="badge rounded-pill text-bg-success fs-6"  style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-asterisk"></i></span>
+                                                    {{!-- <td><span class="badge bg-success" style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-asterisk"></i></span></td> --}}
+                                                {{/if}}
+                                                {{#if ready_to_pay}}
+                                                <span class="badge rounded-pill text-bg-warning fs-6" >Por Pagar <i class="fa-regular fa-clock"></i></span>
+                                                    {{!-- <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td> --}}
+                                                {{/if}}
+                                                {{#if canceled}}
+                                                <span class="badge rounded-pill text-bg-danger fs-6" >Cancelado <i class="fa-solid fa-xmark"></i></span>
+                                                    {{!-- <td><span class="badge bg-danger">Cancelled <i class="fa-solid fa-xmark"></i></span></td> --}}
+                                                {{/if}}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group pb-3">
+                                            {{!-- update order status --}}
                                             {{#if completed}}
-                                                <span class="badge rounded-pill text-bg-success fs-6">Completado <i class="fa-solid fa-check"></i></span>
                                             {{/if}}
                                             {{#if new}}
-                                            <span class="badge rounded-pill text-bg-success fs-6"  style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-asterisk"></i></span>
+                                            <label class="" for="">Actualizar Estado :</label>
+
+                                                <select class="form-select" name="status" aria-label="Default select example">
+                                                    <option class="" style="" value="null" selected>Seleccionar</option>
+                                                    <option class="text-bg-warning" value="ready-to-pay" >Por Pagar</option>
+                                                </select>
                                                 {{!-- <td><span class="badge bg-success" style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-asterisk"></i></span></td> --}}
                                             {{/if}}
                                             {{#if ready_to_pay}}
-                                            <span class="badge rounded-pill text-bg-warning fs-6" >Por Pagar <i class="fa-regular fa-clock"></i></span>
+                                            <label class="" for="">Actualizar Estado :</label>
+
+                                                <select class="form-select" name="status" aria-label="Default select example">
+                                                    <option class="" style="" value="null" selecSted>Seleccionar</option>
+                                                    <option class="text-bg-success" value="completed">Completado</option>
+                                                    <option class="text-bg-danger" value="canceled">Cancelado</option>
+                                                </select>
                                                 {{!-- <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td> --}}
                                             {{/if}}
                                             {{#if canceled}}
-                                            <span class="badge rounded-pill text-bg-danger fs-6" >Cancelado <i class="fa-solid fa-xmark"></i></span>
+                                                {{!-- <span class="badge rounded-pill text-bg-danger fs-6" >Cancelado <i class="fa-solid fa-xmark"></i></span> --}}
                                                 {{!-- <td><span class="badge bg-danger">Cancelled <i class="fa-solid fa-xmark"></i></span></td> --}}
                                             {{/if}}
-                                            {{/with}}
-                                            </div>
                                         </div>
+
+                                        {{!-- progress bar --}}
                                         <div class="form-group pb-3">
-                                            
-                                            <label class="" for="">Actualizar Estado :</label>
-                                            <select class="form-select" name="status" aria-label="Default select example">
-                                                <option class="text-bg-success" style="--bs-bg-opacity: .7;" value="new" selected>Nuevo</option>
-                                                <option class="text-bg-success" value="completed">Completado</option>
-                                                <option class="text-bg-warning" value="ready-to-pay">Por Pagar</option>
-                                                <option class="text-bg-danger" value="canceled">Cancelado</option>
-                                            </select>
+                                            <label class="" for="">Progreso :</label>
+                                            {{#if completed}}
+                                                <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-success" style=" width: 100%">100%</div>
+                                                </div>
+                                            {{/if}}
+                                            {{#if new}}
+                                                <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-success" style="--bs-bg-opacity: .7; width: 33%">33%</div>
+                                                </div>
+                                                {{!-- <td><span class="badge bg-success" style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-asterisk"></i></span></td> --}}
+                                            {{/if}}
+                                            {{#if ready_to_pay}}
+                                                <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-warning" style=" width: 66%">66%</div>
+                                                </div>
+                                                {{!-- <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td> --}}
+                                            {{/if}}
+                                            {{#if canceled}}
+                                                <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-danger" style=" width: 100%">100%</div>
+                                                </div>
+                                                {{!-- <td><span class="badge bg-danger">Cancelled <i class="fa-solid fa-xmark"></i></span></td> --}}
+                                            {{/if}}
                                         </div>
-                                        
                                         <div class="form-group pb-3">
                                             <div class="btn-group w-100" role="group" aria-label="Basic mixed styles example">
-                                                <a class="btn btn-secondary" href="/admin/orders">Cancelar</a>
-                                                <button type="submit" class="btn btn-success">Confirmar</button>
+                                                {{!-- <a class="btn btn-secondary" href="/admin/orders">Atras</a> --}}
+                                                {{#if new}}
+                                                    <button type="submit" class="btn btn-primary {{#if completed}}d-none{{/if}} {{#if canceled}}d-none{{/if}}">Continuar <i class="fa-solid fa-angle-right"></i></button>
+                                                {{/if}}
+                                                {{#if ready_to_pay}}
+                                                    <button type="submit" class="btn btn-success {{#if completed}}d-none{{/if}} {{#if canceled}}d-none{{/if}}">Confirmar</button>
+                                                {{/if}}
+
+                                                {{#if completed}}
+                                                    <button type="submit" class="btn btn-success" disabled>Confirmar</button>
+                                                {{/if}}
+
+                                                {{#if canceled}}
+                                                    <button type="submit" class="btn btn-success" disabled>Confirmar</button>
+                                                {{/if}}
                                             </div>
                                         </div>
+                                        {{/with}}
                                     </form>
                                 </div>
                             </div>
