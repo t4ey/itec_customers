@@ -236,6 +236,38 @@ exports.marketplace = async (req, res) => {
     });
 }
 
+exports.checkout = async (req, res) => {
+    const client_id = res.locals.user.id;
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+
+    const cart_products = await db.query("SELECT * FROM producto JOIN cart_shopping ON producto.id = cart_shopping.producto_id WHERE client_id = ?", [client_id]);
+
+    let product;
+    let total_cash = 0;
+    let n_products = 0;
+
+    for (var i = 0; i < cart_products.length; i++) {
+        total_cash += cart_products[i].price * cart_products[i].cantidad;
+        n_products++;
+    }
+
+    // let hasOrder = false;
+    // const client_orders = await db.query("SELECT * FROM pedido WHERE client_id = ?", [client_id]);
+    // console.log(client_orders[client_orders.length - 1].status);
+    
+    // if (!(client_orders[client_orders.length - 1].status == 'canceled') && !(client_orders[client_orders.length - 1].status == 'completed'))
+    //     hasOrder = true;
+    // else { hasOrder = false }
+
+    return res.render('./marketplace/checkout.hbs', {
+        products: cart_products,
+        message: message,
+        alertType: alertType,
+        total_cash,
+        n_products
+    });
+}
 
 // post requests
 

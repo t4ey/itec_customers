@@ -9,7 +9,7 @@
     <!-- boostrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    
+
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,7 @@
     <!-- font awesome icons -->
     <script src="https://kit.fontawesome.com/8faedc4425.js" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="../css/styles_car_shopping.css">
+    <link rel="stylesheet" href="/css/styles_car_shopping.css">
 </head>
 <body>
     <!-- navbar -->
@@ -119,95 +119,138 @@
             {{else}}
                 <form action="/marketplace/cart_shopping/make_order" method="POST">
             {{/if}}
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="text-start pb-3">Productos en el <strong>Carrito</strong></h2>
+            
+            <div class="container-fluid text-start px-0">
+                <h2 class="">Cajas</h2>
+                
+            </div>
+            <div class="row mt-5">
+                <div class="col-12 text-start">
+                    
                 </div>
-                <div class="col col-12 col-lg-8">
+                <div class="col col-12 col-lg-8 text-start">
+                    <h4 class="">Su orden</h4>
+                    <hr>
                     <div class="container-fluid">
                         {{#if products}}
                             {{#each products}}
-                            <div class="row item">
+                            <div class="row ">
                                 <div class="col col-5 col-sm-2 px-0">
                                     <img class="item-img" src="{{img_dir}}" alt="">
                                 </div>
                                 <div class="col col-7 col-sm-5 my-auto">
-                                    <h2 class="">{{name}}</h2>
+                                    <h3 class="text-capitalize">{{name}}</h3>
                                 </div>
                                 <div class="col col-5 col-sm-2 my-auto py-3 py-sm-0">
                                     <input name="product_id" type="number" value="{{id}}" class="d-none">
-                                    <input name="quantity" type="number" min="1" max="50" value="{{quantity}}">
+                                    <h4 class="btn btn-outline-primary h4 my-auto" name="quantity" type="number" >{{cantidad}}</h4>
                                 </div>
                                 <div class="col col-5 col-sm-2 my-auto">
-                                    <p class="my-auto">{{price}} Bs</p>
+                                    <h4 class="my-auto">{{price}} Bs</h4>
                                 </div>
                                 <div class="col col-2 col-sm-1 my-auto">
-                                {{#if ../order}}
+                                {{#unless 0}}
                                     {{!-- <a href="/marketplace/product/cart_shopping/remove_product/{{id} }" ><i class="fa-solid fa-trash"></i></a> --}}
                                 {{else}}
                                     <a href="/marketplace/product/cart_shopping/remove_product/{{id}}" ><i class="fa-solid fa-trash"></i></a>
-                                {{/if}}
+                                {{/unless}}
                                 </div>
+                                <hr class="my-3">
                             </div>
                             {{/each}}
                         {{else}}
                             {{!-- content --}}
+                            <div class="col-md-10 mx-auto text-center pt-5">
+                                <div class="card card-body">
+                                    <h3>No hay ningún producto en el carrito </h2>
+                                    <a href="/marketplace"><h3>Añadir Producto</h3></a>
+                                </div>
+                            </div>
                         {{/if}}
-                        {{!-- <div class="row item">
-                            <div class="col col-5 col-sm-2 px-0">
-                                <img class="item-img" src="../images/arduino.jpg" alt="">
-                            </div>
-                            <div class="col col-7 col-sm-5 my-auto">
-                                <h2 class="">Arduino Uno</h2>
-                            </div>
-                            <div class="col col-5 col-sm-2 my-auto py-3 py-sm-0">
-                                <input type="number" min="1" max="50" value="1">
-                            </div>
-                            <div class="col col-5 col-sm-2 my-auto">
-                                <p class="my-auto">50 Bs</p>
-                            </div>
-                            <div class="col col-2 col-sm-1 my-auto">
-                                <a href="#"><i class="fa-solid fa-trash"></i></a>
-                            </div>
-                        </div>
-                        <div class="row item">
-                            <div class="col col-5 col-sm-2 px-0">
-                                <img class="item-img" src="../images/arduino.jpg" alt="">
-                            </div>
-                            <div class="col col-7 col-sm-5 my-auto">
-                                <h2 class="">Arduino Uno</h2>
-                            </div>
-                            <div class="col col-5 col-sm-2 my-auto py-3 py-sm-0">
-                                <input type="number" min="1" max="50" value="1">
-                            </div>
-                            <div class="col col-5 col-sm-2 my-auto">
-                                <p class="my-auto">50 Bs</p>
-                            </div>
-                            <div class="col col-2 col-sm-1 my-auto px-0">
-                                <a href="#"><i class="fa-solid fa-trash"></i></a>
-                            </div>
-                        </div> --}}
                     </div>
+
+                    {{!-- <hr> --}}
+                    <div class="container-fluid">
+                        <div class="">
+                            <div class="row">
+                                <div class="col col-6"><h5 class=" me-auto">N° Artículos </h5></div>
+                                <div class="col col-6 text-end"><h5 class="">{{n_products}} artículos</h5></div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-6"><h5 class="">SubTotal </h5></div>
+                                <div class="col col-6 text-end"><h5 class="">{{total_cash}} Bs</h5></div>
+                            </div>
+                            {{!-- <div class="row">
+                                <div class="col col-6"><h5 class="">IVA </h5></div>
+                                <div class="col col-6 text-end"><h5 class="">0 Bs</h5></div>
+                            </div> --}}
+                            <div class="row">
+                                <div class="col col-6"><h5 class="bold" style="font-weight: bold;">Total </h5></div>
+                                <div class="col col-6 text-end"><h5 style="font-weight: bold;" class="">{{total_cash}} Bs</h5></div>
+                            </div>
+                        </div>    
+                    </div>
+                    <hr>
                 </div>
                 <div class="col col-12 col-lg-4 text-start px-lg-3">
+                    <div class="card p-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Detalles de la cuenta</h5>
+                            
+                            <hr>
+
+                            <div class="container-fluid">
+                                <div class="row my-3">
+                                    <p class="text-muted h5">Nombre</p>
+                                    <input class="form-control form-control-lg" type="text" value="dd@d.com" aria-label="Disabled input example" disabled readonly>
+                                </div>
+                                <div class="row my-3">
+                                    <p class="text-muted h5">Email</p>
+                                    <input class="form-control form-control-lg" type="text" value="dd@d.com" aria-label="Disabled input example" disabled readonly>
+                                </div>                            
+                            </div>
+
+                            <h5 class="card-title mt-4">Detalles de pago</h5>
+                            
+                            <hr>
+                            
+                            <p class="text-muted h5">Email</p>
+                            <select class="form-select">
+                                <option data-icon="fa-heart">Ketchup</option>
+                                <option data-icon="fa-heart">Ketchup</option>
+                                <option data-icon="fa-heart">Ketchup</option>
+                                <option data-icon="fa-heart">Ketchup</option>
+                                <option data-icon="fa-heart">Ketchup</option>
+                            </select>
+
+                            <select class="select show-tick">
+                            <option>Mustard</option>
+                            <option>Ketchup</option>
+                            <option>Relish</option>
+                            </select>
+
+                            <a href="#" class="btn btn-primary w-100">Confirmar Pedido</a>
+                        </div>
+                    </div>
+
                     <div class="container-fluid calculus-container">
                         <p class="d-inline-block me-auto">N° Artículos: </p>
                         <p class="d-inline-block">{{n_products}}</p>
                         <br>
                         <p class="d-inline-block">SubTotal: </p>
-                        <p class="d-inline-block">50</p>
+                        <p class="d-inline-block">50 Bs</p>
                         <br>
                         <p class="d-inline-block">IVA: </p>
-                        <p class="d-inline-block">50</p>
+                        <p class="d-inline-block">50 Bs</p>
                         <hr>
                         <p class="d-inline-block">Total: </p>
-                        <p class="d-inline-block">{{total_cash}} Bs.</p>
+                        <p class="d-inline-block">{{total_cash}} Bs</p>
                     </div>
                     <div class="container-fluid buy-btn-container text-center">
                     {{#if order}}
                         <button type="submit" class="btn btn-outline-secondary">Cancelar pedido</button>
                     {{else}}
-                        <a  href="/marketplace/cart_shopping/checkout" class="btn btn-success">Hacer Pedido</a>
+                        <button type="submit" class="btn btn-success">Hacer Pedido</button>
                     {{/if}}
                     </div>
                 </div>
@@ -276,6 +319,8 @@
         </footer>
     
     </section>
+
+
     <!-- bootstrap js cdn -->
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"

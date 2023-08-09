@@ -102,6 +102,8 @@ router.get('/marketplace/cart_shopping', requireAuth, async (req, res) => {
 
 router.post('/marketplace/search', marketplace.searchInMarketplace);
 
+router.get('/marketplace/cart_shopping/checkout', marketplace.checkout);
+
 // POST ROUTES
 
 router.post('/register', alreadyLogged, authController.register);
