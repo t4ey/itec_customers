@@ -265,7 +265,8 @@ exports.checkout = async (req, res) => {
         message: message,
         alertType: alertType,
         total_cash,
-        n_products
+        n_products,
+        payment_select: (req.query.payment_method == "cash") ? '<i class="fa-solid fa-money-bills" style="color: #20c200;"></i>  En Efectivo' : "Seleccionar",
     });
 }
 

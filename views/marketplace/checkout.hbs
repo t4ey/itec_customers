@@ -192,10 +192,12 @@
                     </div>
                     <hr>
                 </div>
+
+                {{!-- order details --}}
                 <div class="col col-12 col-lg-4 text-start px-lg-3">
                     <div class="card p-3">
                         <div class="card-body">
-                            <h5 class="card-title">Detalles de la cuenta</h5>
+                            <h5 class="card-title">Detalles de la Cuenta</h5>
                             
                             <hr>
 
@@ -209,27 +211,25 @@
                                     <input class="form-control form-control-lg" type="text" value="dd@d.com" aria-label="Disabled input example" disabled readonly>
                                 </div>                            
                             </div>
-
+{{!-- 
                             <h5 class="card-title mt-4">Detalles de pago</h5>
                             
-                            <hr>
+                            <hr> --}}
                             
-                            <p class="text-muted h5">Email</p>
-                            <select class="form-select">
-                                <option data-icon="fa-heart">Ketchup</option>
-                                <option data-icon="fa-heart">Ketchup</option>
-                                <option data-icon="fa-heart">Ketchup</option>
-                                <option data-icon="fa-heart">Ketchup</option>
-                                <option data-icon="fa-heart">Ketchup</option>
-                            </select>
+                            <p class="text-muted h5">Metodo de Pago</p>
+                            <div class="dropdown my-3">
+                                <button class=" w-100 form-select form-select-lg text-start" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{{payment_select}}}
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu w-100">
+                                    <li><a class="dropdown-item" href="/marketplace/cart_shopping/checkout">Seleccionar</a></li>
+                                    <li><a class="dropdown-item" href="/marketplace/cart_shopping/checkout?payment_method=cash"><i class="fa-solid fa-money-bills fa-fade" style="color: #20c200;"></i> En Efectivo</a></li>
+                                </ul>
+                            </div>
 
-                            <select class="select show-tick">
-                            <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>
-                            </select>
+                            <hr>
 
-                            <a href="#" class="btn btn-primary w-100">Confirmar Pedido</a>
+                            <a href="#" class="btn btn-primary w-100">Confirmar Pedido </a>
                         </div>
                     </div>
 
