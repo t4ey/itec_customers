@@ -211,7 +211,7 @@
                                     <input class="form-control form-control-lg" type="text" value="dd@d.com" aria-label="Disabled input example" disabled readonly>
                                 </div>                            
                             </div>
-{{!-- 
+                            {{!-- 
                             <h5 class="card-title mt-4">Detalles de pago</h5>
                             
                             <hr> --}}
@@ -229,29 +229,12 @@
 
                             <hr>
 
-                            <a href="#" class="btn btn-primary w-100">Confirmar Pedido </a>
+                            {{#if order}}
+                                <button type="submit" class="btn btn-outline-secondary">Cancelar pedido</button>
+                            {{else}}
+                                <button type="submit" class="btn btn-success w-100">Confirmar Pedido </button>
+                            {{/if}}
                         </div>
-                    </div>
-
-                    <div class="container-fluid calculus-container">
-                        <p class="d-inline-block me-auto">N° Artículos: </p>
-                        <p class="d-inline-block">{{n_products}}</p>
-                        <br>
-                        <p class="d-inline-block">SubTotal: </p>
-                        <p class="d-inline-block">50 Bs</p>
-                        <br>
-                        <p class="d-inline-block">IVA: </p>
-                        <p class="d-inline-block">50 Bs</p>
-                        <hr>
-                        <p class="d-inline-block">Total: </p>
-                        <p class="d-inline-block">{{total_cash}} Bs</p>
-                    </div>
-                    <div class="container-fluid buy-btn-container text-center">
-                    {{#if order}}
-                        <button type="submit" class="btn btn-outline-secondary">Cancelar pedido</button>
-                    {{else}}
-                        <button type="submit" class="btn btn-success">Hacer Pedido</button>
-                    {{/if}}
                     </div>
                 </div>
             </div>

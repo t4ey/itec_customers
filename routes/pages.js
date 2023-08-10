@@ -62,7 +62,7 @@ router.get('/marketplace/product/:id', requireAuth, async (req, res) => {
 
 router.get('/marketplace/cart_shopping', requireAuth, async (req, res) => {
     const client_id = res.locals.user.id;
-    // console.log('id : ', user_id)
+    console.log('id : ', client_id)
     const message = req.flash('message');
     const alertType = req.flash('alertType');
 
@@ -100,9 +100,10 @@ router.get('/marketplace/cart_shopping', requireAuth, async (req, res) => {
     });
 });
 
-router.post('/marketplace/search', marketplace.searchInMarketplace);
+router.post('/marketplace/search', requireAuth, marketplace.searchInMarketplace);
 
-router.get('/marketplace/cart_shopping/checkout', marketplace.checkout);
+router.get('/marketplace/cart_shopping/checkout', requireAuth, marketplace.checkout);
+
 
 // POST ROUTES
 
@@ -123,5 +124,17 @@ router.get('/marketplace/product/cart_shopping/remove_product/:id', requireAuth,
 router.post('/marketplace/cart_shopping/make_order', checkUser, marketplace.make_order);
 
 router.post('/marketplace/cart_shopping/cancel_order', checkUser, marketplace.cancel_order);
+
+router.post('/marketplace/cart_shopping/checkout', checkUser, async (req, res) => {
+    const cart_products = req.body;
+    const client_id = res.locals.user.id;
+    // console.log("post cid: ", client_id);
+
+    for (var i = 0; i < cart_products.product_id.length; i++) {
+        await db.query(`UPDATE cart_shopping SET cantidad = ${cart_products.quantity[i]} WHERE client_id = ${client_id} AND producto_id = ${cart_products.product_id[i]}`);
+    }
+
+    return res.redirect('/marketplace/cart_shopping/checkout');
+});
 
 module.exports = router;

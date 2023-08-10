@@ -19,7 +19,7 @@
     <!-- font awesome icons -->
     <script src="https://kit.fontawesome.com/8faedc4425.js" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="../css/styles_car_shopping.css">
+    <link rel="stylesheet" href="/css/styles_car_shopping.css">
 </head>
 <body>
     <!-- navbar -->
@@ -117,7 +117,7 @@
             {{#if order}}
                 <form action="/marketplace/cart_shopping/cancel_order" method="POST">
             {{else}}
-                <form action="/marketplace/cart_shopping/make_order" method="POST">
+                <form action="/marketplace/cart_shopping/checkout" method="POST">
             {{/if}}
             <div class="row">
                 <div class="col-12">
@@ -207,7 +207,7 @@
                     {{#if order}}
                         <button type="submit" class="btn btn-outline-secondary">Cancelar pedido</button>
                     {{else}}
-                        <a  href="/marketplace/cart_shopping/checkout" class="btn btn-success">Hacer Pedido</a>
+                        <button  type="submit" class="btn btn-success">Hacer Pedido</button>
                     {{/if}}
                     </div>
                 </div>
