@@ -1,5 +1,7 @@
 const { db } = require("../../database/database");
 
+const date = require('date-and-time');
+
 // FUNCIONS
 
     // pagination funcion
@@ -439,7 +441,14 @@ exports.make_order = async (req, res) => {
             for (var i = 0; i < db_cart_products.length; i++) {
                 await db.query('INSERT INTO detalle_pedido SET ?', { pedido_id: last_pedido_id, producto_id: db_cart_products[i].producto_id, cantidad: db_cart_products[i].cantidad });
             }
-            req.flash('message', "Se ha realizado el Pedido, Puede pasar a recoger el pedido hasta el 'fecha'");
+
+            // set two days later and formatting it
+            const twoDaysLater = new Date();
+            twoDaysLater.setDate(twoDaysLater.getDate() + 2);
+
+            req.flash('message', `Se ha realizado el Pedido, Puede pasar a recoger el pedido hasta el '${date.format(twoDaysLater, 'YYYY-MM-DD') }'`);
+            // date.format(twoDaysLater.setDate(today.getDate() + 2), 'YYYY-MM-DD');
+            
             req.flash('alertType', "alert-success");
             // return res.redirect('/marketplace/product/' + product_id);
             return res.redirect('/marketplace/cart_shopping');
