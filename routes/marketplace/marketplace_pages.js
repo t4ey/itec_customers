@@ -267,6 +267,7 @@ exports.checkout = async (req, res) => {
         total_cash,
         n_products,
         payment_select: (req.query.payment_method == "cash") ? '<i class="fa-solid fa-money-bills" style="color: #20c200;"></i>  En Efectivo' : "Seleccionar",
+        payment_select_cash: (req.query.payment_method == "cash") ? true : false,
     });
 }
 
@@ -366,17 +367,9 @@ exports.make_order = async (req, res) => {
     const client_id = res.locals.user.id;
     console.log('id : ', client_id);
 
-    const cart_products = req.body;
+    const { payment_method } = req.body;
 
-    console.log(cart_products);
-
-    for(var i = 0; i < cart_products.length; i++) {
-        if (!cart_products.quantity[i] || (cart_products.quantity[i] > 50) || (cart_products.quantity[i] < 0) || !client_id) {
-            req.flash('message', "Algo salio mal");
-            req.flash('alertType', "alert-warning");
-            return res.redirect('/marketplace/cart_shopping');
-        }
-    }
+    console.log("pm: ", payment_method);
 
     await db.query("SELECT * FROM pedido WHERE client_id = ?", [client_id], async (error, result) => {
         if (error)
@@ -386,6 +379,13 @@ exports.make_order = async (req, res) => {
         console.log(last_order);
         if (last_order.status != 'canceled' && last_order.status != 'completed') {
             req.flash('message', "El pedido ya fue realizado");
+            req.flash('alertType', "alert-danger");
+            return res.redirect('back');
+        }
+
+        if (payment_method != "cash") {
+            console.log("pm: ", payment_method);
+            req.flash('message', "Debe seleccionar un método de pago");
             req.flash('alertType', "alert-danger");
             return res.redirect('back');
         }
@@ -402,20 +402,21 @@ exports.make_order = async (req, res) => {
                 list_id_db_cart_products.push(db_cart_products[i].producto_id);
             }
 
-            // make order if there's enough stock
             let ordered_products = (await db.query("SELECT * FROM producto WHERE id IN (?)", [list_id_db_cart_products]));
+
+            // make order if there's enough stock
             for(var i = 0;i<ordered_products.length;i++) {
                 console.log("stock???", ordered_products[i])
-                if (cart_products.quantity[i] > ordered_products[i].stock) {
+                if (db_cart_products[i].cantidad > ordered_products[i].stock) {
                     req.flash('message', "No hay stock suficiente del producto " + "\"" + ordered_products[i].name + "\"");
                     req.flash('alertType', "alert-danger");
-                    return res.redirect('back');
+                    return res.redirect('/marketplace/cart_shopping');
                 }
             }
 
             // if there's stock substract the number of items to order on the "producto db" to make the accountability of stock
             for (var i = 0; i < ordered_products.length; i++)
-                await db.query('UPDATE producto SET stock = ? WHERE id = ?', [ordered_products[i].stock - cart_products.quantity[i], ordered_products[i].id]);
+                await db.query('UPDATE producto SET stock = ? WHERE id = ?', [ordered_products[i].stock - db_cart_products[i].cantidad, ordered_products[i].id]);
 
             let product_prices = (await db.query("SELECT price FROM producto WHERE id IN (?)", [list_id_db_cart_products]));
             // console.log(product_prices);
@@ -423,11 +424,11 @@ exports.make_order = async (req, res) => {
             let total_cash = 0;
             
             for (var i = 0; i < db_cart_products.length; i++) {
-                total_cash += product_prices[i].price * cart_products.quantity[i];
+                total_cash += product_prices[i].price * db_cart_products[i].cantidad;
             }
             
             for(var i = 0; i < db_cart_products.length; i++) {
-                await db.query('UPDATE cart_shopping SET cantidad = ? WHERE client_id = ? AND producto_id = ?', [cart_products.quantity[i], client_id, db_cart_products[i].producto_id]);
+                await db.query('UPDATE cart_shopping SET cantidad = ? WHERE client_id = ? AND producto_id = ?', [db_cart_products[i].cantidad, client_id, db_cart_products[i].producto_id]);
             }
             // make order
             await db.query('INSERT INTO pedido SET ?', {total_amount: total_cash, client_id: client_id});
@@ -436,12 +437,12 @@ exports.make_order = async (req, res) => {
             const last_pedido_id = pedidos_id[pedidos_id.length - 1].id;
             
             for (var i = 0; i < db_cart_products.length; i++) {
-                await db.query('INSERT INTO detalle_pedido SET ?', { pedido_id: last_pedido_id, producto_id: db_cart_products[i].producto_id, cantidad: cart_products.quantity[i] });
+                await db.query('INSERT INTO detalle_pedido SET ?', { pedido_id: last_pedido_id, producto_id: db_cart_products[i].producto_id, cantidad: db_cart_products[i].cantidad });
             }
             req.flash('message', "Se ha realizado el Pedido, Puede pasar a recoger el pedido hasta el 'fecha'");
             req.flash('alertType', "alert-success");
             // return res.redirect('/marketplace/product/' + product_id);
-            return res.redirect('back');
+            return res.redirect('/marketplace/cart_shopping');
         });
     });
     

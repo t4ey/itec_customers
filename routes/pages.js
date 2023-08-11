@@ -130,7 +130,19 @@ router.post('/marketplace/cart_shopping/checkout', checkUser, async (req, res) =
     const client_id = res.locals.user.id;
     // console.log("post cid: ", client_id);
 
-    for (var i = 0; i < cart_products.product_id.length; i++) {
+    console.log("cart_prods:" , cart_products);
+
+    for (var i = 0; i < cart_products.length; i++) {
+        if (!cart_products.quantity[i] || (cart_products.quantity[i] > 50) || (cart_products.quantity[i] < 0) || !client_id) {
+            req.flash('message', "Algo salio mal");
+            req.flash('alertType', "alert-warning");
+            return res.redirect('/marketplace/cart_shopping');
+        }
+    }
+
+    const cart_products_length = (await db.query(`SELECT * FROM cart_shopping WHERE client_id = ${client_id}`)).length;
+
+    for (var i = 0; i < cart_products_length; i++) {
         await db.query(`UPDATE cart_shopping SET cantidad = ${cart_products.quantity[i]} WHERE client_id = ${client_id} AND producto_id = ${cart_products.product_id[i]}`);
     }
 

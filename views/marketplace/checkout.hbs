@@ -220,6 +220,11 @@
                             
                             <p class="text-muted h5">Metodo de Pago</p>
                             <div class="dropdown my-3">
+                                {{#if payment_select_cash}}
+                                    <input class="d-none" type="text" name="payment_method" id="pay_meth" value="cash">
+                                {{else}}
+                                    <input class="d-none" type="text" name="payment_method" id="pay_meth" value="null">
+                                {{/if}}
                                 <button class=" w-100 form-select form-select-lg text-start" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     {{{payment_select}}}
                                 </button>
