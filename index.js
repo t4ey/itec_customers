@@ -1,6 +1,7 @@
 const express = require('express'); 
 const app = express();
 const port = 3000;
+const hbs = require('hbs');
 
 const path = require('path');
 
@@ -42,8 +43,22 @@ app.use(express.urlencoded({ extended: false }));
 // parse json bodies
 app.use(express.json()),
 
+// HANDLEBARS CODE
+
+// app.engine('handlebars', exphbs({
+//     partialsDir: 'views/marketplace'
+// }));
+
 app.set('view engine', 'hbs');
 
+// declare partials
+
+const partialsPath = path.join(__dirname, "views/partials/marketplace");
+hbs.registerPartials(partialsPath);
+
+// app.engine('.hbs', engine({ extname: '.hbs' }));
+// app.set('view engine', '.hbs');
+// app.set('views', './views');
 // ROUTES USED
 
 // check all the get requests
