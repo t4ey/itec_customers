@@ -139,12 +139,18 @@ router.post('/marketplace/cart_shopping/checkout', checkUser, async (req, res) =
             return res.redirect('/marketplace/cart_shopping');
         }
     }
-
-    const cart_products_length = (await db.query(`SELECT * FROM cart_shopping WHERE client_id = ${client_id}`)).length;
-
-    for (var i = 0; i < cart_products_length; i++) {
-        await db.query(`UPDATE cart_shopping SET cantidad = ${cart_products.quantity[i]} WHERE client_id = ${client_id} AND producto_id = ${cart_products.product_id[i]}`);
+    
+    // case if threres only one product in the list it becomes automatically a string var instead of a list of strings
+    // console.log(typeof(cart_products.product_id));
+    
+    if (typeof (cart_products.product_id) == "string") {
+        await db.query(`UPDATE cart_shopping SET cantidad = ${cart_products.quantity} WHERE client_id = ${client_id} AND producto_id = ${cart_products.product_id}`);
+    } else {
+        for (var i = 0; i < cart_products.quantity.length; i++) {
+            await db.query(`UPDATE cart_shopping SET cantidad = ${cart_products.quantity[i]} WHERE client_id = ${client_id} AND producto_id = ${cart_products.product_id[i]}`);
+        }
     }
+
 
     return res.redirect('/marketplace/cart_shopping/checkout');
 });

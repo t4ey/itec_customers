@@ -316,10 +316,10 @@ exports.add_to_shopping_cart = async (req, res) => {
 
     // if there's an order active
 
-    const orderActive = await db.query("SELECT * FROM pedido WHERE client_id = ?" , [client_id]);
-    // console.log(orderActive);
+    const orderActive = (await db.query(`SELECT * FROM pedido WHERE client_id = ${client_id} ORDER BY id DESC LIMIT 1`))[0].status;
+    console.log(orderActive);
 
-    if ((orderActive[orderActive.length - 1] == 'canceled') || (orderActive[orderActive.length - 1] == 'completed') || (orderActive[orderActive.length - 1] == 'new')) {
+    if ((orderActive == 'new') || (orderActive == 'ready-to-pay')) {
         req.flash('message', "Tiene un pedido en curso, no puede añadir o eliminar productos hasta que el pedido sea completado");
         req.flash('alertType', "alert-warning");
         return res.redirect('/marketplace/cart_shopping');
@@ -333,7 +333,7 @@ exports.add_to_shopping_cart = async (req, res) => {
         // console.log('result', result);
         if (result.length > 0) {
             req.flash('message', "Ya ha añadido este producto al carrito de compras");
-            req.flash('alertType', "alert-danger");
+            req.flash('alertType', "alert-warning");
             return res.redirect('back');
         }
 
