@@ -29,52 +29,7 @@
 <body>
     <!-- navbar -->
     
-    <div class="container-fluid navbar-container">
-    
-        <nav class="navbar navbar-expand-lg navbar-dark mb-3 py-3">
-            <div class="container-fluid px-0">
-                <a class="navbar-brand" href="../index.html">OVA Tienda Virtual</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-    
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="market.html">Popular</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contacto</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../index.html#Catalog">Catálogo</a>
-                        </li>
-                    </ul>
-                    <a href="#Catalog">
-                        <div class="dropdown-center">
-                            <a type="button" class="btn btn-outline-light catalog-btn ms-0 ms-lg-2 dropdown-toggle"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="ps-2"> Mi Cuenta</span>
-                            </a>
-                            <ul class="dropdown-menu text-small shadow">
-                                <li><a class="dropdown-item" href="cart_sopping.html">Carrito</a></li>
-                                <li><a class="dropdown-item" href="account_customers.html">Perfil</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
-                            </ul>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </nav>
-    </div>
+    {{> navbar}}
 
     <!-- heading section -->
 
@@ -116,7 +71,7 @@
         <div class="container-fluid text-center categories-container">
             <div class="row">
                 <!-- categories part -->
-                <div class="col col-12 col-lg-3 px-4 px-lg-0">
+                <div class="col col-12 col-lg-3">
 
                     <!-- accordion -->
 

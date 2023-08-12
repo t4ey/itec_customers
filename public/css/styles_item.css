@@ -1,5 +1,26 @@
 body {
     background-color: #DFF6FF;
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 2.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
 }
 
 a {
