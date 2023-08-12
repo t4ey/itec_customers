@@ -1481,13 +1481,32 @@ exports.order_status = async (req, res) => {
 
     const client_id = (await db.query('SELECT client_id FROM pedido WHERE id = ?', [id]))[0].client_id;
 
+    // make the accountability for the stock on the "producto db"
+    if (updated_status == 'canceled') {
+        console.log(updated_status, client_id);
+        const db_cart_products = await db.query("SELECT * FROM cart_shopping WHERE client_id = ?", [client_id]);
+
+        const list_id_db_cart_products = [];
+        for (var i = 0; i < db_cart_products.length; i++) {
+            list_id_db_cart_products.push(db_cart_products[i].producto_id);
+        }
+
+        console.log("cantidad:::", db_cart_products);
+
+        const ordered_products = await db.query("SELECT * FROM producto WHERE id IN (?)", [list_id_db_cart_products]);
+
+        for (var i = 0; i < ordered_products.length; i++)
+            await db.query('UPDATE producto SET stock = ? WHERE id = ?', [ordered_products[i].stock + db_cart_products[i].cantidad, ordered_products[i].id]);
+    }
+
+    // update the status
+    await db.query("UPDATE pedido SET ? WHERE id = ?", [{ status: updated_status}, id ]);
     
+    // delete from the shopping cart 
     if(updated_status == 'completed' || updated_status == 'canceled'){
         console.log(updated_status, client_id);
         await db.query("DELETE FROM cart_shopping WHERE client_id = ?", [client_id]);
     }
-
-    await db.query("UPDATE pedido SET ? WHERE id = ?", [{ status: updated_status}, id ]);
 
     return res.redirect('/admin/orders/details/' + id);
 }
