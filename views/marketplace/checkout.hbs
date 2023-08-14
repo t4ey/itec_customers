@@ -89,33 +89,61 @@
                     <h4 class="">Su orden</h4>
                     <hr>
                     <div class="container-fluid">
-                        {{#if products}}
+                    {{#if products}}
                             {{#each products}}
                             <div class="row ">
-                                <div class="col col-5 col-sm-2 px-0">
+                                <div class="col col-5 col-lg-2 pe-0 mb-3 mb-lg-0">
                                     <img class="item-img" src="{{img_dir}}" alt="">
                                 </div>
-                                <div class="col col-7 col-sm-5 my-auto">
+                                <div class="col col-7 col-lg-4  ps-2 ps-sm-4 overflow-auto">
                                     <h3 class="text-capitalize">{{name}}</h3>
                                 </div>
-                                <div class="col col-5 col-sm-2 my-auto py-3 py-sm-0">
-                                    <input name="product_id" type="number" value="{{id}}" class="d-none">
-                                    <h4 class="btn btn-outline-primary h4 my-auto" name="quantity" type="number" >{{cantidad}}</h4>
+                                <div class="col col-4 col-lg-2 text-center">
+                                    <div class="row text-start">
+                                        <h6>Precio</h6>
+                                    </div>
+                                    <div class="row">
+                                        <h5 class="my-auto">{{price}} Bs</h4>
+                                        {{!-- <input type="number" id="price_{ {id} }" class="d-none" value="{ {price} }"> --}}
+                                    </div>
                                 </div>
-                                <div class="col col-5 col-sm-2 my-auto">
-                                    <h4 class="my-auto">{{price}} Bs</h4>
+                                <div class="col col-4 col-lg-2 py-sm-0 px-0">
+                                    <div class="row text-start">
+                                        <h6>Cantidad</h6>
+                                    </div>
+                                    <div class="text-center">
+                                        <input name="product_id" type="number" value="{{id}}" class="d-none">
+                                        {{!-- <input name="quantity" type="number" min="1" max="50" value="{{quantity} }"> --}} 
+                                        <input name="product_id" type="number" value="{{id}}" class="d-none">
+                                        <h4 class="btn btn-outline-primary h4 my-auto" name="quantity" type="number" >{{cantidad}}</h4>                                        
+                                    </div>
                                 </div>
-                                <div class="col col-2 col-sm-1 my-auto">
-                                {{#unless 0}}
-                                    {{!-- <a href="/marketplace/product/cart_shopping/remove_product/{{id} }" ><i class="fa-solid fa-trash"></i></a> --}}
-                                {{else}}
-                                    <a href="/marketplace/product/cart_shopping/remove_product/{{id}}" ><i class="fa-solid fa-trash"></i></a>
-                                {{/unless}}
+                                <div class="col col-4 col-lg-2 text-end">
+                                    <div class="row">
+                                        <h6>Total</h6>
+                                    </div>
+                                    <div class="row">
+                                        <h5 class="my-auto" id="total_{{id}}">{{total}} Bs</h4>
+                                    </div>
                                 </div>
-                                <hr class="my-3">
                             </div>
+                            <div class="row mb-0 mt-3 mt-lg-1">
+                                <div class="col col-0 col-lg-2 px-0">
+                                </div>
+                                <div class="col col-12 col-lg-5 my-auto ps-3 ps-lg-4 text-mute fs-6">
+                                    {{#if ../order}}
+                                        {{!-- <a href="/marketplace/product/cart_shopping/remove_product/{{id} }" ><i class="fa-solid fa-trash"></i></a> --}}
+                                    {{else}}
+                                        <a class="text-muted" href="/marketplace/product/cart_shopping/remove_product/{{id}}">
+                                            <i class="fa-regular fa-trash-can text-mute"></i> <h6 class="d-inline-block">Eliminar</h6>
+                                        </a>
+                                    {{/if}}
+                                </div>
+                            </div>
+                            <hr class="my-3">
                             {{/each}}
                         {{else}}
+                        
                             {{!-- content --}}
                             <div class="col-md-10 mx-auto text-center pt-5">
                                 <div class="card card-body">

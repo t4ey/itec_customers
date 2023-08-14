@@ -83,7 +83,7 @@ router.get('/marketplace/cart_shopping', requireAuth, async (req, res) => {
         product = await db.query("SELECT * FROM producto WHERE id = ?", [cart_products[i].producto_id]);
         products.push(product[0]);
         products[i].quantity = cart_products[i].cantidad;
-        products[i].total = (product[0].price * cart_products[i].cantidad);
+        products[i].total = parseFloat((product[0].price * cart_products[i].cantidad).toFixed(2));
         total_cash += product[0].price * cart_products[i].cantidad;
         n_products++;
     }

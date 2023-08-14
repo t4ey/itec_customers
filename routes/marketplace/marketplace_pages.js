@@ -245,12 +245,12 @@ exports.checkout = async (req, res) => {
 
     const cart_products = await db.query("SELECT * FROM producto JOIN cart_shopping ON producto.id = cart_shopping.producto_id WHERE client_id = ?", [client_id]);
 
-    let product;
     let total_cash = 0;
     let n_products = 0;
 
     for (var i = 0; i < cart_products.length; i++) {
         total_cash += cart_products[i].price * cart_products[i].cantidad;
+        cart_products[i].total = parseFloat((cart_products[i].price * cart_products[i].cantidad).toFixed(2));
         n_products++;
     }
 
