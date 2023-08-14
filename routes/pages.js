@@ -39,24 +39,30 @@ router.get('/marketplace/product/:id', requireAuth, async (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
 
-    let product = await db.query("SELECT * FROM producto WHERE id = ?", [id]);
     let categories = await db.query("SELECT * FROM categoria");
-
+    
     //stock functionality for one product
+    await db.query("SELECT * FROM producto WHERE id = ?", [id], (error, result) => {
+        if(error)
+            console.log(error);
 
-    if (product[0].stock <= 5 && product[0].stock > 0) {
-        product[0].little_stock = true;
-        // console.log("little product", products[i].little_stock);
-    }
+        const product = result;
 
-    // console.log(product);
-    // console.log(categories);
-    res.render('./marketplace/product.hbs', {
-        categories: categories,
-        product: product[0],
-        message: message,
-        alertType: alertType,
+        if (product[0].stock <= 5 && product[0].stock > 0) {
+            product[0].little_stock = true;
+            // console.log("little product", products[i].little_stock);
+        }
+    
+        // console.log(product);
+        // console.log(categories);
+        return res.render('./marketplace/product.hbs', {
+            categories: categories,
+            product: product[0],
+            message: message,
+            alertType: alertType,
+        });
     });
+
 });
 
 
@@ -77,6 +83,7 @@ router.get('/marketplace/cart_shopping', requireAuth, async (req, res) => {
         product = await db.query("SELECT * FROM producto WHERE id = ?", [cart_products[i].producto_id]);
         products.push(product[0]);
         products[i].quantity = cart_products[i].cantidad;
+        products[i].total = (product[0].price * cart_products[i].cantidad);
         total_cash += product[0].price * cart_products[i].cantidad;
         n_products++;
     }
@@ -90,13 +97,14 @@ router.get('/marketplace/cart_shopping', requireAuth, async (req, res) => {
     // console.log(products);
     // console.log(cart_products);
     // console.log(categories);
-    res.render('./marketplace/cart_shopping.hbs', {
+    return res.render('./marketplace/cart_shopping.hbs', {
+        message: message,
+        alertType: alertType,
+        
         order: pedido,
         total_cash: total_cash,
         n_products: n_products,
         products: products,
-        message: message,
-        alertType: alertType,
     });
 });
 

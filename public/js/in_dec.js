@@ -42,7 +42,7 @@ $(document).ready(function () {
 
         console.log(typeof(input_quantity.val()));
 
-        total.text((parseInt(price.val()) * parseInt(input_quantity.val())) + " Bs");
+        total.text((parseFloat(price.val()) * parseInt(input_quantity.val())).toFixed(2) + " Bs");
     });
 
     $("input").bind("change paste keyup", function () {
@@ -64,6 +64,6 @@ $(document).ready(function () {
 
         // console.log(parseInt(input_quantity.val()));
         // console.log(console.log(parseInt(input_quantity.val())));
-        total.text((parseInt(price.val()) * parseInt(input_quantity.val())) + " Bs");
+        total.text((parseFloat(price.val()) * parseInt(input_quantity.val())).toFixed(2) + " Bs");
     });
 });
