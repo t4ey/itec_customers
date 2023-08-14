@@ -155,4 +155,6 @@ router.post('/marketplace/cart_shopping/checkout', checkUser, async (req, res) =
     return res.redirect('/marketplace/cart_shopping/checkout');
 });
 
+router.get('/marketplace/cart_shopping/update_quantity', checkUser, marketplace.update_quantity);
+
 module.exports = router;

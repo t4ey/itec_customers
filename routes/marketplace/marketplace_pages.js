@@ -353,6 +353,37 @@ exports.add_to_shopping_cart = async (req, res) => {
     // res.send("ok");
 }
 
+exports.update_quantity = async (req, res) => {
+    const client_id = res.locals.user.id;
+    console.log('id : ', client_id)
+    
+    const { action, product_id } = req.query;
+    
+    console.log('action ', action);
+    console.log('p:id : ', product_id);
+
+    await db.query(`SELECT * FROM cart_shopping WHERE producto_id = ${product_id} AND client_id = ${client_id}`, async(error, result) => {
+        if(error)
+            console.log(error);
+
+        const product = result[0];
+        console.log("before ", product);
+        // updatding the product by plus 1 
+
+        if(action == "increment") {
+            product.cantidad++;
+            console.log("after ", product);
+            await db.query(`UPDATE cart_shopping SET cantidad = ${product.cantidad} WHERE producto_id = ${product_id} AND client_id = ${client_id}`);
+        } else if( action == "decrement") {
+            product.cantidad--;
+            await db.query(`UPDATE cart_shopping SET cantidad = ${product.cantidad} WHERE producto_id = ${product_id} AND client_id = ${client_id}`);
+        }
+
+    });
+    
+    return res.redirect('back');
+}
+
 exports.delete_cart_product = async (req, res) => {
     const { id } = req.params;
     const product_id = id;
