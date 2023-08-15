@@ -266,7 +266,7 @@ exports.checkout = async (req, res) => {
         products: cart_products,
         message: message,
         alertType: alertType,
-        total_cash,
+        total_cash: parseFloat(total_cash.toFixed(2)),
         n_products,
         payment_select: (req.query.payment_method == "cash") ? '<i class="fa-solid fa-money-bills" style="color: #20c200;"></i>  En Efectivo' : "Seleccionar",
         payment_select_cash: (req.query.payment_method == "cash") ? true : false,
@@ -357,7 +357,7 @@ exports.update_quantity = async (req, res) => {
     const client_id = res.locals.user.id;
     console.log('id : ', client_id)
     
-    const { action, product_id } = req.query;
+    const { action, product_id, custom } = req.body;
     
     console.log('action ', action);
     console.log('p:id : ', product_id);
@@ -367,6 +367,11 @@ exports.update_quantity = async (req, res) => {
             console.log(error);
 
         const product = result[0];
+
+        if(action == undefined || custom == product.cantidad || custom == "") {
+            return res.json({ reloadPage: false });
+        }
+
         console.log("before ", product);
         // updatding the product by plus 1 
 
@@ -377,11 +382,16 @@ exports.update_quantity = async (req, res) => {
         } else if( action == "decrement") {
             product.cantidad--;
             await db.query(`UPDATE cart_shopping SET cantidad = ${product.cantidad} WHERE producto_id = ${product_id} AND client_id = ${client_id}`);
+        } else if(action == "custom") {
+            product.cantidad = custom;
+            await db.query(`UPDATE cart_shopping SET cantidad = ${product.cantidad} WHERE producto_id = ${product_id} AND client_id = ${client_id}`);
         }
 
+        // const result_p = await db.query(`SELECT * FROM cart_shopping WHERE producto_id = ${product_id} AND client_id = ${client_id}`);
+
+        return res.json({ reloadPage: true });
     });
     
-    return res.redirect('back');
 }
 
 exports.delete_cart_product = async (req, res) => {

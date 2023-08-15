@@ -84,7 +84,7 @@ router.get('/marketplace/cart_shopping', requireAuth, async (req, res) => {
         products.push(product[0]);
         products[i].quantity = cart_products[i].cantidad;
         products[i].total = parseFloat((product[0].price * cart_products[i].cantidad).toFixed(2));
-        total_cash += product[0].price * cart_products[i].cantidad;
+        total_cash += products[i].total;
         n_products++;
     }
 
@@ -102,7 +102,7 @@ router.get('/marketplace/cart_shopping', requireAuth, async (req, res) => {
         alertType: alertType,
         
         order: pedido,
-        total_cash: total_cash,
+        total_cash: parseFloat(total_cash.toFixed(2)),
         n_products: n_products,
         products: products,
     });
@@ -163,6 +163,6 @@ router.post('/marketplace/cart_shopping/checkout', checkUser, async (req, res) =
     return res.redirect('/marketplace/cart_shopping/checkout');
 });
 
-router.get('/marketplace/cart_shopping/update_quantity', checkUser, marketplace.update_quantity);
+router.post('/marketplace/cart_shopping/update_quantity', checkUser, marketplace.update_quantity);
 
 module.exports = router;

@@ -167,24 +167,11 @@
                     <div class="container-fluid px-0">
                         <div class="">
                             <div class="row">
-                                <div class="col col-6"><h5 class=" me-auto">N° Artículos </h5></div>
-                                <div class="col col-6 text-end"><h5 class="">{{n_products}} artículos</h5></div>
-                            </div>
-                            <div class="row">
-                                <div class="col col-6"><h5 class="">SubTotal </h5></div>
-                                <div class="col col-6 text-end"><h5 class="">{{total_cash}} Bs</h5></div>
-                            </div>
-                            {{!-- <div class="row">
-                                <div class="col col-6"><h5 class="">IVA </h5></div>
-                                <div class="col col-6 text-end"><h5 class="">0 Bs</h5></div>
-                            </div> --}}
-                            <div class="row">
-                                <div class="col col-6"><h5 class="bold" style="font-weight: bold;">Total </h5></div>
-                                <div class="col col-6 text-end"><h5 style="font-weight: bold;" class="">{{total_cash}} Bs</h5></div>
+                                <div class="col col-6"><h5 class=" me-auto">{{n_products}} Artículos </h5></div>
+                                {{!-- <div class="col col-6 text-end"><h5 class="">{{n_products } } artículos</h5></div> --}}
                             </div>
                         </div>    
                     </div>
-                    <hr>
                 </div>
 
                 {{!-- order details --}}
@@ -205,7 +192,9 @@
                                 </div>
                                 <div class="row my-3">
                                     <div class="col col-6"><h5 class="">SubTotal </h5></div>
-                                    <div class="col col-6 text-end"><h5 class="">{{total_cash}} Bs</h5></div>
+                                    <div class="col col-6 text-end">
+                                        <h5 id="subtotal_cash" class="">{{total_cash}} Bs</h5>
+                                    </div>
                                 </div>
                                 {{!-- <div class="row">
                                     <div class="col col-6"><h5 class="">IVA </h5></div>
@@ -213,7 +202,9 @@
                                 </div> --}}
                                 <div class="row my-3">
                                     <div class="col"><h5 class="bold" style="font-weight: bold;">Total </h5></div>
-                                    <div class="col text-end"><h5 style="font-weight: bold;" class="">{{total_cash}} Bs</h5></div>
+                                    <div class="col text-end">
+                                        <h5 id="total_cash" style="font-weight: bold;" class="">{{total_cash}} Bs</h5>
+                                    </div>
                                 </div>                            
                             </div>
                             {{!-- 
