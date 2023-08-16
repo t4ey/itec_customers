@@ -18,7 +18,7 @@
     <!-- font awesome icons -->
     <script src="https://kit.fontawesome.com/8faedc4425.js" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="../css/styles_dashboard.css">
+    <link rel="stylesheet" href="/css/styles_dashboard.css">
 </head>
 <body>
     
@@ -113,21 +113,12 @@
 
             <!-- dashboard -->
 
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5 mb-3">
                 <div class="container-fluid px-0">
                     <div
                         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Dashboard</h1>
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <div class="btn-group me-2">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-                            </div>
-                            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                                <span data-feather="calendar" class="align-text-bottom"></span>
-                                This week
-                            </button>
-                        </div>
+                        
                     </div>
                     {{#if message}}
                         <div class="alert {{alertType}} alert-dismissible fade show" role="alert">
@@ -217,8 +208,48 @@
                 </div>
 
                 <!-- table contents dashboard -->
-                <h2>Ordenes Recientes</h2>
-                <div class="card flex-fill mt-2" bis_skin_checked="1">
+                <div class="container-fluid px-0">
+                    <div class="row">
+                        <div class="col">
+                            <h2>Ordenes Recientes</h2>
+                        </div>
+                        <div class="col text-end">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Fecha
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <form action="/admin/home" method="get">
+                                            <input type="text" class="d-none" name="filter_date" value="this week">
+                                            <button class="dropdown-item" type="submit">Esta semana</button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form action="/admin/home" method="get">
+                                            <input type="text" class="d-none" name="filter_date" value="this month">
+                                            <button class="dropdown-item" type="submit">Este mes</button></li>
+                                        </form>
+                                    <li><hr class="dropdown-divider"></li>  
+
+                                        <li><h6 class="dropdown-header">Fecha Personalizada</h6></li>
+                                    <li>
+                                        <form action="/admin/home" method="get">
+                                            <span class="dropdown-item">
+                                                <p class="" >De: <input min="2022-01-01" class="form-control input-group date" type="date" id="date_l_start" name="date_start"></p>
+                                                <p class="" >A: <input min="2022-01-01" class="form-control input-group date" type="date" id="date_l_end" name="date_end"></p>
+                                            </span>
+                                            <span class="dropdown-item">
+                                                <button type="submit" class="btn btn-primary">Filtrar</button>
+                                            </span>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card flex-fill my-2" bis_skin_checked="1">
                     
                     <div id="datatables-dashboard-projects_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer"
                         bis_skin_checked="1">
@@ -248,7 +279,7 @@
                                     <tbody>
                                         {{#each orders}}
                                         <tr class="even">
-                                            <td class="order align-middle white-space-nowrap h5"><a class="fw-semi-bold" href="/admin/orders/details/{{id}}">#{{id}}</a>
+                                            <td class="order align-middle white-space-nowrap h5"><a class="fw-semi-bold" href="/admin/orders/details/{{id}}">#000000{{id}}</a>
                                             <td class="total align-middle fw-semi-bold text-1000 h6">Bs. {{total_amount}}</td>
                                             <td class="align-middle white-space-nowrap ps-8">
                                                 <a class=" align-items-center" href="/admin/edit_client/{{client_id}}">
@@ -310,6 +341,7 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
        
+    <script src="/js/a_home.js"></script>
 </body>
 </html>                    
                

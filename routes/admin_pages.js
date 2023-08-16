@@ -147,21 +147,36 @@ router.get('/home', requireAuth, async (req, res) => {
     const new_orders = await db.query('SELECT id FROM pedido WHERE status = "new"');
     const ready_to_pay_orders = await db.query('SELECT id FROM pedido WHERE status = "ready-to-pay"');
     const out_of_stock = await db.query('SELECT id FROM producto WHERE stock = 0');
-
+    
     const order_stats = {
         new: new_orders.length, 
         ready_to_pay: ready_to_pay_orders.length,
         out_of_stock: out_of_stock.length,
     };
+    // date filter
+    const { filter_date } = req.query;
+    const { date_start, date_end } = req.query;
+    console.log(filter_date);
+    
+    // console.log(order_stats);
 
-    console.log(order_stats);
-
+    let orders;
     // order table
+    if(filter_date == "this week") {
+        // get orders from the last week
+        orders = await db.query("select * from pedido where fecha_de_pedido > now() -  interval 7 day ORDER BY id DESC");    
+    }else if(filter_date == "this month") {
+        orders = await db.query("select * from pedido where MONTH(fecha_de_pedido) = MONTH(now()) and YEAR(fecha_de_pedido) = YEAR(now()) ORDER BY id DESC");    
 
-    // get orders from the last week
-    const orders = await db.query("select * from pedido where fecha_de_pedido > now() -  interval 7 day ORDER BY id DESC");
+    }else if(date_start) {
+        console.log(date_start, date_end);
+        orders = await db.query("select * from pedido where fecha_de_pedido >= ? AND fecha_de_pedido <= ? ORDER BY id DESC", [date_start, date_end]);    
+    }else {
+        orders = await db.query("select * from pedido where fecha_de_pedido > now() -  interval 7 day ORDER BY id DESC");    
+    }
+
     // const orders = await db.query("SELECT * FROM pedido ORDER BY id DESC");
-    console.log(orders);
+    // console.log(orders);
     if (!(orders.length > 0)) {
         return res.render('./admin/a_home', {
             message: message,
@@ -210,7 +225,7 @@ router.get('/home', requireAuth, async (req, res) => {
         }
     }
 
-    console.log(orders);
+    // console.log(orders);
 
     res.render('./admin/a_home', {
         message: message,
