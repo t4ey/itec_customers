@@ -273,6 +273,70 @@ exports.checkout = async (req, res) => {
     });
 }
 
+exports.order = async (req, res) => {
+    const client_id = res.locals.user.id;
+    console.log('id : ', client_id)
+    const message = req.flash('message');
+    const alertType = req.flash('alertType');
+
+    await db.query("SELECT * FROM pedido WHERE client_id = ? ORDER BY id DESC LIMIT 1", [client_id], async (error, result) => {
+        if(error)
+            console.log(error)
+
+        const order_details = result[0];
+        
+        // if there's no order redirect directly
+        if ((order_details.status == 'canceled') || (order_details.status == 'completed'))
+        return res.render('./marketplace/order.hbs', {
+            message: message,
+            alertType: alertType,
+
+            order: false,
+            order_details,
+        });
+ 
+        // setting the status to be available on hbs file
+        const n_products = (await db.query(`SELECT COUNT(pedido_id) as n_products FROM detalle_pedido WHERE pedido_id = ${order_details.id}`))[0].n_products;
+        order_details.n_products = n_products;
+        
+        switch (order_details.status ) {
+            case 'new':
+                order_details.new = true;
+                break;
+            case 'completed':
+                order_details.completed = true;
+                break;
+            case 'ready-to-pay':
+                order_details.ready_to_pay = true;
+                break;
+            case 'canceled':
+                order_details.canceled = true;
+                break;
+            default:
+                order_details.new = true;
+                break;
+        }
+
+        // set two days later and formatting it
+        const twoDaysLater = new Date();
+        twoDaysLater.setDate(twoDaysLater.getDate() + 2);
+        order_details.expiration_date = date.format(twoDaysLater, 'YYYY-MM-DD');
+
+        console.log(order_details);
+
+        // console.log(products);
+        // console.log(cart_products);
+        // console.log(categories);
+        return res.render('./marketplace/order.hbs', {
+            message: message,
+            alertType: alertType,
+    
+            order: true,
+            order_details,
+        });
+    });
+}
+
 // post requests
 
 exports.searchInMarketplace = async (req, res) => {
@@ -503,10 +567,6 @@ exports.cancel_order = async (req, res) => {
     const client_id = res.locals.user.id;
     console.log('id : ', client_id);
 
-    const cart_products = req.body;
-
-    console.log(cart_products);
-
     await db.query("SELECT id FROM pedido WHERE client_id = ?", [client_id], async (error, result) => {
         if (error)
             console.log(error);
@@ -543,7 +603,7 @@ exports.cancel_order = async (req, res) => {
         req.flash('message', "El pedido fue cancelado");
         req.flash('alertType', "alert-success");
         // return res.redirect('/marketplace/product/' + product_id);
-        return res.redirect('back');
+        return res.redirect('/marketplace');
     });
 
     // res.send("ok");

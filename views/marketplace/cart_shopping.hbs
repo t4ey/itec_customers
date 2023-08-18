@@ -161,6 +161,15 @@
                             </div>
                             <hr class="my-3">
                             {{/each}}
+                            {{!-- <hr> --}}
+                            <div class="container-fluid px-0">
+                                <div class="">
+                                    <div class="row">
+                                        <div class="col col-6"><h5 class=" me-auto">{{n_products}} Artículos </h5></div>
+                                        {{!-- <div class="col col-6 text-end"><h5 class="">{{n_products } } artículos</h5></div> --}}
+                                    </div>
+                                </div>    
+                            </div>
                         {{else}}
                             {{!-- content --}}
                             <div class="col-md-10 mx-auto text-center pt-5">
@@ -172,15 +181,6 @@
                         {{/if}}
                     </div>
 
-                    {{!-- <hr> --}}
-                    <div class="container-fluid px-0">
-                        <div class="">
-                            <div class="row">
-                                <div class="col col-6"><h5 class=" me-auto">{{n_products}} Artículos </h5></div>
-                                {{!-- <div class="col col-6 text-end"><h5 class="">{{n_products } } artículos</h5></div> --}}
-                            </div>
-                        </div>    
-                    </div>
                 </div>
 
                 {{!-- order details --}}
@@ -234,26 +234,28 @@
                         </div>
                     </div>
 
+                    {{#if order}}
+                        
+                        {{!-- if order active show order details --}}
+                        <div class="card border-success p-3 mt-3">
+                            <div class="card-header  bg-transparent border-success text-success text-center">
+                                <h4 class="bold" style="font-weight: bold;">
+                                    Pedido Activo
+                                </h4>
+                            </div>
+                            <div class="card-body text-center px-0">
+                                <h5 class="px-3">No podrá realizar otro pedido si ya tiene uno activo</h5>
 
-                    {{!-- if order active show order details --}}
-                    <div class="card border-success p-3 mt-3">
-                        <div class="card-header  bg-transparent border-success text-success text-center">
-                            <h4 class="bold" style="font-weight: bold;">
-                                Pedido Activo
-                            </h4>
+                                <hr>
+
+                                {{#if order}}
+                                    <a  href="/marketplace/order" class="btn btn-success w-100">Ver Detalles </a>
+                                {{else}}
+                                    {{!-- <button type="submit" class="btn btn-outline-secondary">Cancelar pedido</button> --}}
+                                {{/if}}
+                            </div>
                         </div>
-                        <div class="card-body text-center px-0">
-                            <h5 class="px-3">No podrá realizar otro pedido si ya tiene uno activo</h5>
-
-                            <hr>
-
-                            {{#if order}}
-                                <a  href="/marketplace/order" class="btn btn-success w-100">Ver Detalles </a>
-                            {{else}}
-                                {{!-- <button type="submit" class="btn btn-outline-secondary">Cancelar pedido</button> --}}
-                            {{/if}}
-                        </div>
-                    </div>
+                    {{/if}}
                 </div>
             </div>
         </div>

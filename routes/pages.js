@@ -112,6 +112,7 @@ router.post('/marketplace/search', requireAuth, marketplace.searchInMarketplace)
 
 router.get('/marketplace/cart_shopping/checkout', requireAuth, marketplace.checkout);
 
+router.get('/marketplace/order', requireAuth, marketplace.order);
 
 // POST ROUTES
 
