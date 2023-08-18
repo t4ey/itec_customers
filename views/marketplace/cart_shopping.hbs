@@ -98,7 +98,7 @@
                     <div class="container container-fluid px-0">
                         {{#if products}}
                             {{#each products}}
-                            <div class="row ">
+                            <div class="row">
                                 <div class="col col-5 col-lg-2 pe-0 mb-3 mb-lg-0">
                                     <img class="item-img" src="{{img_dir}}" alt="">
                                 </div>
@@ -118,15 +118,24 @@
                                     <div class="row text-start">
                                         <h6>Cantidad</h6>
                                     </div>
-                                    <div class="row ">
-                                        <input name="product_id" type="number" value="{{id}}" class="d-none">
-                                        {{!-- <input name="quantity" type="number" min="1" max="50" value="{{quantity} }"> --}} 
-                                        <div class="input-group py-auto my-auto text-center" bis_skin_checked="1">
-                                            <button style="min-width: 1rem" class="btn btn-decrement btn-outline-secondary px-2 px-sm-3" type="button" id="{{id}}" name="action" value="decrement"><strong>−</strong></button>
-                                            <input type="number" inputmode="decimal" min="1" max="50" id="i{{id}}" name="quantity" value="{{quantity}}" style="text-align: center; max-width: 4rem" class="form-control px-2 px-sm-2" placeholder="">
-                                            <button style="min-width: 1rem" class="btn btn-increment btn-outline-secondary px-2 px-sm-3" type="button" id="{{id}}" name="action" value="increment"><strong>+</strong></button>
+                                    {{#if ../order}}
+                                        <div class="text-center">
+                                            <input name="product_id" type="number" value="{{id}}" class="d-none">
+                                            {{!-- <input name="quantity" type="number" min="1" max="50" value="{{quantity} }"> --}} 
+                                            <input name="product_id" type="number" value="{{id}}" class="d-none">
+                                            <h4 class="btn btn-outline-primary h4 my-auto" name="quantity" type="number" >{{quantity}}</h4>                                        
                                         </div>
-                                    </div>
+                                    {{else}}
+                                        <div class="row ">
+                                            <input name="product_id" type="number" value="{{id}}" class="d-none">
+                                            {{!-- <input name="quantity" type="number" min="1" max="50" value="{{quantity} }"> --}} 
+                                            <div class="input-group py-auto my-auto text-center" bis_skin_checked="1">
+                                                <button style="min-width: 1rem" class="btn btn-decrement btn-outline-secondary px-2 px-sm-3 {{#if ../order}}disabled{{/if}}" type="button" id="{{id}}" name="action" value="decrement"><strong>−</strong></button>
+                                                <input type="number" inputmode="decimal" min="1" max="50" id="i{{id}}" name="quantity" value="{{quantity}}" style="text-align: center; max-width: 4rem" class="form-control px-2 px-sm-2" placeholder="" {{#if ../order}}disabled{{/if}}>
+                                                <button style="min-width: 1rem" class="btn btn-increment btn-outline-secondary px-2 px-sm-3 {{#if ../order}}disabled{{/if}}" type="button" id="{{id}}" name="action" value="increment"><strong>+</strong></button>
+                                            </div>
+                                        </div>
+                                    {{/if}}
                                 </div>
                                 <div class="col col-4 col-lg-2 text-end">
                                     <div class="row">
@@ -183,11 +192,11 @@
                             <hr>
                             <div class="container-fluid px-0">
                                 <div class="row my-3">
-                                    <div class="col">
+                                    <div class="col pe-xl-0">
                                         <h5 class="">N° Artículos: </h5>
                                     </div>
                                     <div class="col text-end">
-                                        <h5 class="">{{n_products}} artículos</h5>
+                                        <h5 class="">{{n_products}}</h5>
                                     </div>
                                 </div>
                                 <div class="row my-3">
@@ -216,9 +225,32 @@
                             <hr>
 
                             {{#if order}}
-                                <button type="submit" class="btn btn-outline-secondary">Cancelar pedido</button>
+                                {{!-- <div class="row">
+                                    <button type="submit" class="btn btn-outline-secondary ms-auto">Cancelar pedido</button>
+                                </div> --}}
                             {{else}}
                                 <button type="submit" class="btn btn-success w-100 p-2">Hacer Pedido </button>
+                            {{/if}}
+                        </div>
+                    </div>
+
+
+                    {{!-- if order active show order details --}}
+                    <div class="card border-success p-3 mt-3">
+                        <div class="card-header  bg-transparent border-success text-success text-center">
+                            <h4 class="bold" style="font-weight: bold;">
+                                Pedido Activo
+                            </h4>
+                        </div>
+                        <div class="card-body text-center px-0">
+                            <h5 class="px-3">No podrá realizar otro pedido si ya tiene uno activo</h5>
+
+                            <hr>
+
+                            {{#if order}}
+                                <a  href="/marketplace/order" class="btn btn-success w-100">Ver Detalles </a>
+                            {{else}}
+                                {{!-- <button type="submit" class="btn btn-outline-secondary">Cancelar pedido</button> --}}
                             {{/if}}
                         </div>
                     </div>
