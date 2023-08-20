@@ -41,9 +41,9 @@ router.get('/location', (req, res) => {
 
 ///marketplace section
 
-router.get('/marketplace', requireAuth, marketplace.marketplace);
+router.get('/marketplace', marketplace.marketplace);
 
-router.get('/marketplace/product/:id', requireAuth, async (req, res) => {
+router.get('/marketplace/product/:id', async (req, res) => {
     const { id } = req.params;
     // console.log('id : ', id)
     const message = req.flash('message');
@@ -121,7 +121,7 @@ router.get('/marketplace/cart_shopping', requireAuth, async (req, res) => {
     });
 });
 
-router.post('/marketplace/search', requireAuth, marketplace.searchInMarketplace);
+router.post('/marketplace/search', marketplace.searchInMarketplace);
 
 router.get('/marketplace/cart_shopping/checkout', requireAuth, marketplace.checkout);
 
@@ -139,7 +139,7 @@ router.get('/logout', authController.logout);
 
     // marketplace posts
 
-router.post('/marketplace/cart_shopping/add_product/:id', checkUser, marketplace.add_to_shopping_cart);
+router.post('/marketplace/cart_shopping/add_product/:id', requireAuth, checkUser, marketplace.add_to_shopping_cart);
 
 router.get('/marketplace/product/cart_shopping/remove_product/:id', requireAuth, marketplace.delete_cart_product);
 
