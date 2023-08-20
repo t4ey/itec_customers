@@ -118,7 +118,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         {{/if}}
-                        <div class="row">
+                        <div class="row mb-5">
                             {{#with product}}
                             <div class="col col-12 col-lg-6">
                                 <!-- <div class="row"> -->
@@ -134,41 +134,70 @@
                                 
                             </div>
 
-                            <div class="col col-12 col-lg-6">
-                                    
-                                    
-                                <a href="">
-                                    <h3 class="card-title">{{name}}</h3>
-                                </a>
-                                <h3 class="card-text">{{price}} Bs.</h3>
+                            <div class="col col-12 col-lg-6 ps-4 pt-3 pt-lg-1">
+                                <div class="row text-center text-lg-start">
+                                    <h3 class="card-title text-capitalize">{{name}}</h3>
+                                </div>     
                                 <hr>
-                                <p>Código de Producto : <strong>EL-42</strong></p>
-                                <p>Existencias:
-                                
-                                    {{!-- display according to stock --}}
-                                    {{#if little_stock}}
-                                    <span class="text-warning"><i class="fa-solid fa-triangle-exclamation"></i> Pocas existencias</span>
-                                    {{else}}
-                                    {{#if stock}}<span class="text-success"><i class="fa-solid fa-check"></i> Hay existencias</span>{{/if}}
-                                    {{/if}}
-                                    {{#unless stock}}
-                                    <span class="text-danger"><i class="fa-solid fa-ban"></i> No hay existencias</span>
-                                    {{/unless}}
+                                <div class="row ">
+                                    <p class="fw-semibold">Precio : 
+                                    </p>
+                                </div>
+                                <div class="row text-center text-lg-start pb-3">
+                                    <h4 class="card-text">
+                                        <span class="d-none d-lg-inline">
+                                        &#160;&#160;&#160;&#160;&#160;&#160;
+                                        </span>
+                                    {{price}} Bs.
+                                    </h4>
+                                </div>
+                                <div class="row ">
+                                    <p class="fw-semibold">Categorias : 
+                                    </p>
+                                </div>
+                                <div class="row text-center text-lg-start mb-3">
+                                    <span>
+                                    <span class="d-none d-lg-inline">
+                                    &#160;&#160;&#160;&#160;&#160;&#160;
+                                    </span>
+                                        {{#each ../p_categories}}
+                                            <span class="badge text-bg-light    ">{{name}}</span>                                         
+                                        {{/each}}
+                                    </span>
+                                </div>
+
+                                <p class="fw-semibold">Existencias:
                                 </p>
+                                <div class="row text-center text-lg-start mb-3">
+                                    <span>
+                                    <span class="d-none d-lg-inline">
+                                        &#160;&#160;&#160;&#160;&#160;&#160;
+                                    </span>
+                                        {{!-- display according to stock --}}
+                                        {{#if little_stock}}
+                                        <span class="text-warning"><i class="fa-solid fa-triangle-exclamation"></i> Pocas existencias</span>
+                                        {{else}}
+                                        {{#if stock}}<span class="text-success"><i class="fa-solid fa-check"></i> Hay existencias</span>{{/if}}
+                                        {{/if}}
+                                        {{#unless stock}}
+                                        <span class="text-danger"><i class="fa-solid fa-ban"></i> No hay existencias</span>
+                                        {{/unless}}
+                                    </span>
+                                </div>
                                 <form action="/marketplace/cart_shopping/add_product/{{id}}" method="POST" class="row g-3">
-                                    <div class="col-4 col-lg-2">
-                                        <label for="inputNumberQuantity" class="form-label">Cantidad:</label>
+                                    <div class="">
+                                        <label for="inputNumberQuantity" class="form-label fw-semibold">Cantidad:</label>
 
                                     </div>
-                                    <div class="col col-3 col-lg-6">
+                                    <div class="row ps-5 ps-lg-0 mb-3">
                                         {{!-- <input type="number" class="form-control" id="inputNumberQuantity" value="1" min="1" max="50" name="quantity"> --}}
-                                        <div class="input-group py-auto my-auto text-center" bis_skin_checked="1">
-                                            <button style="min-width: 1rem" class="btn btn-decrement btn-outline-secondary px-2 px-sm-3" type="button" id="{{id}}" name="action" value="decrement"><strong>−</strong></button>
-                                            <input type="number" inputmode="decimal" min="1" max="50" id="i{{id}}" name="quantity" value="1" style="text-align: center; max-width: 4rem" class="form-control px-2 px-sm-2" placeholder="">
-                                            <button style="min-width: 1rem" class="btn btn-increment btn-outline-secondary px-2 px-sm-3" type="button" id="{{id}}" name="action" value="increment"><strong>+</strong></button>
+                                        <div class="ps-0 ps-lg-5 input-group py-auto my-auto text-center mx-auto justify-content-center" bis_skin_checked="1">
+                                                <button style="min-width: 1rem" class="btn btn-decrement btn-outline-secondary px-2 px-sm-3" type="button" id="{{id}}" name="action" value="decrement"><strong>−</strong></button>
+                                                <input type="number" inputmode="decimal" min="1" max="50" id="i{{id}}" name="quantity" value="1" style="text-align: center; max-width: 4rem" class="form-control px-2 px-sm-2" placeholder="">
+                                                <button style="min-width: 1rem" class="btn btn-increment btn-outline-secondary px-2 px-sm-3" type="button" id="{{id}}" name="action" value="increment"><strong>+</strong></button>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="text-center">
                                         <button type="submit" class="btn btn-primary" {{#unless stock}}disabled{{/unless}}><i class="fa-solid fa-cart-plus"></i>
                                             <span>Añadir al carrito</span></button>
 

@@ -52,7 +52,7 @@ router.get('/marketplace/product/:id', requireAuth, async (req, res) => {
     let categories = await db.query("SELECT * FROM categoria");
     
     //stock functionality for one product
-    await db.query("SELECT * FROM producto WHERE id = ?", [id], (error, result) => {
+    await db.query("SELECT * FROM producto WHERE id = ?", [id], async (error, result) => {
         if(error)
             console.log(error);
 
@@ -62,10 +62,13 @@ router.get('/marketplace/product/:id', requireAuth, async (req, res) => {
             product[0].little_stock = true;
             // console.log("little product", products[i].little_stock);
         }
-    
+        
+        const p_categories = await db.query('SELECT name FROM categoria JOIN clasificacion ON clasificacion.cat_id = categoria.id where prod_id = ?', [id]);
+        console.log("cats from p", p_categories);
         // console.log(product);
         // console.log(categories);
         return res.render('./marketplace/product.hbs', {
+            p_categories,
             categories: categories,
             product: product[0],
             message: message,
