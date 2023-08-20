@@ -1,0 +1,38 @@
+<section id="heading">
+    <div class="container-fluid container-heading">
+        <div class="row">
+            <h1>Horarios de atencion : </h1>
+            <h2>10:30 - 20:30 mañanas</h2>
+            <h2>10:30 - 20:30 tardes</h2>
+            <h3>abierto</h3>
+        </div>
+        
+        <div class="search-bar-container">
+            <div class="row">
+                <div class="col col-2 col-lg-4">
+                    <a class="btn btn-primary" href="/marketplace" role="button">
+                        <i class="fa-solid fa-home"></i> <span class="sopping-cart-text">Inicio</span>
+                    </a>
+                </div>
+                
+                {{!-- search bar --}}
+
+                <div class="col col-7 col-lg-4">
+                    <form action="/marketplace/search" class="d-flex" role="search" method="POST">
+                        <input class="form-control me-2 " type="search" placeholder="Buscar" aria-label="Search" name="search">
+                        <button class="btn btn-outline-primary" typeS="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+
+                    </form>
+                </div>
+
+
+                <div class="col col-3 col-lg-4 text-end ">
+                    <a class="btn btn-primary" href="/marketplace/cart_shopping" role="button"><i class="fa-solid fa-cart-shopping"></i> 
+                    <span class="sopping-cart-text">Carrito</span></a>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+    
+</section>
