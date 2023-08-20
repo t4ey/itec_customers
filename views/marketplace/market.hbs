@@ -58,9 +58,10 @@
                                                 Categorias
                                             </a>
                                             {{#each categories}}
+                                                
                                                 <form action="/marketplace/search" method="POST">
                                                     <input type="number" class="d-none" name="category" id="{{id}}" value="{{id}}">
-                                                    <button type="submit" class="list-group-item list-group-item-action">{{name}}</button>
+                                                    <button type="submit" class="list-group-item list-group-item-action {{#if active}}list-group-item-primary{{/if}}">{{name}}</button>
                                                 </form>
                                             {{else}}
                                                 <a href="#" class="list-group-item list-group-item-action">Shomething went wrong :(</a>

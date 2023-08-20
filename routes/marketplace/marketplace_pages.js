@@ -125,6 +125,12 @@ exports.marketplace = async (req, res) => {
             p_cat_list.push(p_cat[i].prod_id);
         }
 
+        let cat_name;
+        for(var i = 0; i < categories.length; i++) {
+            if(category == categories[i].id) {
+                categories[i].active = true;
+            }
+        }
         // get products
 
         if (p_cat.length < 1) {
