@@ -54,7 +54,7 @@
                         </form>
                     </div>
                     <div class="col col-4 text-end">
-                        <a class="btn btn-primary" href="cart_sopping.html" role="button"><i class="fa-solid fa-cart-shopping"></i>
+                        <a class="btn btn-primary" href="/marketplace/cart_shopping" role="button"><i class="fa-solid fa-cart-shopping"></i>
                             <span class="sopping-cart-text">Carrito</span></a>
                     </div>
                 </div>
@@ -93,7 +93,10 @@
                                             Categorias
                                         </a>
                                         {{#each categories}}
-                                            <a href="#" class="list-group-item list-group-item-action">{{name}}</a>
+                                            <form action="/marketplace/search" method="POST">
+                                                <input type="number" class="d-none" name="category" id="{{id}}" value="{{id}}">
+                                                <button type="submit" class="list-group-item list-group-item-action">{{name}}</button>
+                                            </form>
                                         {{else}}
                                             <a href="#" class="list-group-item list-group-item-action">Shomething went wrong :(</a>
                                         {{/each}}
@@ -157,8 +160,13 @@
                                         <label for="inputNumberQuantity" class="form-label">Cantidad:</label>
 
                                     </div>
-                                    <div class="col-3 col-lg-2">
-                                        <input type="number" class="form-control" id="inputNumberQuantity" value="1" min="1" max="50" name="quantity">
+                                    <div class="col col-3 col-lg-6">
+                                        {{!-- <input type="number" class="form-control" id="inputNumberQuantity" value="1" min="1" max="50" name="quantity"> --}}
+                                        <div class="input-group py-auto my-auto text-center" bis_skin_checked="1">
+                                            <button style="min-width: 1rem" class="btn btn-decrement btn-outline-secondary px-2 px-sm-3" type="button" id="{{id}}" name="action" value="decrement"><strong>−</strong></button>
+                                            <input type="number" inputmode="decimal" min="1" max="50" id="i{{id}}" name="quantity" value="1" style="text-align: center; max-width: 4rem" class="form-control px-2 px-sm-2" placeholder="">
+                                            <button style="min-width: 1rem" class="btn btn-increment btn-outline-secondary px-2 px-sm-3" type="button" id="{{id}}" name="action" value="increment"><strong>+</strong></button>
+                                        </div>
                                     </div>
                                     <div class="col-12">
                                         <button type="submit" class="btn btn-primary" {{#unless stock}}disabled{{/unless}}><i class="fa-solid fa-cart-plus"></i>
@@ -189,6 +197,7 @@
 
     <!-- js custom -->
     <script src="/js/market.js"></script>
+    <script src="/js/p_in_dec.js"></script>
 </body>
 
 </html>
