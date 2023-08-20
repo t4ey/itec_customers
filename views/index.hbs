@@ -29,11 +29,26 @@
                 <!-- navbar -->
                 <nav class="navbar navbar-expand-lg navbar-dark mb-3">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="#title">OVA Tienda Virtual</a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
+                        <a class="navbar-brand align-text-center" href="#title">
+                            <div class="row">
+                                <div class="col">
+                                    <div class=" brand-container rounded mx-0 mx-md-auto">
+                                        <img src="/images/brand.png" alt="Logo" class="brand-img">
+                                    </div>
+                                </div>
+                                <div class="col px-0 mt-1 text-center">
+                                    <span class="mx-auto">
+                                        Tienda Virtual
+                                    </span>
+                                </div> 
+                            </div>
+                        </a>
+                        <div class="col ">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                        </div>
 
                         <div class="collapse navbar-collapse text-start" id="navbarSupportedContent">
                              <ul class="navbar-nav ms-auto mb-2 mb-lg-0 pe-0 pe-lg-3">
@@ -84,6 +99,7 @@
                 <div class="container heading-content">
                     <div class="row">
                         <div class="col col-12 col-lg-6">
+                            <h4 class="upper-heading-text">Productos de electrónica</h4>
                             <h1>La Mejor Tienda de productos de electrónica</h1>
                             <!-- <p>los mejores productos en electronica a precios buenos para tus proyectos profesionales Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
                             </p> -->
@@ -93,7 +109,7 @@
                             <img src="images/heading1.png" class="heading-img" alt="heading image">
                         </div>
                     </div>
-                    <a href="/marketplace" type="button" class="dwl-button btn btn-light btn-lg mt-5 mt-lg-5"><i class="fa-solid fa-store"></i> Tienda</a>
+                    <a href="/marketplace" type="button" class="dwl-button btn btn-outline-dark btn-lg mt-5 mt-lg-3"><i class="fa-solid fa-shop" style="color: #FFC93C"></i> Tienda</a>
                 </div>
             </div>
             
@@ -129,27 +145,27 @@
             <div class="container-fluid cards-container">
                 <h2 class="mb-5 cards-heading">Acerca de nosotros</h2>
                 <div class="row">
-                    <div class="col col-12 col-lg-4 mb-5">
+                    <div class="col col-12 col-lg-5 mb-5 mx-auto">
                         <div class="card text-start">
                             <img src="images/location.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">Nuestra Ubicación</h5>
                                 <p class="card-text dark-text">Nos encontramos en la Calle ...</p>
-                                <a href="subs/location.html" class="btn btn-primary"><i class="fa-solid fa-map-location-dot"></i> Ubicación</a>
+                                <a href="/location" class="btn btn-primary"><i class="fa-solid fa-map-location-dot"></i> Ubicación</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col col-12 col-lg-4 mb-5">
+                    <div class="col col-12 col-lg-5 mb-5 mx-auto">
                         <div class="card text-start ">
                             <img src="images/arduino.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">Contacto</h5>
                                 <p class="card-text dark-text">Envianos un mensaje ...</p>
-                                <a href="subs/contact.html" class="btn btn-primary"><i class="fa-regular fa-paper-plane"></i> Contactar</a>
+                                <a href="/contact" class="btn btn-primary"><i class="fa-regular fa-paper-plane"></i> Contactar</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col col-12 col-lg-4 mb-5">
+                    {{!-- <div class="col col-12 col-lg-4 mb-5">
                         <div class="card text-start">
                             <img src="images/arduino.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
@@ -158,7 +174,7 @@
                                 <a href="#" class="btn btn-primary"><i class="fa-solid fa-map-location-dot"></i> Maps</a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </section>
@@ -168,15 +184,17 @@
                 <div class="container-fluid text-center text-lg-start">
                     <div class="row">
                         <div class="col col-12 col-lg-6">
-                            <h1 class="catalog-heading">Nuestro Calogo de Productos</h1>
+                            <h1 class="catalog-heading">Descarga nuestro Calogo de Productos</h1>
                             <p class="dark-text">contamos con una gran variedad de productos, por esto le presentamos nuestro catalogo a su dispocicion</p>
+                            <div class="mb-3 mb-lg-1 text-center">
+                                <button type="button" class="btn btn-outline-dark btn-lg mt-5"><i class="fa-sharp fa-solid fa-download"></i> Descargar Catálogo<o/button>
+                            </div>
                         </div>
                         <div class="col col-12 col-lg-6 text-center">
                             <img src="images/catalogue.png" alt="Catalog image" class="img-catalog mt-4 mt-lg-0">
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-outline-dark btn-lg mt-5"><i class="fa-sharp fa-solid fa-download"></i> Descargar Catálogo<o/button>
 
             </div>
         </section>

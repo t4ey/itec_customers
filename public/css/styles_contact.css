@@ -56,6 +56,22 @@ p {
     font-weight: 300;
 }
 
+.brand-container {
+    width: 80px;
+    height: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.brand-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 110%;
+    height: 120%;
+}
+
 /* form section */
 
 .form-container {

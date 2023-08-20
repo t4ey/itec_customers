@@ -65,6 +65,22 @@ a {
     padding: 3% 15% 1%;
 }
 
+.brand-container {
+    width: 80px;
+    height: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.brand-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 110%;
+    height: 120%;
+}
+
 /* categories */
 
 .categories-container {
@@ -170,5 +186,12 @@ footer i:hover {
         color: black;
         font-weight: 500;
         font-size: 1rem;
+    }
+
+    .brand-container {
+        width: 60px;
+        height: 33px;
+        position: relative;
+        overflow: hidden;
     }
 }

@@ -61,6 +61,35 @@ a {
     width: 25rem;
 }
 
+.dwl-button {
+
+    background-color: #FFC93C;
+    border-color: #FFC93C;
+    color: black;
+}
+
+.upper-heading-text {
+    font-family: 'Montserrat', sans-serif;
+    color: #FFC93C;
+    font-weight: 800;
+}
+
+.brand-container {
+    width: 80px;
+    height: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.brand-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 110%;
+    height: 120%;
+}
+
 /* footer section */
 
 footer {
@@ -139,6 +168,13 @@ footer i:hover {
     .form-container {
         width: 100%;
         padding: 3% 0 3%;
+    }
+
+    .brand-container {
+        width: 70px;
+        height: 35px;
+        position: relative;
+        overflow: hidden;
     }
     
 }

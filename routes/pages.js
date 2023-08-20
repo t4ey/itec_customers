@@ -29,6 +29,16 @@ router.get('/profile', requireAuth, (req, res) => {
     res.render('./session/profile_customers.hbs');
 });
 
+router.get('/contact', (req, res) => {
+
+    res.render('./home/contact.hbs');
+});
+
+router.get('/location', (req, res) => {
+
+    res.render('./home/location.hbs');
+});
+
 ///marketplace section
 
 router.get('/marketplace', requireAuth, marketplace.marketplace);

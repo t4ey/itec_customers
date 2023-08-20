@@ -81,6 +81,22 @@ p {
     transform: translate(-50%, -3em);
 }
 
+.brand-container {
+    width: 80px;
+    height: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.brand-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 110%;
+    height: 120%;
+}
+
 /* items section */
 
 .container-items {
@@ -93,6 +109,19 @@ p {
     width: 10rem;
     border: solid 3px #1363DF;
     border-radius: 30%;
+}
+
+.dwl-button {
+    font-weight: 500;
+    background-color: white;
+    border-color: white;
+    color: black;
+}
+
+.upper-heading-text {
+    font-family: 'Montserrat', sans-serif;
+    color: #FFC93C;
+    font-weight: 800;
 }
 
 /* cards section */
@@ -261,5 +290,16 @@ footer i:hover {
 
     .catalog-heading {
         font-size: 2rem;
+    }
+}
+
+/* mobile size and below */
+
+@media (max-width: 576px) {
+    .brand-container {
+        width: 60px;
+        height: 33px;
+        position: relative;
+        overflow: hidden;
     }
 }

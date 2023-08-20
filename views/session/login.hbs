@@ -19,63 +19,12 @@
     <!-- font awesome icons -->
     <script src="https://kit.fontawesome.com/8faedc4425.js" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="../css/styles_log_in_customers.css">
+    <link rel="stylesheet" href="/css/styles_log_in_customers.css">
 </head>
 <body>
     <!-- navbar -->
     
-    <div class="container-fluid navbar-container">
-    
-        <nav class="navbar navbar-expand-lg navbar-dark mb-3 py-3">
-            <div class="container-fluid px-0">
-                <a class="navbar-brand" href="../index.html">OVA Tienda Virtual</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-    
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/marketplace">Tienda</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/contact">Contacto</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/#Catalog">Catálogo</a>
-                        </li>
-                    </ul>
-                    <a href="#Catalog">
-                        {{#if user}}
-                            <div class="dropdown-center">
-                                <a type="button" class="btn btn-outline-light catalog-btn ms-0 ms-lg-2 dropdown-toggle" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <span class="ps-2"> {{user.first_name}}</span>
-                                </a>
-                                <ul id="dropdownEnter" class="dropdown-menu text-small shadow">
-                                    <li><a class="dropdown-item" href="subs/cart_sopping.html">Carrito</a></li>
-                                    <li><a class="dropdown-item" href="/profile">Perfil</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="/logout">Cerrar Sesion</a></li>
-                                </ul>
-                            </div>
-                        {{else}}
-                            <a type="button" class="btn btn-outline-light catalog-btn ms-0 ms-lg-2" href="/login">
-                                <span class="ps-2 d-block"> Iniciar Sesion {{user.email}}</span>
-                            </a>
-                        {{/if}}
-                    </a>
-                </div>
-            </div>
-        </nav>
-    </div>
+    {{> navbar}}
     
     <!-- heading section -->
     

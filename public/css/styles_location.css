@@ -60,6 +60,22 @@ iframe {
     color: white;
 }
 
+.brand-container {
+    width: 80px;
+    height: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.brand-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 110%;
+    height: 120%;
+}
+
 /* location section */
 
 .location-container {
@@ -153,5 +169,16 @@ footer i:hover {
 
     .container-heading {
         padding: 5% 15% 10%;
+    }
+}
+
+/* mobile size and below */
+
+@media (max-width: 576px) { 
+    .brand-container {
+        width: 70px;
+        height: 35px;
+        position: relative;
+        overflow: hidden;
     }
 }
