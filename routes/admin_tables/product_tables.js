@@ -518,7 +518,7 @@ exports.add_product = async (req, res) => {
         return res.redirect(req.originalUrl);
     }
     
-    await db.query("SELECT name FROM producto WHERE name = ?", [product_name], async (error, result) => {
+    await db.query("SELECT name FROM producto WHERE name = ?", [product_name.trim()], async (error, result) => {
         if (error)
         console.log(error);
         
@@ -538,12 +538,12 @@ exports.add_product = async (req, res) => {
             await resize_image(req.file, "micro-" + product_name, img_micro_width, img_micro_height);
         }
 
-        await db.query('INSERT INTO producto SET ?', { name: product_name, price: price, stock: stock, img_dir: ('/images/products/' + product_name + '.jpg') }, async (error, result) => {
+        await db.query('INSERT INTO producto SET ?', { name: product_name.trim(), price: price.trim(), stock: stock, img_dir: ('/images/products/' + product_name + '.jpg') }, async (error, result) => {
             if (error)
                 console.log(error);
 
             else {
-                await db.query("SELECT id FROM producto WHERE name = ?" , [product_name], async (error, result) => {
+                await db.query("SELECT id FROM producto WHERE name = ?", [product_name.trim()], async (error, result) => {
                     if (error)
                         console.log(error);
 
@@ -610,7 +610,7 @@ exports.edit_product = async (req, res) => {
             await resize_image(req.file, "micro-" + product_name, img_micro_width, img_micro_height);
         }
 
-        await db.query('UPDATE producto SET ? WHERE id = ' + id, { name: product_name, price: price, stock: stock, img_dir: ('/images/products/' + product_name + '.jpg') }, async (error, result) => {
+        await db.query('UPDATE producto SET ? WHERE id = ' + id, { name: product_name.trim(), price: price, stock: stock, img_dir: ('/images/products/' + product_name + '.jpg') }, async (error, result) => {
             if (error)
                 console.log(error);
 
@@ -811,7 +811,7 @@ exports.add_category = async (req, res) => {
         return res.redirect('/admin/add_category');
     }
 
-    await db.query("SELECT name FROM categoria WHERE name = ?", [cat_name], async (error, result) => {
+    await db.query("SELECT name FROM categoria WHERE name = ?", [cat_name.trim()], async (error, result) => {
         if (error)
             console.log(error);
 
@@ -821,7 +821,7 @@ exports.add_category = async (req, res) => {
             return res.redirect('/admin/categories');
         }
 
-        db.query('INSERT INTO categoria SET ?', { name: cat_name, description: description}, (error, result) => {
+        db.query('INSERT INTO categoria SET ?', { name: cat_name.trim(), description: description.trim() }, (error, result) => {
             if (error)
                 console.log(error);
                 
@@ -943,7 +943,7 @@ exports.edit_category = async (req, res) => {
     }
 
 
-    db.query('UPDATE categoria SET ? WHERE id = ' + id, [{ name: cat_name, description: description }], (error, result) => {
+    db.query('UPDATE categoria SET ? WHERE id = ' + id, [{ name: cat_name.trim(), description: description.trim() }], (error, result) => {
         if (error)
             console.log(error);
 
@@ -1115,9 +1115,9 @@ exports.searchOrder = async (req, res) => {
     if (searchText != "") {
         console.log("textS: ", searchText);
         if (searchType == "id") {
-            querySearch = `SELECT pedido.id, pedido.total_amount, client.id as "client_id",email,status,fecha_de_pedido FROM pedido JOIN client ON pedido.client_id = client.id WHERE pedido.id LIKE "%${searchText}%" ORDER BY pedido.id DESC`;
+            querySearch = `SELECT pedido.id, pedido.total_amount, client.id as "client_id",email,status,fecha_de_pedido FROM pedido JOIN client ON pedido.client_id = client.id WHERE pedido.id LIKE "%${searchText.trim() }%" ORDER BY pedido.id DESC`;
         } else {
-            querySearch = `SELECT pedido.id, pedido.total_amount, client.id as "client_id",email,status,fecha_de_pedido FROM pedido JOIN client ON pedido.client_id = client.id WHERE email LIKE "%${searchText}%" ORDER BY pedido.id DESC`;
+            querySearch = `SELECT pedido.id, pedido.total_amount, client.id as "client_id",email,status,fecha_de_pedido FROM pedido JOIN client ON pedido.client_id = client.id WHERE email LIKE "%${searchText.trim() }%" ORDER BY pedido.id DESC`;
         }
     } else {
         return res.redirect('/admin/orders');

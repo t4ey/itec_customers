@@ -22,7 +22,7 @@ exports.login = async (req, res) => {
             return res.redirect('/admin/login');
         }
 
-        await db.query('SELECT * FROM administradores WHERE email = ?', [email], async (error, result) => {
+        await db.query('SELECT * FROM administradores WHERE email = ?', [email.trim()], async (error, result) => {
             console.log("login result : " + result.length);
             if (!(result.length > 0)) {
                 console.log(result);
@@ -76,7 +76,7 @@ exports.add_employee = async (req, res) => {
     console.log(req.body);
 
 
-    await db.query("SELECT email FROM administradores WHERE email = ?", [email], async (error, result) => {
+    await db.query("SELECT email FROM administradores WHERE email = ?", [email.trim()], async (error, result) => {
         if (error)
             console.log(error);
 
@@ -95,7 +95,7 @@ exports.add_employee = async (req, res) => {
         // console.log(typeof(hashedPassword));
         // console.log(hashedPassword.length);
 
-        db.query('INSERT INTO administradores SET ?', { first_name: name, last_name: lastName, email: email, phone_number: phoneNumber, address: localAddress, is_admin: isAdmin, password: hashedPassword }, (error, result) => {
+        db.query('INSERT INTO administradores SET ?', { first_name: name.trim(), last_name: lastName.trim(), email: email.trim(), phone_number: phoneNumber.trim(), address: localAddress.trim(), is_admin: isAdmin, password: hashedPassword }, (error, result) => {
             if (error)
                 console.log(error);
             else{
@@ -155,7 +155,7 @@ exports.edit_employee = async (req, res) => {
         //change data only
 
         else {
-            await db.query('UPDATE administradores SET ? WHERE id = ' + id, { first_name: name, last_name: lastName, email: email, phone_number: phone_number, address: local_address }, async (error, result) => {
+            await db.query('UPDATE administradores SET ? WHERE id = ' + id, { first_name: name.trim(), last_name: lastName.trim(), email: email.trim(), phone_number: phone_number.trim(), address: local_address.trim() }, async (error, result) => {
                 if (error) {
                     console.log(error);
                 }
@@ -229,7 +229,7 @@ exports.edit_client = async (req, res) => {
         //change data only
 
         else {
-            await db.query('UPDATE client SET ? WHERE id = ' + id, { first_name: name, last_name: last_name, email: email }, async (error, result) => {
+            await db.query('UPDATE client SET ? WHERE id = ' + id, { first_name: name.trim(), last_name: last_name.trim(), email: email.trim() }, async (error, result) => {
                 if (error) {
                     console.log(error);
                 }
