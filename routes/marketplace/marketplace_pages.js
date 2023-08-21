@@ -110,6 +110,7 @@ exports.marketplace = async (req, res) => {
     let products;
     let pagination_format;
     let hasFilter;
+    let category_text;
 
     if(category) {
         // get id from products in the same category
@@ -125,12 +126,13 @@ exports.marketplace = async (req, res) => {
             p_cat_list.push(p_cat[i].prod_id);
         }
 
-        let cat_name;
         for(var i = 0; i < categories.length; i++) {
             if(category == categories[i].id) {
                 categories[i].active = true;
+                category_text = categories[i].name;
             }
         }
+        console.log("category naem: ",category_text);
         // get products
 
         if (p_cat.length < 1) {
@@ -139,6 +141,7 @@ exports.marketplace = async (req, res) => {
                 products: products,
                 message: message,
                 alertType: alertType,
+                category_text,
             });
         }
 
@@ -169,7 +172,7 @@ exports.marketplace = async (req, res) => {
         // const products = await db.query("SELECT * FROM producto WHERE name LIKE '%" + search_string + "%'");
         // pagination
         // console.log("with_search :", search);
-        pagination_format = await pagination("SELECT * FROM producto WHERE name LIKE '%" + search + "%'", req, res);
+        pagination_format = await pagination("SELECT * FROM producto WHERE name LIKE '%" + search.trim() + "%'", req, res);
         hasFilter = {search: search};
         
         if (pagination_format.status == "return if over pages") {
@@ -241,6 +244,8 @@ exports.marketplace = async (req, res) => {
         message: message,
         alertType: alertType,
         pagination_bar: pag_bar,
+        category_text,
+        search_text: search
     });
 }
 

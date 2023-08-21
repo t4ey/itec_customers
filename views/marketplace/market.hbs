@@ -86,7 +86,19 @@
                                     {{message}}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
-                            {{/if}}    
+                            {{/if}}
+
+                            {{#if category_text}}
+                                <div class="row mb-2">
+                                    <h2>Categoría "<strong>{{category_text}}</strong>"</h2>
+                                </div>    
+                            {{else}}
+                                {{#if search_text}}
+                                    <div class="row mb-2">
+                                    <h2>Busqueda "<strong>{{search_text}}</strong>"</h2>
+                                </div>   
+                                {{/if}}
+                            {{/if}}
                             <div class="row">
                             {{#each products}}
                                 <div class="col col-12 col-md-6 col-xl-4 mb-0 mb-lg-4 mt-5 mt-lg-0">
