@@ -117,7 +117,7 @@
                 <div class="container-fluid px-0">
                     <div
                         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Dashboard</h1>
+                        <h1 class="h2">Inicio</h1>
                         
                     </div>
                     {{#if message}}
@@ -134,7 +134,7 @@
                 <div class="container-fluid cards-container px-0 pb-5">
                     {{#with stats}}
                     <div class="row h-100">
-                        <div class="col-12 col-md-4">
+                        <div class="col col-12 col-md-4 mb-3">
                             <!-- Card -->
                             <a href="/admin/orders/filter/new" style="text-decoration: inherit">
                                 <div class="card border-0 h-100 shadow card-n-orders">
@@ -157,7 +157,7 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col-12 col-md-4">
+                        <div class="col col-12 col-md-4 mb-3">
                             <!-- Card -->
                             <a href="/admin/orders/filter/ready-to-pay" style="text-decoration: inherit">
                                 <div class="card border-0 h-100 shadow card-orders">
@@ -180,7 +180,7 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col-12 col-md-4">
+                        <div class="col col-12 col-md-4 mb-3">
                             <a href="/admin/products/out_of_stock" style="text-decoration: inherit">
                                 <!-- Card -->
                                 <div class="card border-0 h-100 shadow card-out-stock">
@@ -251,82 +251,78 @@
                 </div>
                 <div class="card flex-fill my-2" bis_skin_checked="1">
                     
-                    <div id="datatables-dashboard-projects_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer"
+                    <div id="datatables-dashboard-projects_wrapper" class="table-sm-responsive overflow-x-auto"
                         bis_skin_checked="1">
-                        <div class="row dt-row" bis_skin_checked="1">
-                            <div class="col-sm-12" bis_skin_checked="1">
-                                {{#if orders}}
-                                <table id="datatables-dashboard-projects" class="table table-striped my-0 dataTable no-footer"
-                                    aria-describedby="datatables-dashboard-projects_info">
-                                    <thead>
-                                        <tr>
-                                            <th class="sorting sorting_asc" tabindex="0" aria-controls="datatables-dashboard-projects"
-                                                rowspan="1" colspan="1" aria-sort="ascending"
-                                                aria-label="Name: activate to sort column descending">N° ORDEN</th>
-                                            <th class="d-none d-xl-table-cell sorting" tabindex="0"
-                                                aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1"
-                                                aria-label="Start Date: activate to sort column ascending">TOTAL</th>
-                                            <th class="d-none d-xl-table-cell sorting" tabindex="0"
-                                                aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1"
-                                                aria-label="End Date: activate to sort column ascending">CLIENTE</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1"
-                                                colspan="1" aria-label="Status: activate to sort column ascending">ESTADO</th>
-                                            <th class="d-none d-md-table-cell sorting" tabindex="0"
-                                                aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1"
-                                                aria-label="Assignee: activate to sort column ascending">FECHA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{#each orders}}
-                                        <tr class="even">
-                                            <td class="order align-middle white-space-nowrap h5"><a class="fw-semi-bold" href="/admin/orders/details/{{id}}">#000000{{id}}</a>
-                                            <td class="total align-middle fw-semi-bold text-1000 h6">Bs. {{total_amount}}</td>
-                                            <td class="align-middle white-space-nowrap ps-8">
-                                                <a class=" align-items-center" href="/admin/edit_client/{{client_id}}">
-                                                    <h6 class="mb-0 text-900">{{client_name}}</h6>
-                                                </a>
-                                            </td>
-                                            {{#if completed}}
-                                                <td><span class="badge bg-success">Completado <i class="fa-solid fa-check"></i></span></td>
-                                            {{/if}}
-                                            {{#if new}}
-                                                <td><span class="badge bg-success" style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-asterisk"></i></span></td>
-                                            {{/if}}
-                                            {{#if ready_to_pay}}
-                                                <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
-                                            {{/if}}
-                                            {{#if canceled}}
-                                                <td><span class="badge bg-danger">Cancelled <i class="fa-solid fa-xmark"></i></span></td>
-                                            {{/if}}
-                                            <td class="date align-middle white-space-nowrap text-700 fs--1 ">{{fecha_de_pedido}}</td>
-                                        </tr>
-                                        {{/each}}
-                                        {{!-- <tr class="even">
-                                            <td class="sorting_1">Project Fireball</td>
-                                            <td class="d-none d-xl-table-cell">01/01/2022</td>
-                                            <td class="d-none d-xl-table-cell">31/06/2022</td>
-                                            <td><span class="badge bg-danger">Cancelled <i class="fa-solid fa-xmark"></i></span></td>
-                                            <td class="d-none d-md-table-cell">Bertha Martin</td>
-                                        </tr>
-                                        <tr class="even">
-                                            <td class="sorting_1">Project Nitro</td>
-                                            <td class="d-none d-xl-table-cell">01/01/2022</td>
-                                            <td class="d-none d-xl-table-cell">31/06/2022</td>
-                                            <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
-                                            <td class="d-none d-md-table-cell">Carl Jenkins</td>
-                                        </tr> --}}
-                                    </tbody>
-                                </table>
-                                {{else}}
-                                    <div class="col-md-8 mx-auto text-center py-5">
-                                        <div class="card card-body">
-                                            <h2>No hay ningún pedido</h2>
-                                            <a href="/admin/add_product"><h3>Añadir Un nuevo Producto</h3></a>
-                                        </div>
-                                    </div>
-                                {{/if}}
+                        {{#if orders}}
+                        <table id="datatables-dashboard-projects" class="table table-striped my-0 dataTable no-footer "
+                            aria-describedby="datatables-dashboard-projects_info">
+                            <thead>
+                                <tr>
+                                    <th class="sorting sorting_asc" tabindex="0" aria-controls="datatables-dashboard-projects"
+                                        rowspan="1" colspan="1" aria-sort="ascending"
+                                        aria-label="Name: activate to sort column descending">N° ORDEN</th>
+                                    <th class=" d-xl-table-cell sorting" tabindex="0"
+                                        aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1"
+                                        aria-label="Start Date: activate to sort column ascending">TOTAL</th>
+                                    <th class=" d-xl-table-cell sorting" tabindex="0"
+                                        aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1"
+                                        aria-label="End Date: activate to sort column ascending">CLIENTE</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1"
+                                        colspan="1" aria-label="Status: activate to sort column ascending">ESTADO</th>
+                                    <th class=" d-md-table-cell sorting" tabindex="0"
+                                        aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1"
+                                        aria-label="Assignee: activate to sort column ascending">FECHA</th>
+                                </tr>
+                            </thead>
+                            <tbody class="">
+                                {{#each orders}}
+                                <tr class="even">
+                                    <td class="order align-middle white-space-nowrap h5"><a class="fw-semi-bold" href="/admin/orders/details/{{id}}">#000000{{id}}</a>
+                                    <td class="total align-middle fw-semi-bold text-1000 h6">Bs. {{total_amount}}</td>
+                                    <td class="align-middle white-space-nowrap ps-8">
+                                        <a class=" align-items-center" href="/admin/edit_client/{{client_id}}">
+                                            <h6 class="mb-0 text-900">{{client_name}}</h6>
+                                        </a>
+                                    </td>
+                                    {{#if completed}}
+                                        <td><span class="badge bg-success">Completado <i class="fa-solid fa-check"></i></span></td>
+                                    {{/if}}
+                                    {{#if new}}
+                                        <td><span class="badge bg-success" style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-asterisk"></i></span></td>
+                                    {{/if}}
+                                    {{#if ready_to_pay}}
+                                        <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
+                                    {{/if}}
+                                    {{#if canceled}}
+                                        <td><span class="badge bg-danger">Cancelled <i class="fa-solid fa-xmark"></i></span></td>
+                                    {{/if}}
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ">{{fecha_de_pedido}}</td>
+                                </tr>
+                                {{/each}}
+                                {{!-- <tr class="even">
+                                    <td class="sorting_1">Project Fireball</td>
+                                    <td class="d-none d-xl-table-cell">01/01/2022</td>
+                                    <td class="d-none d-xl-table-cell">31/06/2022</td>
+                                    <td><span class="badge bg-danger">Cancelled <i class="fa-solid fa-xmark"></i></span></td>
+                                    <td class="d-none d-md-table-cell">Bertha Martin</td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="sorting_1">Project Nitro</td>
+                                    <td class="d-none d-xl-table-cell">01/01/2022</td>
+                                    <td class="d-none d-xl-table-cell">31/06/2022</td>
+                                    <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
+                                    <td class="d-none d-md-table-cell">Carl Jenkins</td>
+                                </tr> --}}
+                            </tbody>
+                        </table>
+                        {{else}}
+                            <div class="col-md-8 mx-auto text-center py-5">
+                                <div class="card card-body">
+                                    <h2>No hay ningún pedido</h2>
+                                    <a href="/admin/add_product"><h3>Añadir Un nuevo Producto</h3></a>
+                                </div>
                             </div>
-                        </div>
+                        {{/if}}
                         
                     </div>
                 </div>
