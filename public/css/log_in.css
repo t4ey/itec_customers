@@ -9,6 +9,22 @@ body {
     margin-bottom: 15%;
 }
 
+.brand-container {
+    width: 120px;
+    height: 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+.brand-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 110%;
+    height: 120%;
+}
+
 
 /* footer section */
 
