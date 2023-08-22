@@ -53,8 +53,10 @@ app.set('view engine', 'hbs');
 
 // declare partials
 
-const partialsPath = path.join(__dirname, "views/partials/marketplace");
-hbs.registerPartials(partialsPath);
+const userPartials = path.join(__dirname, "views/partials/marketplace");
+hbs.registerPartials(userPartials);
+const adminPartials = path.join(__dirname, "views/partials/admin");
+hbs.registerPartials(adminPartials);
 
 // app.engine('.hbs', engine({ extname: '.hbs' }));
 // app.set('view engine', '.hbs');
