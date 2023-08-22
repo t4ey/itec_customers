@@ -78,12 +78,14 @@
                             <h6 class="card-title">Estado del Pedido:</h6>
                             {{#if new}}
                                 <p class="form-control form-control-lg " style="background-color: #e9ecef" id="lastName" name="lastName" disabled><i class="fa-solid fa-spinner text-warning"></i> Procesando</p>
+                                <div id="emailHelp" class="form-text">Su pedido tardara en procesarse en un maximo de 20 minutos</div>
                             {{else}}
                                 
                                 <p class="form-control form-control-lg " style="background-color: #e9ecef" id="lastName" name="lastName" disabled><i class="fa-solid fa-check text-success"></i> Listo para la entrega</p>
+                                <div id="emailHelp" class="form-text">Su pedido esta listo para ser entregado, puede pasar por la tienda a recogerlo</div>
                             {{/if}}
 
-                            <div class="mb-3">
+                            <div class="mb-3 mt-2">
                                 <label for="InputEmail" class="form-label">Fecha de expiración:</label>
                                 <input type="email" class="form-control form-control-lg" id="InputEmail" name="email" aria-describedby="emailHelp" value="{{expiration_date}}" disabled>
                             </div>
