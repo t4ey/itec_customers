@@ -161,86 +161,13 @@
                 <!-- table contents dashboard -->
                 <h2>Reportes Creados</h2>
 
-                {{!-- filters --}}
-                {{#with filters}}
-                <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
-                    <li class="nav-item"><a href="/admin/orders/filter/all" class="nav-link active" aria-current="page">Todos <span
-                                class="text-700 text-black">({{all}})</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="/admin/orders/filter/new">Nuevos <span class="text-700 text-black">({{new}})</span></a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="/admin/orders/filter/ready-to-pay">Por Pagar <span class="text-700 text-black">({{ready_to_pay}})</span></a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="/admin/orders/filter/completed">Completado <span class="text-700 text-black">({{completed}})</span></a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="/admin/orders/filter/canceled">Fállido <span class="text-700 text-black">({{canceled}})</span></a></li>
-                </ul>
-                {{/with}}
-                <!-- <div class="card mt-2" bis_skin_checked="1">
-                
-                    <div id="datatables-dashboard-projects_wrapper" class=" no-footer" bis_skin_checked="1">
-                        <div class="row " bis_skin_checked="1">
-                            <div class="col-sm-12 table-responsive" bis_skin_checked="1">
-                                <table class="table table-hover no-footer">
-                                    <thead>
-                                        <tr>
-                                            <th class="" tabindex="0" aria-controls="datatables-dashboard-projects"
-                                                rowspan="1" colspan="1" aria-sort="ascending"
-                                                aria-label="Name: activate to sort column descending">N° ORDEN</th>
-                                            <th class="d-none d-xl-table-cell sorting" tabindex="0"
-                                                aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1"
-                                                aria-label="Start Date: activate to sort column ascending">TOTAL</th>
-                                            <th class="d-none d-xl-table-cell sorting" tabindex="0"
-                                                aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1"
-                                                aria-label="End Date: activate to sort column ascending">CLIENTE</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1"
-                                                colspan="1" aria-label="Status: activate to sort column ascending">ESTADO</th>
-                                            <th class="d-none d-md-table-cell sorting" tabindex="0"
-                                                aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1"
-                                                aria-label="Assignee: activate to sort column ascending">FECHA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-group-divider">
-                                        <tr class="even">
-                                            <td class="order align-middle white-space-nowrap"><a class="fw-semi-bold"
-                                                    href="#!">#2448</a>
-                                            <td class="total align-middle fw-semi-bold text-1000">$9562</td>
-                                            <td class="align-middle white-space-nowrap ps-8">
-                                                <a class=" align-items-center" href="#">
-                                                    <h6 class="mb-0 text-900">Igor Borvibson</h6>
-                                                </a>
-                                            </td>
-                                            <td><span class="badge bg-success">Confirmado <i class="fa-solid fa-check"></i></span></td>
-                                            <td class="date align-middle white-space-nowrap text-700 fs--1 ">Nov 24, 10:16 AM</td>
-                                        </tr>
-                                        <tr class="even">
-                                            <td class="sorting_1">Project Fireball</td>
-                                            <td class="d-none d-xl-table-cell">01/01/2022</td>
-                                            <td class="d-none d-xl-table-cell">31/06/2022</td>
-                                            <td><span class="badge bg-danger">Cancelled <i class="fa-solid fa-xmark"></i></span></td>
-                                            <td class="d-none d-md-table-cell">Bertha Martin</td>
-                                        </tr>
-                                        <tr class="even">
-                                            <td class="sorting_1">Project Nitro</td>
-                                            <td class="d-none d-xl-table-cell">01/01/2022</td>
-                                            <td class="d-none d-xl-table-cell">31/06/2022</td>
-                                            <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
-                                            <td class="d-none d-md-table-cell">Carl Jenkins</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                
-                    </div>
-                </div> -->
-
                 {{!-- table --}}
-                <div class="table-sm-responsive">
+                <div class="container-fluid px-0">
                     {{#if reports}}
                     <div class="row">
                         {{#each reports}}
                             {{#if isActive}}
-                            <div class="col col-6 my-3">
+                            <div class="col col-12 col-md-6 my-3">
                                 <div class="card p-2" >
                                 <div class="card-body">
                                     <div class="row">
@@ -255,10 +182,10 @@
                                     </div>
                                     <hr>
                                     <div class="row">
-                                        <div class="col col-4">
+                                        <div class="col col-5">
                                             <a href="/admin/reports/{{id}}" class="card-link h6 text-primary link-underline link-underline-opacity-0 "><i class="fa-solid fa-folder-closed"></i> Ver Reporte</a>
                                         </div>
-                                        <div class="col col-8 text-end">
+                                        <div class="col col-7 text-end">
                                             <h6 class="card-subtitle text-body-secondary mt-0 mb-auto"><i class="fa-solid fa-database"></i> Reportes del {{db}} db</h6>
                                             
                                         </div>
