@@ -27,84 +27,8 @@
 
     <div class="container-fluid">
         <div class="row">
-            <nav id="sidebarMenu" class="pt-1 pt-sm-5 col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                <div class="position-sticky pt-3 sidebar-sticky">
-                    <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item">
-                            <a href="/admin/home" class="nav-link link-dark" aria-current="page">
-                                <i class="fa-solid fa-house"></i>
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/admin/orders" class="nav-link link-dark">
-                                <i class="fa-regular fa-note-sticky"></i>
-                                Ordenes
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/admin/products" class="nav-link link-dark">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                                Productos
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/admin/categories" class="nav-link link-dark">
-                                <i class="fa-solid fa-tag"></i>
-                                Categorias
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/admin/clients" class="nav-link active">
-                                <i class="fa-solid fa-users"></i>
-                                Clientes
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/admin/salesperson" class="nav-link link-dark">
-                                <span class="me-2">
-                                    <i class="fa-regular fa-id-badge"></i> 
-                                </span>
-                                Vendedores
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/admin/reports" class="nav-link link-dark">
-                            <span class="me-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                class="feather feather-bar-chart-2 align-text-bottom" aria-hidden="true">
-                                    <line x1="18" y1="20" x2="18" y2="10"></line>
-                                    <line x1="12" y1="20" x2="12" y2="4"></line>
-                                    <line x1="6" y1="20" x2="6" y2="14"></line>
-                                </svg>
-                            </span>
-                                Reportes
-                            </a>
-                        </li>
-                    </ul>
-
-                    <div class="py-3" height="20px"></div>
-                    <hr class="">
-                    <div class="dropdown px-3" bis_skin_checked="1">
-                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                            <strong>{{admin.first_name}}</strong>
-                        </a>
-                        <ul class="dropdown-menu text-small shadow">
-                            <li><a class="dropdown-item" href="/admin/add_employee">Crear Nuevo Usuario</a></li>
-                            <li><a class="dropdown-item" href="/admin/settings">Ajustes</a></li>
-                            <li><a class="dropdown-item" href="/admin/edit_employee/{{admin.id}}">Perfil</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="/admin/logout">Cerrar Sesión</a></li>
-                        </ul>
-                    </div>
-
-                </div>
-            </nav>
+            {{!-- side navbar --}}
+            {{> a_sidebar bar_clients="true"}}
 
             <!-- dashboard -->
             
