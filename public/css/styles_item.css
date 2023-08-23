@@ -176,8 +176,8 @@ footer i:hover {
 
 @media (max-width: 576px) {
     .brand-container {
-        width: 60px;
-        height: 33px;
+        width: 48px;
+        height: 30px;
         position: relative;
         overflow: hidden;
     }
