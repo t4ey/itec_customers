@@ -258,9 +258,9 @@ footer i:hover {
 
     /* navbar - dropdown */
     
-    #dropdownEnter {
-        left: calc(--variable-width);
-    }
+    /* #dropdownEnter {
+        left: calc(--variable-width - 20px);
+    } */
 
     /* Features section */
     
@@ -296,9 +296,12 @@ footer i:hover {
 /* mobile size and below */
 
 @media (max-width: 576px) {
+    .container-heading {
+        padding: 5% 11% 20%;
+    }
     .brand-container {
-        width: 60px;
-        height: 33px;
+        width: 55px;
+        height: 30px;
         position: relative;
         overflow: hidden;
     }

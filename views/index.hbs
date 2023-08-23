@@ -43,7 +43,7 @@
                                 </div> 
                             </div>
                         </a>
-                        <div class="col ">
+                        <div class="col text-end">
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -69,14 +69,14 @@
                                 </li>
                             </ul>
                             
-                            <div class="ms-0 ms-lg-5">
+                            <div class="ms-0 ms-lg-5 text-start">
                                 {{#if user}}
                                     <div class="dropdown-center ms-0 ms-lg-5">
                                         <a type="button" class="btn btn-outline-light catalog-btn ms-0 ms-lg-2 dropdown-toggle" data-bs-toggle="dropdown"
                                             aria-expanded="false">
                                             <span class="ps-2"> {{user.first_name}}</span>
                                         </a>
-                                        <ul id="dropdownEnter" class="dropdown-menu text-small shadow">
+                                        <ul id="dropdownEnter" class="dropdown-menu text-small shadow text-start">
                                             <li><a class="dropdown-item" href="/marketplace/cart_shopping">Carrito</a></li>
                                             <li><a class="dropdown-item" href="/marketplace/order">Pedido</a></li>
                                             <li><a class="dropdown-item" href="/profile">Perfil</a></li>
@@ -87,7 +87,7 @@
                                         </ul>
                                     </div>
                                 {{else}}
-                                <a type="button" class="btn btn-outline-light catalog-btn ms-0 ms-lg-2" href="/login">
+                                <a type="button" class="btn btn-outline-light catalog-btn mx-auto ms-md-0 ms-lg-2" href="/login">
                                         <span class="ps-2 d-block"> Iniciar Sesion</span>
                                 </a>
                                 {{/if}}
