@@ -89,7 +89,8 @@ a {
 }
 
 .card-img-top {
-    height: 10rem;
+    width: 100%;
+    height: 66%;
 }
 
 /* footer section */
@@ -145,16 +146,16 @@ footer i:hover {
 
 /* Extra large and avobe */
 
-@media (min-width: 1400px) {
+/* @media (min-width: 1400px) {
     /* .search-bar-container {
         width: 40%;
         margin: auto;
-    } */
+    } *
 
     .card-img-top {
         height: 15rem;
     }
-}
+} */
 
 /* tablet size and below */
 
@@ -170,9 +171,9 @@ footer i:hover {
         display: none;
     }
 
-    .card-img-top {
+    /* .card-img-top {
         height: 15rem;
-    }
+    } */
 }
 
 /* mobile size and below */
