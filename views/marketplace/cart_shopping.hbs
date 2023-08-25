@@ -141,7 +141,7 @@
                             </div>
                         {{else}}
                             {{!-- content --}}
-                            <div class="col-md-10 mx-auto text-center pt-5">
+                            <div class="col-md-10 mx-auto text-center pt-5 pb-3 ">
                                 <div class="card card-body">
                                     <h3>No hay ningún producto en el carrito </h2>
                                     <a href="/marketplace"><h3>Añadir Producto</h3></a>
@@ -204,7 +204,11 @@
                                     <button type="submit" class="btn btn-outline-secondary ms-auto">Cancelar pedido</button>
                                 </div> --}}
                             {{else}}
-                                <button type="submit" class="btn btn-success w-100 p-2">Hacer Pedido </button>
+                                {{#if products}}
+                                    <button type="submit" class="btn btn-success w-100 p-2">Hacer Pedido </button>
+                                {{else}}
+                                    <button type="button" class="btn btn-success w-100 p-2 disabled">Hacer Pedido </button>
+                                {{/if}}
                             {{/if}}
                         </div>
                     </div>

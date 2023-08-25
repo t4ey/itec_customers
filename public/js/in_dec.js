@@ -33,14 +33,15 @@ $(document).ready(function () {
         //     input_quantity.val(parseInt(input_quantity.val()) - 1);
         // }
 
-        if (parseInt(input_quantity.val()) > 50) {
+        if (parseInt(input_quantity.val()) >= 50) {
             input_quantity.val(50);
         }
-        else if (input_quantity.val() < 1) {
+        else if (parseInt(input_quantity.val()) <= 1) {
+            console.log(input_quantity.val());
+            console.log(typeof(input_quantity.val()));
             input_quantity.val(1);
         }
 
-        // console.log(typeof(input_quantity.val()));
 
         // total.text(parseFloat((parseFloat(price.val()) * parseInt(input_quantity.val())).toFixed(2)) + " Bs");
 

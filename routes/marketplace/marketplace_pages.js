@@ -449,19 +449,25 @@ exports.update_quantity = async (req, res) => {
 
         console.log("before ", product);
         // updatding the product by plus 1 
-
+        
         if(action == "increment") {
             product.cantidad++;
-            console.log("after ", product);
-            await db.query(`UPDATE cart_shopping SET cantidad = ${product.cantidad} WHERE producto_id = ${product_id} AND client_id = ${client_id}`);
+            // console.log("after ", product);
         } else if( action == "decrement") {
             product.cantidad--;
-            await db.query(`UPDATE cart_shopping SET cantidad = ${product.cantidad} WHERE producto_id = ${product_id} AND client_id = ${client_id}`);
+            // await db.query(`UPDATE cart_shopping SET cantidad = ${product.cantidad} WHERE producto_id = ${product_id} AND client_id = ${client_id}`);
         } else if(action == "custom") {
             product.cantidad = custom;
-            await db.query(`UPDATE cart_shopping SET cantidad = ${product.cantidad} WHERE producto_id = ${product_id} AND client_id = ${client_id}`);
+            // await db.query(`UPDATE cart_shopping SET cantidad = ${product.cantidad} WHERE producto_id = ${product_id} AND client_id = ${client_id}`);
         }
 
+        if(product.cantidad > 50)
+            product.cantidad = 50;
+        else if (product.cantidad < 1)
+            product.cantidad = 1;
+        
+        await db.query(`UPDATE cart_shopping SET cantidad = ${product.cantidad} WHERE producto_id = ${product_id} AND client_id = ${client_id}`);
+        
         // const result_p = await db.query(`SELECT * FROM cart_shopping WHERE producto_id = ${product_id} AND client_id = ${client_id}`);
 
         return res.json({ reloadPage: true });
