@@ -150,7 +150,8 @@ p {
 }
 
 .card-img-top {
-    height: 11rem;
+    width: 100%;
+    height: 20vw;
 }
 
 /* catalog section */
@@ -237,7 +238,8 @@ footer i:hover {
     }
 
     .card-img-top {
-        height: 16rem;
+        width: 100%;
+        height: 17vw;
     }
 }
 
@@ -303,6 +305,11 @@ footer i:hover {
 
     .card {
         width: 16rem;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 20vh;
     }
 
     /* catalog section */
