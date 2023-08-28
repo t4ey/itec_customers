@@ -21,6 +21,14 @@ router.get('/login', alreadyLogged, (req, res) => {
     res.render('./session/login.hbs')
 });
 
+    // download catalog
+
+router.get('/download-catalog', (req, res) => {
+    // console.log(__dirname);
+    // console.log(loggedIn);
+    res.download('./public/docs/Catalogo de productos 2022-2023.pdf');
+})
+
 router.get('/register', alreadyLogged, (req, res) => {
     res.render('./session/register.hbs')
 });
