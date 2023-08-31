@@ -175,17 +175,19 @@
                                 <th>CLIENTE</th>
                                 <th>ESTADO</th>
                                 <th>FECHA</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
                             {{#each orders}}
                             <tr class="">
-                                <td class="order align-middle white-space-nowrap"><a class="h5 color-primary text-primary fw-semi-bold" href="/admin/orders/details/{{id}}">#000000{{id}}</a>
+                                <td class="order align-middle white-space-nowrap"><span class="h5 color-primary text-primary fw-semi-bold" href="/admin/orders/details/{{id}}">#000000{{id}}</span>
                                 <td class="total align-middle fw-semi-bold text-1000">Bs. {{total_amount}}</td>
-                                <td class="align-middle white-space-nowrap ps-8">
-                                    <a class=" align-items-center" href="/admin/edit_client/{{client_id}}">
-                                        <h6 class="mb-0 text-900 h5">{{client_name}}</h6>
-                                    </a>
+                                <td class="align-middle white-space-nowrap ps-8 text-center">
+                                    <h6 class="mb-0 text-900 h5 d-inline-block pe-2">{{client_name}}</h6>
+                                    <a href="/admin/edit_client/{{client_id}}" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa-regular fa-user"></i> Usuario</a>
+                                    {{!-- <a class=" align-items-center" href="/admin/edit_client/{{client_id} }">
+                                    </a> --}}
                                 </td>
                                 {{#if completed}}
                                     <td><span class="badge bg-success">Completado <i class="fa-solid fa-check"></i></span></td>
@@ -200,6 +202,7 @@
                                     <td><span class="badge bg-danger">Cancelado <i class="fa-solid fa-xmark"></i></span></td>
                                 {{/if}}
                                 <td class="date align-middle white-space-nowrap text-700 fs--1 ">{{fecha_de_pedido}}</td>
+                                <td class="text-center"><a href="/admin/orders/details/{{id}}" type="button" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i> Editar</a></td>
                             </tr>
                             {{/each}}
                         </tbody>

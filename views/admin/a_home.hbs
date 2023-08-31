@@ -191,16 +191,17 @@
                                     <th class=" d-md-table-cell sorting" tabindex="0"
                                         aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1"
                                         aria-label="Assignee: activate to sort column ascending">FECHA</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody class="">
                                 {{#each orders}}
                                 <tr class="even">
-                                    <td class="order align-middle white-space-nowrap h5"><a class="fw-semi-bold" href="/admin/orders/details/{{id}}">#000000{{id}}</a>
+                                    <td class="order align-middle white-space-nowrap h5"><span class="fw-semi-bold text-primary" href="/admin/orders/details/{{id}}">#000000{{id}}</span>
                                     <td class="total align-middle fw-semi-bold text-1000 h6">Bs. {{total_amount}}</td>
                                     <td class="align-middle white-space-nowrap ps-8">
-                                        <a class=" align-items-center" href="/admin/edit_client/{{client_id}}">
-                                            <h6 class="mb-0 text-900">{{client_name}}</h6>
+                                        <h6 class="mb-0 text-900 d-inline-block pe-2 ">{{client_name}}</h6>
+                                        <a class="btn btn-sm btn-outline-secondary" href="/admin/edit_client/{{client_id}}"><i class="fa-regular fa-user"></i> Usuario
                                         </a>
                                     </td>
                                     {{#if completed}}
@@ -216,6 +217,7 @@
                                         <td><span class="badge bg-danger">Cancelado <i class="fa-solid fa-xmark"></i></span></td>
                                     {{/if}}
                                     <td class="date align-middle white-space-nowrap text-700 fs--1 ">{{fecha_de_pedido}}</td>
+                                    <td class="text-center"><a href="/admin/orders/details/{{id}}" type="button" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i> Editar</a></td>
                                 </tr>
                                 {{/each}}
                                 {{!-- <tr class="even">

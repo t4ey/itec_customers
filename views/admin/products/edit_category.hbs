@@ -102,6 +102,7 @@
                                 <th>Precio</th>
                                 <th>Categoria</th>
                                 <th>Stock</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
@@ -110,9 +111,9 @@
                                 <td class="order align-middle white-space-nowrap">{{id}}</td>
                                 <td class="order align-middle white-space-nowrap"><img src="{{{img_dir}}}" alt="img" width="50" ></td>
                                 <td class="align-middle white-space-nowrap ps-8">
-                                    <a class=" align-items-center" href="/admin/edit_product/{{id}}">
-                                        <h6 class="mb-0 text-900 h5">{{name}}</h6>
-                                    </a>
+                                    <h6 class="mb-0 text-900 h5">{{name}}</h6>
+                                    {{!-- <a class=" align-items-center" href="/admin/edit_product/{{id} }">
+                                    </a> --}}
                                 </td>
                                 <td class="total align-middle fw-semi-bold text-1000">{{price}} Bs.</td>
                                 <td>
@@ -122,6 +123,7 @@
                                     {{!-- <span class="badge text-bg-light">Electronica</span> --}}
                                 </td>
                                 <td class="date align-middle white-space-nowrap text-700 "><span class="h5">{{stock}}</span> unidades</td>
+                                <td class="text-center"><a href="/admin/edit_product/{{id}}" type="button" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i> Editar</a></td>
                             </tr>
                             {{/each}}
                         </tbody>

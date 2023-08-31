@@ -58,6 +58,7 @@
                                         <th>Precio</th>
                                         <th>Cantidad</th>
                                         <th>Total</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-group-divider">
@@ -84,15 +85,16 @@
                                     </tr> --}}
                                     {{#each ordered_products}}
                                     <tr class="h4">
-                                        <td class="order align-middle white-space-nowrap"><img src="{{img_dir}}" alt="img" width="100" ></td>
+                                        <td class="order align-middle white-space-nowrap text-center"><img src="{{img_dir}}" alt="img" width="110" ></td>
                                         <td class="align-middle white-space-nowrap ps-8">
+                                            <p class="mb-0 text-900">{{name}}</p>
                                             <a class=" align-items-center" href="/admin/edit_product/{{id}}">
-                                                <p class="mb-0 text-900">{{name}}</p>
                                             </a>
                                         </td>
                                         <td class="total align-middle fw-semi-bold text-1000">{{price}} Bs.</td>
                                         <td class="date align-middle white-space-nowrap text-700 "><span class="h5"></span>{{quantity}} unidades</td>
                                         <td class="total align-middle fw-semi-bold text-1000">{{total}} Bs.</td>
+                                        <td class="text-center align-middle"><a href="/admin/edit_product/{{id}}" type="button" class="btn btn-sm btn-primary my-auto"><i class="fa-regular fa-pen-to-square"></i> Editar</a></td>
                                     </tr>
                                     {{/each}}
                                 </tbody>

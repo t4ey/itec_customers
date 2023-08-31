@@ -103,20 +103,22 @@
                                     <th>Apellido(s)</th>
                                     <th>N° de Contacto</th>
                                     <th>Dirección</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
                             {{#each employees}}
                                 <tr class="">
                                     <td class="order align-middle white-space-nowrap">{{id}}</td>
-                                    <td class="date align-middle white-space-nowrap text-700"><a href="/admin/edit_employee/{{id}}"
-                                            class="h5">{{email}}</a></td>
+                                    <td class="date align-middle white-space-nowrap text-700"><span href="/admin/edit_employee/{{id}}"
+                                            class="h5">{{email}}</span></td>
                                     <td class="align-middle white-space-nowrap">
                                         <h6 class="mb-0 text-900">{{first_name}}</h6>
                                     </td>
                                     <td class="total align-middle fw-semi-bold text-1000">{{last_name}}</td>
                                     <td class="total align-middle fw-semi-bold text-1000">{{phone_number}}</td>
                                     <td class="total align-middle fw-semi-bold text-1000">{{address}}</td>
+                                    <td class="text-center"><a href="/admin/edit_employee/{{id}}" type="button" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i> Editar</a></td>
                                 </tr>
                             {{/each}}
                             </tbody>

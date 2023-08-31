@@ -79,18 +79,20 @@
                                 <th>ID</th>
                                 <th>Nombre</th>
                                 <th>Desciption</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
                         {{#each categories}}
                             <tr class="">
                                 <td class="order align-middle white-space-nowrap">{{id}}</td>
-                                <td class="align-middle white-space-nowrap ps-8">
-                                    <a class=" align-items-center" href="/admin/edit_category/{{id}}">
-                                        <h6 class="mb-0 text-900 h5">{{name}}</h6>
-                                    </a>
+                                <td class="align-middle white-space-nowrap ps-8 ">
+                                    <h6 class="mb-0 text-900 h5 text-capitalize">{{name}}</h6>
+                                    {{!-- <a class=" align-items-center" href="/admin/edit_category/{{id} }">
+                                    </a> --}}
                                 </td>
                                 <td class="total align-middle fw-semi-bold text-1000">{{description}}</td>
+                                <td class="text-center"><a href="/admin/edit_category/{{id}}" type="button" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i> Editar</a></td>
                             </tr>
                             {{/each}}
                         </tbody>
