@@ -501,7 +501,11 @@ exports.filter_products = async (req, res) => {
 exports.add_product = async (req, res) => {
     console.log("img", req.file);
 
-    const { product_name, price, stock, categories } = req.body;
+    const { product_name, price, stock } = req.body;
+
+    let { categories } = req.body;
+    // convert array as a string to array
+    categories = categories.split(',');
     
     console.log(req.body);
     
@@ -566,7 +570,7 @@ exports.add_product = async (req, res) => {
                     }
                     req.flash('message', "Producto registrado exitosamente.");
                     req.flash('alertType', "alert-success");
-                    return res.redirect('/admin/products');
+                    return res.status(200).end();
                 });
 
                 // XCONSOEL TYPEOF CATEGORIES
@@ -581,7 +585,11 @@ exports.add_product = async (req, res) => {
 
 exports.edit_product = async (req, res) => {
     const { id } = req.params;
-    const { product_name, price, stock, categories } = req.body;
+    const { product_name, price, stock } = req.body;
+
+    let { categories } = req.body;
+    // convert array as a string to array
+    categories = categories.split(',');
 
     console.log(req.file);
     console.log(req.body);
@@ -624,16 +632,18 @@ exports.edit_product = async (req, res) => {
                     await db.query('DELETE FROM clasificacion WHERE prod_id = ?', [id]);
                     categories.forEach(async category_id => {
                         // console.log(category_id);
+                        // console.log("catttypp", cat_type);
                         await db.query('INSERT INTO clasificacion SET ?', { cat_id: category_id, prod_id: product_id });
                     });
                 }
                 else {
+                    // console.log("catttypp222", cat_type);
                     await db.query('DELETE FROM clasificacion WHERE prod_id = ?', [id]);
                     await db.query('INSERT INTO clasificacion SET ?', { cat_id: categories, prod_id: product_id });
                 }
                 req.flash('message', "Se actulizó el producto exitosamente.");
                 req.flash('alertType', "alert-success");
-                return res.redirect(req.originalUrl);
+                return res.status(200).end();
 
                 // XCONSOEL TYPEOF CATEGORIES
 
