@@ -103,7 +103,11 @@
                             {{#each products}}
                                 <div class="col col-12 col-md-6 col-xl-4 mb-2 mb-lg-4 mt-2 mt-lg-0">
                                     <div class="card">
-                                        <a href="/marketplace/product/{{id}}"><img src="{{img_dir}}" class="card-img-top" alt="{{name}}"></a>
+                                        <a href="/marketplace/product/{{id}}">
+                                            <div class="ratio ratio-4x3">
+                                                <img src="{{img_dir}}" class="card-img-top" alt="{{name}}">
+                                            </div>
+                                        </a>
                                         <div class="card-body">
                                             <a href="/marketplace/product/{{id}}"><h5 class="card-title text-capitalize">{{name}}</h5></a>
 
