@@ -95,7 +95,7 @@ exports.login = async (req, res) => {
                 
                 res.cookie('jwt', token, cookieOptions);
 
-                return res.redirect("/");
+                return res.redirect("/marketplace");
             }
         });
 
