@@ -102,26 +102,29 @@
                             <div class="row">
                             {{#each products}}
                                 <div class="col col-12 col-md-6 col-xl-4 mb-2 mb-lg-4 mt-2 mt-lg-0">
-                                    <div class="card">
+                                    <div class="card h-100">
                                         <a href="/marketplace/product/{{id}}">
                                             <div class="ratio ratio-4x3">
                                                 <img src="{{img_dir}}" class="card-img-top" alt="{{name}}">
                                             </div>
                                         </a>
-                                        <div class="card-body">
+                                        <div class="card-body position-relative">
                                             <a href="/marketplace/product/{{id}}"><h5 class="card-title text-capitalize">{{name}}</h5></a>
 
+                                            <p class="card-text">{{price}} Bs.</p>
                                             {{!-- display according to stock --}}
                                             {{#if little_stock}}
-                                            <p class="text-warning"><i class="fa-solid fa-triangle-exclamation"></i> Pocas existencias</p>
+                                            <p class="text-warning mb-1"><i class="fa-solid fa-triangle-exclamation "></i> Pocas existencias</p>
                                             {{else}}
-                                            {{#if stock}}<p>&nbsp</p>{{/if}}
+                                            {{!-- {{#if stock} }<p>&nbsp;</p>{{/if} } --}}
                                             {{/if}}
                                             {{#unless stock}}
-                                            <p class="text-danger"><i class="fa-solid fa-ban"></i> No hay existencias</p>
+                                            <p class="text-danger mb-1"><i class="fa-solid fa-ban "></i> No hay existencias</p>
                                             {{/unless}}
-                                            <p class="card-text">{{price}} Bs.</p>
+                                        </div>
                                             {{!-- post add to cart shopping --}}
+                                        <div class="card-footer bg-transparent border-top-0 mb-2">
+                                        {{!-- <div class=" mt-auto">    --}}
                                             <form action="/marketplace/cart_shopping/add_product/{{id}}" method="post">
                                                 <input type="number" class="form-control d-none" id="inputNumberQuantity" value="1" min="1" max="1" name="quantity">
                                                 <button class="btn btn-primary w-100" {{#unless stock}}disabled{{/unless}}><i class="fa-solid fa-cart-plus" ></i> <span>Añadir al carrito</span></button>
