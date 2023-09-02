@@ -416,7 +416,7 @@ exports.filter_products = async (req, res) => {
         pagination_format = await pagination(`SELECT * FROM producto WHERE stock >= 1 AND isDeleted = false`, req, res);
     }
     else if (filter == "out_of_stock") {
-        pagination_format = await pagination(`SELECT * FROM producto WHERE stock = AND isDeleted = false`, req, res);
+        pagination_format = await pagination(`SELECT * FROM producto WHERE stock = 0 AND isDeleted = false`, req, res);
     }
 
     // console.log("deffff");
