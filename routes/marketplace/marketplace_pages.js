@@ -192,7 +192,7 @@ exports.marketplace = async (req, res) => {
 
         // pagination
         // console.log("deffff");
-        pagination_format = await pagination('SELECT * FROM producto', req, res);
+        pagination_format = await pagination('SELECT * FROM producto WHERE isDeleted = false', req, res);
         hasFilter = false;
         
         if (pagination_format.status == "return if over pages") {

@@ -101,6 +101,7 @@
                         </thead>
                         <tbody class="table-group-divider">
                         {{#each products}}
+                            {{#unless isDeleted}}
                             <tr class="">
                                 <td class="order align-middle white-space-nowrap">{{id}}</td>
                                 <td class="order align-middle white-space-nowrap"><img src="{{img_dir}}" alt="img" width="50" ></td>
@@ -119,7 +120,8 @@
                                 <td class="date align-middle white-space-nowrap text-700 "><span class="h5">{{stock}}</span> unidades</td>
                                 <td class="text-center"><a href="/admin/edit_product/{{id}}" type="button" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i> Editar</a></td>
                             </tr>
-                            {{/each}}
+                            {{/unless}}
+                        {{/each}}
                         </tbody>
                     </table>
                         {{else}}

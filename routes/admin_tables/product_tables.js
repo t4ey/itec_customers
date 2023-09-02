@@ -136,7 +136,7 @@ exports.products = async (req, res) => {
 
     // console.log(message);
     let products = {}
-    products.all = await db.query("SELECT * FROM producto");
+    products.all = await db.query("SELECT * FROM producto WHERE isDeleted = false");
 
     // filter's bar counter
 
@@ -165,7 +165,7 @@ exports.products = async (req, res) => {
 
     // console.log("deffff");
     // data query request await db.query(`SELECT * FROM pedido WHERE status = ${data} ORDER BY id DESC`);
-    const pagination_format = await pagination('SELECT * FROM producto', req, res);
+    const pagination_format = await pagination('SELECT * FROM producto WHERE isDeleted = false', req, res);
     const link_page = res.originalUrl;
 
     // if try to ingress to a different page range
@@ -658,7 +658,30 @@ exports.edit_product = async (req, res) => {
 exports.delete_product = async (req, res) => {
     const { id } = req.params;
 
-    await db.query('DELETE FROM producto WHERE id = ?', [id]);
+    const orderIds = await db.query("SELECT pedido_id FROM detalle_pedido WHERE producto_id = ?", [id]);
+
+    if(orderIds.length < 1) {
+        await db.query('UPDATE producto SET isDeleted = 1 WHERE id = ?', [id]);
+        req.flash('message', 'El producto a sido eliminado exitosamente');
+        req.flash('alertType', 'alert-success');
+        return res.redirect('/admin/products');
+    }
+
+    let orderIdsArray = [];
+    for(var i = 0;i < orderIds.length;i++) {
+        orderIdsArray.push(orderIds[i].pedido_id);
+    }
+    const orderActives = await db.query("SELECT id FROM pedido WHERE id IN (?) AND status = 'new'", [orderIdsArray]);
+    console.log("oids: ", orderIdsArray);
+    console.log("isActive: ", orderActives); 
+    
+    if(orderActives.length > 0){
+        req.flash('message', 'El producto no se puede eliminar por que esta en una orden activa');
+        req.flash('alertType', 'alert-warning');
+        return res.redirect('back');
+    }
+
+    await db.query('UPDATE producto SET isDeleted = 1 WHERE id = ?', [id]);
 
     req.flash('message', 'El producto a sido eliminado exitosamente');
     req.flash('alertType', 'alert-success');
