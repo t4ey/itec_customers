@@ -245,12 +245,12 @@ exports.searchProducts = async (req, res) => {
 
     const { searchText } = req.query;
 
-    let querySearch = `SELECT * FROM producto`;
+    let querySearch = `SELECT * FROM producto WHERE isDeleted = false`;
 
     if (searchText != "") {
         console.log("textS: ", searchText);
         
-        querySearch = `SELECT * FROM producto WHERE name LIKE "%${searchText}%"`;
+        querySearch = `SELECT * FROM producto WHERE name LIKE "%${searchText}% AND isDeleted = false"`;
     } else {
         return res.redirect('/admin/products');
     }
@@ -380,7 +380,7 @@ exports.filter_products = async (req, res) => {
 
     // console.log(message);
     let products = {}
-    products.all = await db.query("SELECT * FROM producto");
+    products.all = await db.query("SELECT * FROM producto WHERE isDeleted = false");
 
     // filter's bar counter
 
@@ -413,10 +413,10 @@ exports.filter_products = async (req, res) => {
         return res.redirect("/admin/products");
     }
     else if (filter == "published") {
-        pagination_format = await pagination(`SELECT * FROM producto WHERE stock >= 1`, req, res);
+        pagination_format = await pagination(`SELECT * FROM producto WHERE stock >= 1 AND isDeleted = false`, req, res);
     }
     else if (filter == "out_of_stock") {
-        pagination_format = await pagination(`SELECT * FROM producto WHERE stock = 0`, req, res);
+        pagination_format = await pagination(`SELECT * FROM producto WHERE stock = AND isDeleted = false`, req, res);
     }
 
     // console.log("deffff");
