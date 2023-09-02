@@ -507,19 +507,19 @@ exports.add_product = async (req, res) => {
     // convert array as a string to array
     categories = categories.split(',');
     
-    console.log(req.body);
+    console.log("vody", req.body);
     
     
     if ((!product_name || product_name == 'no image') || !price || !stock || !req.file) {
         req.flash('message', "No puede dejar espacios vacios");
         req.flash('alertType', "alert-danger");
-        return res.redirect(req.originalUrl);
+        return res.status(200).end();
     };
-    // console.log(categories);
-    if (categories == null){
+    console.log(categories);
+    if (categories == null || categories.length <= 0 || categories[0] == ""){
         req.flash('message', "Debe seleccionar al menos una categoria");
         req.flash('alertType', "alert-warning");
-        return res.redirect(req.originalUrl);
+        return res.status(200).end();
     }
     
     await db.query("SELECT name FROM producto WHERE name = ?", [product_name.trim()], async (error, result) => {
@@ -529,7 +529,7 @@ exports.add_product = async (req, res) => {
         if (result.length > 0){
             req.flash('message', "El producto ya existe");
             req.flash('alertType', "alert-warning");
-            return res.redirect(req.originalUrl);
+            return res.status(200).end();
         }
         
         // console.log(typeof(hashedPassword));
