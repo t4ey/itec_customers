@@ -11,7 +11,7 @@ const  requireAuth = (req, res, next) => {
     if(token) {
         jwt.verify(token, jwt_secret, (error, decodedToken) => {
             if(error){
-                console.log(error.message);
+                console.log("error auth: ", error.message);
                 res.redirect('/login');
                 // res.redirect('/login');                
             } else {
@@ -32,7 +32,7 @@ const checkAdmin = async (req, res, next) => {
     if (token) {
         jwt.verify(token, jwt_secret, async (error, decodedToken) => {
             if (error) {
-                console.log("error : ", error.message);
+                console.log("error auth : ", error.message);
                 res.locals.admin = null;
                 res.redirect('/');
                 // res.redirect('/login');                
@@ -65,7 +65,7 @@ const alreadyLogged = async (req, res, next) => {
     if (token) {
         jwt.verify(token, jwt_secret, async (error, decodedToken) => {
             if (error) {
-                console.log(error.message);
+                console.log("error auth", error.message);
                 // res.redirect('/login');                
             } else {
                 res.redirect('back'); 

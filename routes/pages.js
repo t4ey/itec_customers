@@ -151,11 +151,11 @@ router.post('/marketplace/cart_shopping/add_product/:id', requireAuth, checkUser
 
 router.get('/marketplace/product/cart_shopping/remove_product/:id', requireAuth, marketplace.delete_cart_product);
 
-router.post('/marketplace/cart_shopping/make_order', checkUser, marketplace.make_order);
+router.post('/marketplace/cart_shopping/make_order', requireAuth, marketplace.make_order);
 
-router.post('/marketplace/cart_shopping/cancel_order', checkUser, marketplace.cancel_order);
+router.post('/marketplace/cart_shopping/cancel_order', requireAuth, marketplace.cancel_order);
 
-router.post('/marketplace/cart_shopping/checkout', checkUser, async (req, res) => {
+router.post('/marketplace/cart_shopping/checkout', requireAuth, async (req, res) => {
     const cart_products = req.body;
     const client_id = res.locals.user.id;
     // console.log("post cid: ", client_id);
@@ -185,6 +185,6 @@ router.post('/marketplace/cart_shopping/checkout', checkUser, async (req, res) =
     return res.redirect('/marketplace/cart_shopping/checkout');
 });
 
-router.post('/marketplace/cart_shopping/update_quantity', checkUser, marketplace.update_quantity);
+router.post('/marketplace/cart_shopping/update_quantity', requireAuth, marketplace.update_quantity);
 
 module.exports = router;

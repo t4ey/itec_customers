@@ -516,13 +516,13 @@ exports.add_product = async (req, res) => {
         return res.status(200).end();
     };
     console.log(categories);
-    if (categories == null || categories.length <= 0 || categories[0] == ""){
+    if (categories == null || categories.length <= 0 || categories[0].length == 0){
         req.flash('message', "Debe seleccionar al menos una categoria");
         req.flash('alertType', "alert-warning");
         return res.status(200).end();
     }
     
-    await db.query("SELECT name FROM producto WHERE name = ?", [product_name.trim()], async (error, result) => {
+    await db.query("SELECT * FROM producto WHERE name = ?", [product_name.trim()], async (error, result) => {
         if (error)
         console.log(error);
         
@@ -532,17 +532,19 @@ exports.add_product = async (req, res) => {
             return res.status(200).end();
         }
         
+        const db_last_product = await db.query("SELECT * FROM producto ORDER BY id DESC LIMIT 1");
+        const new_product_id = parseInt(db_last_product[0].id) + 1;
         // console.log(typeof(hashedPassword));
         // console.log(hashedPassword.length);
         
         // resize and save the image
 
         if(req.file){
-            await resize_image(req.file, product_name, img_width, img_height);
-            await resize_image(req.file, "micro-" + product_name, img_micro_width, img_micro_height);
+            await resize_image(req.file, new_product_id, img_width, img_height);
+            await resize_image(req.file, "micro-" + new_product_id, img_micro_width, img_micro_height);
         }
 
-        await db.query('INSERT INTO producto SET ?', { name: product_name.trim(), price: price.trim(), stock: stock, img_dir: ('/images/products/' + product_name + '.jpg') }, async (error, result) => {
+        await db.query('INSERT * INTO producto SET ?', { name: product_name.trim(), price: price.trim(), stock: stock, img_dir: ('/images/products/' + new_product_id + '.jpg') }, async (error, result) => {
             if (error)
                 console.log(error);
 
@@ -592,7 +594,7 @@ exports.edit_product = async (req, res) => {
     categories = categories.split(',');
 
     console.log(req.file);
-    console.log(req.body);
+    console.log("body  ", req.body);
 
     if ((!product_name || product_name == 'no image') || !price || !stock) {
         req.flash('message', "No puede dejar espacios vacios");
@@ -600,11 +602,16 @@ exports.edit_product = async (req, res) => {
         return res.redirect(req.originalUrl);
     };
     // console.log(categories);
-    if (categories == null) {
+    if (categories == null || categories.length <= 0 || categories[0].length == 0) {
         req.flash('message', "Debe seleccionar al menos una categoria");
         req.flash('alertType', "alert-warning");
-        return res.redirect(req.originalUrl);
+        return res.status(200).end();
     }
+    // if (categories == null) {
+    //     req.flash('message', "Debe seleccionar al menos una categoria");
+    //     req.flash('alertType', "alert-warning");
+    //     return res.status(200).end();
+    // }
 
     await db.query("SELECT * FROM producto WHERE id = ?", [id], async (error, result) => {
         if (error)
@@ -613,12 +620,14 @@ exports.edit_product = async (req, res) => {
         // console.log(typeof(hashedPassword));
         // console.log(hashedPassword.length);
 
+        const db_product = result[0];
+
         if(req.file) {
-            await resize_image(req.file, product_name, img_width, img_height);
-            await resize_image(req.file, "micro-" + product_name, img_micro_width, img_micro_height);
+            await resize_image(req.file, db_product.id, img_width, img_height);
+            await resize_image(req.file, "micro-" + db_product.id, img_micro_width, img_micro_height);
         }
 
-        await db.query('UPDATE producto SET ? WHERE id = ' + id, { name: product_name.trim(), price: price, stock: stock, img_dir: ('/images/products/' + product_name + '.jpg') }, async (error, result) => {
+        await db.query('UPDATE producto SET ? WHERE id = ' + id, { name: product_name.trim(), price: price, stock: stock, img_dir: ('/images/products/' + db_product.id + '.jpg') }, async (error, result) => {
             if (error)
                 console.log(error);
 

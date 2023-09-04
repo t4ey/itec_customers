@@ -11,7 +11,7 @@ const  requireAuth = (req, res, next) => {
     if(token) {
         jwt.verify(token, jwt_secret, (error, decodedToken) => {
             if(error){
-                console.log(error.message);
+                console.log("error auth cl", error.message);
                 res.redirect('/login');
                 // res.redirect('/login');                
             } else {
@@ -36,8 +36,9 @@ const checkUser = async (req, res, next) => {
     if (token) {
         jwt.verify(token, jwt_secret, async (error, decodedToken) => {
             if (error) {
-                console.log(error.message);
+                console.log("error cl auth", error.message);
                 res.locals.user = null;
+                next();
                 // res.redirect('/login');                
             } else {
                 console.log("check user md: ",decodedToken);
@@ -68,7 +69,7 @@ const alreadyLogged = async (req, res, next) => {
     if (token) {
         jwt.verify(token, jwt_secret, async (error, decodedToken) => {
             if (error) {
-                console.log(error.message);
+                console.log("error cl auth", error.message);
                 // res.redirect('/login');                
             } else {
                 res.redirect('back'); 
