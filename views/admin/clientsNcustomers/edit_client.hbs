@@ -142,25 +142,27 @@
                             <tr class="">
                                 <td class="order align-middle white-space-nowrap"><span class="h5 color-primary text-primary fw-semi-bold" href="/admin/orders/details/{{id}}">#000000{{id}}</sp>
                                 <td class="total align-middle fw-semi-bold text-1000">Bs. {{total_amount}}</td>
-                                <td class="align-middle white-space-nowrap ps-8">
-                                    <h6 class="mb-0 text-900 h5">{{client_name}}</h6>
+            
+                                <td class="align-middle white-space-nowrap ps-8 text-center">
+                                    <h6 class="mb-0 text-900 h5 d-inline-block pe-2">{{client_name}}</h6>
+                                    <a href="/admin/edit_client/{{client_id}}" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa-regular fa-user"></i> Usuario</a>
                                     {{!-- <a class=" align-items-center" href="/admin/edit_client/{{client_id} }">
                                     </a> --}}
                                 </td>
                                 {{#if completed}}
-                                    <td><span class="badge bg-success">Completado <i class="fa-solid fa-check"></i></span></td>
+                                    <td class="align-middle"><span class="badge bg-success">Completado <i class="fa-solid fa-check"></i></span></td>
                                 {{/if}}
                                 {{#if new}}
-                                    <td><span class="badge bg-success" style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-asterisk"></i></span></td>
+                                    <td class="align-middle"><span class="badge bg-success" style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-asterisk"></i></span></td>
                                 {{/if}}
                                 {{#if ready_to_pay}}
-                                    <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
+                                    <td class="align-middle"><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
                                 {{/if}}
                                 {{#if canceled}}
-                                    <td><span class="badge bg-danger">Cancelado <i class="fa-solid fa-xmark"></i></span></td>
+                                    <td class="align-middle"><span class="badge bg-danger">Cancelado <i class="fa-solid fa-xmark"></i></span></td>
                                 {{/if}}
-                                <td class="date align-middle white-space-nowrap text-700 fs--1 ">{{fecha_de_pedido}}</td>
-                                <td class="text-center"><a href="/admin/orders/details/{{id}}" type="button" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i> Editar</a></td>
+                                <td class="date align-middle white-space-nowrap text-700 fs--1 text-nowrap">{{fecha_de_pedido}}</td>
+                                <td class="text-center"><a href="/admin/orders/details/{{id}}" type="button" class="btn btn-sm btn-primary text-nowrap"><i class="fa-regular fa-pen-to-square"></i> Editar</a></td>
                             </tr>
                             {{/each}}
                         </tbody>

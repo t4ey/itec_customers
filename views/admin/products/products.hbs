@@ -103,22 +103,22 @@
                         {{#each products}}
                             {{#unless isDeleted}}
                             <tr class="">
-                                <td class="order align-middle white-space-nowrap">{{id}}</td>
-                                <td class="order align-middle white-space-nowrap"><img src="{{img_dir}}" alt="img" width="50" ></td>
-                                <td class="align-middle white-space-nowrap ps-8">
+                                <td class="order align-middle text-nowrap">{{id}}</td>
+                                <td class="order align-middle text-nowrap"><img src="{{img_dir}}" alt="img" width="50" ></td>
+                                <td class="align-middle text-nowrap ps-8">
                                     <h6 class="mb-0 text-900 h5 text-capitalize">{{name}}</h6>
                                     {{!-- <a class=" align-items-center" href="/admin/edit_product/{{id} }">
                                     </a> --}}
                                 </td>
-                                <td class="total align-middle fw-semi-bold text-1000">{{price}} Bs.</td>
+                                <td class="total align-middle fw-semi-bold text-1000 text-nowrap">{{price}} Bs</td>
                                 <td>
                                     {{#each categories}}
                                         <span class="badge text-bg-light">{{this}}</span>                                         
                                     {{/each}}
                                     {{!-- <span class="badge text-bg-light">Electronica</span> --}}
                                 </td>
-                                <td class="date align-middle white-space-nowrap text-700 "><span class="h5">{{stock}}</span> unidades</td>
-                                <td class="text-center"><a href="/admin/edit_product/{{id}}" type="button" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i> Editar</a></td>
+                                <td class="date align-middle  text-700 text-nowrap"><span class="h5">{{stock}}</span> unidades</td>
+                                <td class="text-center align-middle "><a href="/admin/edit_product/{{id}}" type="button" class="btn btn-sm btn-primary text-nowrap"><i class="fa-regular fa-pen-to-square"></i> Editar</a></td>
                             </tr>
                             {{/unless}}
                         {{/each}}

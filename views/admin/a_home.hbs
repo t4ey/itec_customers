@@ -182,10 +182,10 @@
                                         aria-label="Name: activate to sort column descending">N° ORDEN</th>
                                     <th class=" d-xl-table-cell sorting" tabindex="0"
                                         aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1"
-                                        aria-label="Start Date: activate to sort column ascending">TOTAL</th>
+                                        aria-label="End Date: activate to sort column ascending">CLIENTE</th>
                                     <th class=" d-xl-table-cell sorting" tabindex="0"
                                         aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1"
-                                        aria-label="End Date: activate to sort column ascending">CLIENTE</th>
+                                        aria-label="Start Date: activate to sort column ascending">TOTAL</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1"
                                         colspan="1" aria-label="Status: activate to sort column ascending">ESTADO</th>
                                     <th class=" d-md-table-cell sorting" tabindex="0"
@@ -198,26 +198,26 @@
                                 {{#each orders}}
                                 <tr class="even">
                                     <td class="order align-middle white-space-nowrap h5"><span class="fw-semi-bold text-primary" href="/admin/orders/details/{{id}}">#000000{{id}}</span>
-                                    <td class="total align-middle fw-semi-bold text-1000 h6">Bs. {{total_amount}}</td>
                                     <td class="align-middle white-space-nowrap ps-8">
                                         <h6 class="mb-0 text-900 d-inline-block pe-2 ">{{client_name}}</h6>
                                         <a class="btn btn-sm btn-outline-secondary" href="/admin/edit_client/{{client_id}}"><i class="fa-regular fa-user"></i> Usuario
                                         </a>
                                     </td>
+                                    <td class="total align-middle fw-semi-bold text-1000 h6 text-nowrap">{{total_amount}} Bs</td>
                                     {{#if completed}}
-                                        <td><span class="badge bg-success">Completado <i class="fa-solid fa-check"></i></span></td>
+                                        <td class="align-middle"><span class="badge bg-success">Completado <i class="fa-solid fa-check"></i></span></td>
                                     {{/if}}
                                     {{#if new}}
-                                        <td><span class="badge bg-success" style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-asterisk"></i></span></td>
+                                        <td class="align-middle"><span class="badge bg-success" style="--bs-bg-opacity: .7;">Nuevo <i class="fa-solid fa-asterisk"></i></span></td>
                                     {{/if}}
                                     {{#if ready_to_pay}}
-                                        <td><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
+                                        <td class="align-middle"><span class="badge bg-warning">Por Pagar <i class="fa-regular fa-clock"></i></span></td>
                                     {{/if}}
                                     {{#if canceled}}
-                                        <td><span class="badge bg-danger">Cancelado <i class="fa-solid fa-xmark"></i></span></td>
+                                        <td class="align-middle"><span class="badge bg-danger">Cancelado <i class="fa-solid fa-xmark"></i></span></td>
                                     {{/if}}
-                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ">{{fecha_de_pedido}}</td>
-                                    <td class="text-center"><a href="/admin/orders/details/{{id}}" type="button" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i> Editar</a></td>
+                                    <td class="date align-middle text-nowrap text-700 fs--1 ">{{fecha_de_pedido}}</td>
+                                    <td class="text-center align-middle"><a href="/admin/orders/details/{{id}}" type="button" class="btn btn-sm btn-primary text-nowrap"><i class="fa-solid fa-money-check"></i> Editar</a></td>
                                 </tr>
                                 {{/each}}
                                 {{!-- <tr class="even">

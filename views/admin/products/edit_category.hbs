@@ -41,8 +41,8 @@
                         <div class="col mb-2">
                             <a class="btn btn-primary" href="/admin/categories"><i class="fa-solid fa-chevron-left"></i> Atras</a>
                         </div>
-                        <div class="col-6 text-center">
-                            <h2>Añadir Nueva Categoria de Productos</h2>
+                        <div class="col text-center">
+                            <h2>Editar Categoria de Productos</h2>
                         </div>
                         <div class="col text-end">
                             <a class="btn btn-danger" href="/admin/delete_category/{{category.id}}"><i class="fa-regular fa-trash-can"></i> Eliminar Categoria</a>
@@ -108,22 +108,22 @@
                         <tbody class="table-group-divider">
                         {{#each products}}
                             <tr class="">
-                                <td class="order align-middle white-space-nowrap">{{id}}</td>
-                                <td class="order align-middle white-space-nowrap"><img src="{{{img_dir}}}" alt="img" width="50" ></td>
-                                <td class="align-middle white-space-nowrap ps-8">
+                                <td class="order align-middle text-nowrap">{{id}}</td>
+                                <td class="order align-middle text-nowrap"><img src="{{{img_dir}}}" alt="img" width="50" ></td>
+                                <td class="align-middle text-nowrap ps-8">
                                     <h6 class="mb-0 text-900 h5">{{name}}</h6>
                                     {{!-- <a class=" align-items-center" href="/admin/edit_product/{{id} }">
                                     </a> --}}
                                 </td>
-                                <td class="total align-middle fw-semi-bold text-1000">{{price}} Bs.</td>
+                                <td class="total align-middle fw-semi-bold text-1000 text-nowrap">{{price}} Bs</td>
                                 <td>
                                     {{#each categories}}
                                         <span class="badge text-bg-light">{{this}}</span>                                         
                                     {{/each}}
                                     {{!-- <span class="badge text-bg-light">Electronica</span> --}}
                                 </td>
-                                <td class="date align-middle white-space-nowrap text-700 "><span class="h5">{{stock}}</span> unidades</td>
-                                <td class="text-center"><a href="/admin/edit_product/{{id}}" type="button" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i> Editar</a></td>
+                                <td class="date align-middle text-700 text-nowrap"><span class="h5">{{stock}}</span> unidades</td>
+                                <td class="text-center"><a href="/admin/edit_product/{{id}}" type="button" class="text-nowrap btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i> Editar</a></td>
                             </tr>
                             {{/each}}
                         </tbody>
