@@ -250,7 +250,7 @@ exports.searchProducts = async (req, res) => {
     if (searchText != "") {
         console.log("textS: ", searchText);
         
-        querySearch = `SELECT * FROM producto WHERE name LIKE "%${searchText}% AND isDeleted = false"`;
+        querySearch = `SELECT * FROM producto WHERE name LIKE "%${searchText}%" AND isDeleted = false`;
     } else {
         return res.redirect('/admin/products');
     }
@@ -538,13 +538,14 @@ exports.add_product = async (req, res) => {
         // console.log(hashedPassword.length);
         
         // resize and save the image
-
-        if(req.file){
-            await resize_image(req.file, new_product_id, img_width, img_height);
-            await resize_image(req.file, "micro-" + new_product_id, img_micro_width, img_micro_height);
+        if(!(req.file == "undefined") && !(req.file == undefined)){
+            if(req.file){
+                await resize_image(req.file, new_product_id, img_width, img_height);
+                await resize_image(req.file, "micro-" + new_product_id, img_micro_width, img_micro_height);
+            }
         }
 
-        await db.query('INSERT * INTO producto SET ?', { name: product_name.trim(), price: price.trim(), stock: stock, img_dir: ('/images/products/' + new_product_id + '.jpg') }, async (error, result) => {
+        await db.query('INSERT INTO producto SET ?', { name: product_name.trim(), price: price.trim(), stock: stock, img_dir: ('/images/products/' + new_product_id + '.jpg') }, async (error, result) => {
             if (error)
                 console.log(error);
 

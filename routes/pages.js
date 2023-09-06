@@ -71,8 +71,8 @@ router.get('/marketplace/product/:id', async (req, res) => {
             // console.log("little product", products[i].little_stock);
         }
         
-        const p_categories = await db.query('SELECT name FROM categoria JOIN clasificacion ON clasificacion.cat_id = categoria.id where prod_id = ?', [id]);
-        console.log("cats from p", p_categories);
+        const p_categories = await db.query('SELECT * FROM categoria JOIN clasificacion ON clasificacion.cat_id = categoria.id where prod_id = ?', [id]);
+        console.log("cats from p", p_categories[0].name);
         // console.log(product);
         // console.log(categories);
         return res.render('./marketplace/product.hbs', {
