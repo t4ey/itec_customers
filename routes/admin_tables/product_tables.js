@@ -165,7 +165,7 @@ exports.products = async (req, res) => {
 
     // console.log("deffff");
     // data query request await db.query(`SELECT * FROM pedido WHERE status = ${data} ORDER BY id DESC`);
-    const pagination_format = await pagination('SELECT * FROM producto WHERE isDeleted = false', req, res);
+    const pagination_format = await pagination('SELECT * FROM producto WHERE isDeleted = false ORDER BY name', req, res);
     const link_page = res.originalUrl;
 
     // if try to ingress to a different page range
@@ -896,7 +896,7 @@ exports.edit_category_get_req = async (req, res) => {
 
     // console.log("deffff");
     // data query request await db.query(`SELECT * FROM pedido WHERE status = ${data} ORDER BY id DESC`);
-    const pagination_format = await pagination(`SELECT * FROM producto JOIN clasificacion ON producto.id = clasificacion.prod_id WHERE cat_id = ${id}`, req, res);
+    const pagination_format = await pagination(`SELECT * FROM producto JOIN clasificacion ON producto.id = clasificacion.prod_id WHERE isDeleted = false AND cat_id = ${id}`, req, res);
     const link_page = res.originalUrl;
 
     // if try to ingress to a different page range

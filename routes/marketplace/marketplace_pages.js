@@ -149,7 +149,7 @@ exports.marketplace = async (req, res) => {
 
         // pagination
 
-        pagination_format = await pagination(`SELECT * FROM producto WHERE id IN (${p_cat_list})`, req, res);
+        pagination_format = await pagination(`SELECT * FROM producto WHERE isDeleted = false AND id IN (${p_cat_list})`, req, res);
         hasFilter = {category: category};
 
         // in case out of page 

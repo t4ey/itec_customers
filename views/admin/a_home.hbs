@@ -217,7 +217,13 @@
                                         <td class="align-middle"><span class="badge bg-danger">Cancelado <i class="fa-solid fa-xmark"></i></span></td>
                                     {{/if}}
                                     <td class="date align-middle text-nowrap text-700 fs--1 ">{{fecha_de_pedido}}</td>
-                                    <td class="text-center align-middle"><a href="/admin/orders/details/{{id}}" type="button" class="btn btn-sm btn-primary text-nowrap"><i class="fa-solid fa-money-check"></i> Editar</a></td>
+                                    <td class="text-center align-middle"><a href="/admin/orders/details/{{id}}" type="button" class="btn btn-sm btn-primary text-nowrap">
+                                        {{#if new}}
+                                            <i class="fa-solid fa-money-check"></i> Editar
+                                        {{else}}
+                                            <i class="fa-solid fa-money-check"></i> Detalles
+                                        {{/if}}                                    
+                                    </a></td>
                                 </tr>
                                 {{/each}}
                                 {{!-- <tr class="even">
