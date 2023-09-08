@@ -57,7 +57,7 @@ router.get('/marketplace/product/:id', async (req, res) => {
     const message = req.flash('message');
     const alertType = req.flash('alertType');
 
-    let categories = await db.query("SELECT * FROM categoria");
+    let categories = await db.query("SELECT * FROM categoria  ORDER BY name");
     
     //stock functionality for one product
     await db.query("SELECT * FROM producto WHERE id = ?", [id], async (error, result) => {
@@ -141,7 +141,7 @@ router.post('/register', alreadyLogged, authController.register);
 
 router.post('/login', alreadyLogged, authController.login);
 
-router.post('/profile', checkUser, authController.profile);
+router.post('/profile', requireAuth, checkUser, authController.profile);
 
 router.get('/logout', authController.logout);
 
@@ -149,13 +149,13 @@ router.get('/logout', authController.logout);
 
 router.post('/marketplace/cart_shopping/add_product/:id', requireAuth, checkUser, marketplace.add_to_shopping_cart);
 
-router.get('/marketplace/product/cart_shopping/remove_product/:id', requireAuth, marketplace.delete_cart_product);
+router.get('/marketplace/product/cart_shopping/remove_product/:id', requireAuth, checkUser, marketplace.delete_cart_product);
 
-router.post('/marketplace/cart_shopping/make_order', requireAuth, marketplace.make_order);
+router.post('/marketplace/cart_shopping/make_order', requireAuth, checkUser, marketplace.make_order);
 
-router.post('/marketplace/cart_shopping/cancel_order', requireAuth, marketplace.cancel_order);
+router.post('/marketplace/cart_shopping/cancel_order', requireAuth, checkUser, marketplace.cancel_order);
 
-router.post('/marketplace/cart_shopping/checkout', requireAuth, async (req, res) => {
+router.post('/marketplace/cart_shopping/checkout', requireAuth, checkUser, async (req, res) => {
     const cart_products = req.body;
     const client_id = res.locals.user.id;
     // console.log("post cid: ", client_id);
@@ -185,6 +185,6 @@ router.post('/marketplace/cart_shopping/checkout', requireAuth, async (req, res)
     return res.redirect('/marketplace/cart_shopping/checkout');
 });
 
-router.post('/marketplace/cart_shopping/update_quantity', requireAuth, marketplace.update_quantity);
+router.post('/marketplace/cart_shopping/update_quantity', requireAuth, checkUser, marketplace.update_quantity);
 
 module.exports = router;

@@ -106,7 +106,7 @@ exports.marketplace = async (req, res) => {
 
     console.log(" querys", search, page, category);
 
-    let categories = await db.query("SELECT * FROM categoria");
+    let categories = await db.query("SELECT * FROM categoria ORDER BY name");
     let products;
     let pagination_format;
     let hasFilter;
@@ -149,7 +149,7 @@ exports.marketplace = async (req, res) => {
 
         // pagination
 
-        pagination_format = await pagination(`SELECT * FROM producto WHERE isDeleted = false AND id IN (${p_cat_list})`, req, res);
+        pagination_format = await pagination(`SELECT * FROM producto WHERE isDeleted = false AND id IN (${p_cat_list}) ORDER BY name`, req, res);
         hasFilter = {category: category};
 
         // in case out of page 
@@ -172,7 +172,7 @@ exports.marketplace = async (req, res) => {
         // const products = await db.query("SELECT * FROM producto WHERE name LIKE '%" + search_string + "%'");
         // pagination
         // console.log("with_search :", search);
-        pagination_format = await pagination("SELECT * FROM producto WHERE name LIKE '%" + search.trim() + "%'", req, res);
+        pagination_format = await pagination("SELECT * FROM producto WHERE isDeleted = false AND name LIKE '%" + search.trim() + "%' ORDER BY name", req, res);
         hasFilter = {search: search};
         
         if (pagination_format.status == "return if over pages") {
@@ -192,7 +192,7 @@ exports.marketplace = async (req, res) => {
 
         // pagination
         // console.log("deffff");
-        pagination_format = await pagination('SELECT * FROM producto WHERE isDeleted = false', req, res);
+        pagination_format = await pagination('SELECT * FROM producto WHERE isDeleted = false ORDER BY name', req, res);
         hasFilter = false;
         
         if (pagination_format.status == "return if over pages") {
@@ -430,7 +430,7 @@ exports.add_to_shopping_cart = async (req, res) => {
 
 exports.update_quantity = async (req, res) => {
     const client_id = res.locals.user.id;
-    console.log('id : ', client_id)
+    console.log('id q : ', client_id)
     
     const { action, product_id, custom } = req.body;
     
