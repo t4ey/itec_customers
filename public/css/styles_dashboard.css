@@ -116,6 +116,10 @@ body {
     background-color: #e1ffdb;
 }
 
+.card-n-orders:hover {
+    background-color: #c9ffbe;
+}
+
 .card-n-orders-title {
     color: #53d535;
 }
@@ -126,6 +130,9 @@ body {
 
 .card-orders {
     background-color: #fef3d7;
+}
+.card-orders:hover {
+    background-color: #f5e6c0;
 }
 
 .card-orders-title {
@@ -138,6 +145,10 @@ body {
 
 .card-out-stock {
     background-color: #fedfda;
+}
+
+.card-out-stock:hover {
+    background-color: #fdcac0;
 }
 
 .card-out-stock-title {
