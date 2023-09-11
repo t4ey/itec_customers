@@ -408,6 +408,9 @@ exports.filter_products = async (req, res) => {
     // pagination
     // filtering queries
     let pagination_format;
+    
+    const link_page = res.originalUrl;
+    
     if (filter == undefined || filter == "all") {
         console.log("no filter ");
         return res.redirect("/admin/products");
@@ -417,14 +420,10 @@ exports.filter_products = async (req, res) => {
     }
     else if (filter == "out_of_stock") {
         pagination_format = await pagination(`SELECT * FROM producto WHERE stock = 0 AND isDeleted = false`, req, res);
+        
     }
-
-    // console.log("deffff");
-    // data query request await db.query(`SELECT * FROM pedido WHERE status = ${data} ORDER BY id DESC`);
-    // pagination_format = await pagination(`SELECT * FROM pedido WHERE status = '${filter}' ORDER BY id DESC`, req, res);
-    const link_page = res.originalUrl;
-
-    // if try to ingress to a different page range
+    
+    console.log("format pag", pagination_format, link_page)
     if (pagination_format.status == "return if over pages") {
         return res.redirect(link_page + '?page=' + encodeURIComponent(pagination_format.numberOfPages));
     }
@@ -432,11 +431,24 @@ exports.filter_products = async (req, res) => {
         return res.redirect(link_page + '?page=' + encodeURIComponent(1))
     }
     else if (pagination_format.status == "no results") {
-        req.flash('message', 'no se encontro ningún producto');
-        req.flash('alertType', 'alert-danger');
-        return res.redirect(link_page);
-    }
+        // req.flash('message', 'no se encontro ningún producto');
+        // req.flash('alertType', 'alert-danger');
+        // return res.redirect(link_page);
 
+        return res.render('./admin/products/products.hbs', {
+            message: message,
+            alertType: alertType,
+            // products: products,
+            filters: filters,
+            // pagination_bar: pag_bar,
+        });
+    }
+    // console.log("deffff");
+    // data query request await db.query(`SELECT * FROM pedido WHERE status = ${data} ORDER BY id DESC`);
+    // pagination_format = await pagination(`SELECT * FROM pedido WHERE status = '${filter}' ORDER BY id DESC`, req, res);
+    
+    // if try to ingress to a different page range
+    
     const pagination_data = {
         page: pagination_format.page,
         numberOfPages: pagination_format.numberOfPages,

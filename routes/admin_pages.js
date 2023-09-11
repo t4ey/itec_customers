@@ -146,7 +146,7 @@ router.get('/home', requireAuth, async (req, res) => {
 
     const new_orders = await db.query('SELECT id FROM pedido WHERE status = "new"');
     const ready_to_pay_orders = await db.query('SELECT id FROM pedido WHERE status = "ready-to-pay"');
-    const out_of_stock = await db.query('SELECT id FROM producto WHERE stock = 0');
+    const out_of_stock = await db.query('SELECT id FROM producto WHERE stock = 0 AND isDeleted = false');
     
     const order_stats = {
         new: new_orders.length, 
