@@ -1079,9 +1079,13 @@ exports.orders = async (req, res) => {
         }
         console.log("orders",orders);
 
-        let filters = {};
+        // filter's bar numbers
 
-        filters.all = orders.length;
+        const filter_data_orders = await db.query("SELECT * FROM pedido ORDER BY id DESC");
+
+        let filters = {};
+        // image.png
+        filters.all = filter_data_orders.length;
         filters.new = 0;
         filters.ready_to_pay = 0;
         filters.completed = 0;
