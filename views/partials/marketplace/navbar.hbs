@@ -32,10 +32,10 @@
                         <a class="nav-link" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Tienda</a>
+                        <a class="nav-link {{#unless nav_contact}}active{{/unless}}" href="/marketplace">Tienda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/contact">Contacto</a>
+                        <a class="nav-link {{#if nav_contact}}active{{/if}}" href="/contact">Contacto</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/#Catalog">Catálogo</a>
